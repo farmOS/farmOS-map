@@ -6,4 +6,15 @@ module.exports = {
     path: __dirname + '/build',
     filename: 'farmOS-map.js'
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' }
+        ]
+      }
+    ]
+  },
 };
