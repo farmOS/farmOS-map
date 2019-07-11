@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "description": "OpenLayers map used in farmOS.",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "eslint main.js && webpack --config webpack.config.js --mode production"
   },
   "devDependencies": {
     "css-loader": "^3.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-command": "^0.3.0"
