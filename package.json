@@ -6,6 +6,7 @@
     "build": "eslint main.js && webpack --config webpack.config.js --mode production"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",

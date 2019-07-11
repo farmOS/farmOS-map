@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Touch build/farmOS-map.js to ensure that it is owned by this user.
+# Touch build/index.html and build/farmOS-map.js to ensure that it is owned by
+# this user.
+touch build/index.html
 touch build/farmOS-map.js
 
 # Build the farmos-map Docker image.
