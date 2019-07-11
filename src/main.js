@@ -1,9 +1,13 @@
 import 'ol/ol.css';
+import 'ol-layerswitcher/src/ol-layerswitcher.css';
 
 import { Map, View } from 'ol';
 import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
+import LayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
+
+import LayerSwitcher from 'ol-layerswitcher';
 
 // Define window.farmOS if it isn't already.
 if (typeof window.farmOS === 'undefined') {
@@ -21,13 +25,21 @@ window.farmOS.map = {
     const map = new Map({
       target,
       layers: [
-        new TileLayer({
-          source: new XYZ({
-            url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          }),
+        new LayerGroup({
+          title: 'Base layers',
+          layers: [
+            new TileLayer({
+              title: 'Open Street Map',
+              type: 'base',
+              source: new XYZ({
+                url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              }),
+            }),
+          ],
         }),
       ],
       controls: defaultControls().extend([
+        new LayerSwitcher(),
         new FullScreen(),
         new ScaleLine(),
       ]),
