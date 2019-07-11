@@ -1,7 +1,7 @@
 import 'ol/ol.css';
 
 import { Map, View } from 'ol';
-import { defaults as defaultControls, FullScreen } from 'ol/control';
+import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 
@@ -29,6 +29,7 @@ window.farmOS.map = {
       ],
       controls: defaultControls().extend([
         new FullScreen(),
+        new ScaleLine(),
       ]),
       view: new View({
         center: [0, 0],
