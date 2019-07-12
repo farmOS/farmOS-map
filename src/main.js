@@ -1,5 +1,6 @@
 import 'ol/ol.css';
 import 'ol-layerswitcher/src/ol-layerswitcher.css';
+import 'ol-geocoder/dist/ol-geocoder.css';
 
 import { Map, View } from 'ol';
 import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
@@ -8,6 +9,7 @@ import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 
 import LayerSwitcher from 'ol-layerswitcher';
+import Geocoder from 'ol-geocoder';
 
 // Define window.farmOS if it isn't already.
 if (typeof window.farmOS === 'undefined') {
@@ -42,6 +44,12 @@ window.farmOS.map = {
         new LayerSwitcher(),
         new FullScreen(),
         new ScaleLine(),
+        new Geocoder('nominatim', {
+          provider: 'osm',
+          placeholder: 'Search for address...',
+          limit: 5,
+          autoComplete: true,
+        }),
       ]),
       view: new View({
         center: [0, 0],
