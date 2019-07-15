@@ -1,14 +1,23 @@
+// Import OpenLayers CSS and base Map and View definitions.
 import 'ol/ol.css';
-import 'ol-layerswitcher/src/ol-layerswitcher.css';
-import 'ol-geocoder/dist/ol-geocoder.css';
-
 import { Map, View } from 'ol';
+
+// Import OL controls.
 import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
+
+// Import OL layer types.
 import LayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
+
+// Import OL source types.
 import XYZ from 'ol/source/XYZ';
 
+// Import ol-layerswitcher.
+import 'ol-layerswitcher/src/ol-layerswitcher.css';
 import LayerSwitcher from 'ol-layerswitcher';
+
+// Import ol-geocoder.
+import 'ol-geocoder/dist/ol-geocoder.css';
 import Geocoder from 'ol-geocoder';
 
 // Define window.farmOS if it isn't already.
