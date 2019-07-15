@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "OpenLayers map used in farmOS.",
   "scripts": {
-    "build": "eslint main.js && webpack --config webpack.config.js --mode production"
+    "build": "eslint src/main.js && webpack --config webpack.config.js --mode production"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.3",

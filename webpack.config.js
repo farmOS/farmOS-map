@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './main.js',
+  entry: __dirname + '/src/main.js',
   output: {
     path: __dirname + '/build',
     filename: 'farmOS-map.js'
