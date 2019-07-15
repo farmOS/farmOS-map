@@ -40,7 +40,7 @@ window.farmOS.map = {
           title: 'Base layers',
           layers: [
             new TileLayer({
-              title: 'Open Street Map',
+              title: 'OpenStreetMap',
               type: 'base',
               source: new OSM(),
             }),
