@@ -28,7 +28,7 @@ if (typeof window.farmOS === 'undefined') {
 // Add a farmOS.map object that is available globaly.
 window.farmOS.map = {
 
-  // Array of farmOS map instances.
+  // Initialize an array of farmOS map instances.
   instances: [],
 
   // Create a new farmOS map attached to a target element ID.
