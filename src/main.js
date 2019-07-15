@@ -10,7 +10,7 @@ import LayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
 
 // Import OL source types.
-import XYZ from 'ol/source/XYZ';
+import OSM from 'ol/source/OSM';
 
 // Import ol-layerswitcher.
 import 'ol-layerswitcher/src/ol-layerswitcher.css';
@@ -42,9 +42,7 @@ window.farmOS.map = {
             new TileLayer({
               title: 'Open Street Map',
               type: 'base',
-              source: new XYZ({
-                url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              }),
+              source: new OSM(),
             }),
           ],
         }),
