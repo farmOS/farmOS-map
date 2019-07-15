@@ -1,6 +1,6 @@
 {
   "name": "farmOS-map",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "OpenLayers map used in farmOS.",
   "scripts": {
     "build": "eslint src/main.js && webpack --config webpack.config.js --mode production",
