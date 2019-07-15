@@ -75,4 +75,9 @@ window.farmOS.map = {
     };
     this.instances.push(instance);
   },
+
+  // Look up an instance index based on its target element ID.
+  targetIndex(target) {
+    return this.instances.findIndex(instance => instance.target === target);
+  },
 };
