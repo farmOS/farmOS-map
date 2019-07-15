@@ -10,11 +10,17 @@ farmOS Map is an [OpenLayers](https://openlayers.org/) map for farmOS.
 
 For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
-## Setup
+## Development
 
-1. Clone the repository.
-2. Run `./build.sh`
-3. Open `build/index.html` in a browser.
+There are three shell scripts, which use Docker to run NPM commands.
+
+* `/install.sh` - This will install JavaScript dependencies in `./node_modules`
+   and create `package-lock.json`.
+* `/dev.sh` - This will start a Webpack development server at
+   https://localhost:8080 which will live-update as code is changed during
+   development.
+* `/build.sh` - This is used to generate the final `farmOS-map.js` file, along
+  with an `index.html` file that loads it, inside the `build` directory.
 
 ## Maintainers
 
