@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "ol": "^6.1.0",
+    "olgm": "^1.5.0",
     "ol-geocoder": "^4.0.0",
     "ol-layerswitcher": "^3.5.0",
     "ol-popup": "^4.0.0"

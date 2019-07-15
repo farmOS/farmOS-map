@@ -6,6 +6,7 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
+import enableGoogleMaps from './methods/google';
 import addLayer, { getLayerByName } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
@@ -47,6 +48,7 @@ const createInstance = ({ target, options = {} }) => {
     }),
 
     // Add instance methods.
+    enableGoogleMaps,
     addLayer,
     addPopup,
     getLayerByName,
