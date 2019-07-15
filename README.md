@@ -12,15 +12,14 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 ## Development
 
-There are three shell scripts, which use Docker to run NPM commands.
+`npm install` - Install JavaScript dependencies in `./node_modules` and create
+`package-lock.json`.
 
-* `/install.sh` - This will install JavaScript dependencies in `./node_modules`
-   and create `package-lock.json`.
-* `/dev.sh` - This will start a Webpack development server at
-   https://localhost:8080 which will live-update as code is changed during
-   development.
-* `/build.sh` - This is used to generate the final `farmOS-map.js` file, along
-  with an `index.html` file that loads it, inside the `build` directory.
+`npm run dev` - Start a Webpack development server at https://localhost:8080
+which will live-update as code is changed during development.
+
+`npm run build` - Generate the final `farmOS-map.js` file for distribution,
+along with an `index.html` file that loads it, inside the `build` directory.
 
 ## Maintainers
 
