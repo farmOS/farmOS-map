@@ -5,6 +5,9 @@ import { Map, View } from 'ol';
 // Import OL controls.
 import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
 
+// Import OL interactions.
+import { defaults as defaultInteractions } from 'ol/interaction';
+
 // Import OL layer types.
 import LayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
@@ -58,6 +61,7 @@ window.farmOS.map = {
           autoComplete: true,
         }),
       ]),
+      interactions: defaultInteractions(),
       view: new View({
         center: [0, 0],
         zoom: 2,
