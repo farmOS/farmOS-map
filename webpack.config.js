@@ -1,3 +1,4 @@
+const package = require('./package.json');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -19,6 +20,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.BannerPlugin('farmOS-map v' + package.version),
     new CopyWebpackPlugin([
       { from: 'static' }
     ])
