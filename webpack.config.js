@@ -8,6 +8,9 @@ module.exports = {
     path: __dirname + '/build',
     filename: 'farmOS-map.js'
   },
+  performance: {
+    hints: false
+  },
   module: {
     rules: [
       {
