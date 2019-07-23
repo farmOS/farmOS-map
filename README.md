@@ -10,6 +10,11 @@ farmOS Map is an [OpenLayers](https://openlayers.org/) map for farmOS.
 
 For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
+## Usage
+
+1. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
+2. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
+
 ## Development
 
 `npm install` - Install JavaScript dependencies in `./node_modules` and create
