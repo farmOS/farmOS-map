@@ -14,9 +14,9 @@ const createInstance = ({ target }) => ({
   // The OpenLayers map object.
   map: new Map({
     target,
-    layers: defaults.layers,
-    controls: defaults.controls,
-    interactions: defaults.interactions,
+    layers: defaults.layers(),
+    controls: defaults.controls(),
+    interactions: defaults.interactions(),
     view: new View({
       center: [0, 0],
       zoom: 2,

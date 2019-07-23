@@ -24,33 +24,39 @@ import { defaults as defaultInteractions } from 'ol/interaction';
 const defaults = {
 
   // Layers.
-  layers: [
-    new LayerGroup({
-      title: 'Base layers',
-      layers: [
-        new TileLayer({
-          title: 'OpenStreetMap',
-          type: 'base',
-          source: new OSM(),
-        }),
-      ],
-    }),
-  ],
+  layers() {
+    return [
+      new LayerGroup({
+        title: 'Base layers',
+        layers: [
+          new TileLayer({
+            title: 'OpenStreetMap',
+            type: 'base',
+            source: new OSM(),
+          }),
+        ],
+      }),
+    ];
+  },
 
   // Controls.
-  controls: defaultControls().extend([
-    new LayerSwitcher(),
-    new FullScreen(),
-    new ScaleLine(),
-    new Geocoder('nominatim', {
-      provider: 'osm',
-      placeholder: 'Search for address...',
-      limit: 5,
-      autoComplete: true,
-    }),
-  ]),
+  controls() {
+    return defaultControls().extend([
+      new LayerSwitcher(),
+      new FullScreen(),
+      new ScaleLine(),
+      new Geocoder('nominatim', {
+        provider: 'osm',
+        placeholder: 'Search for address...',
+        limit: 5,
+        autoComplete: true,
+      }),
+    ]);
+  },
 
   // Interactions.
-  interactions: defaultInteractions(),
+  interactions() {
+    return defaultInteractions();
+  },
 };
 export default defaults;
