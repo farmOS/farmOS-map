@@ -2,8 +2,16 @@
 import 'ol/ol.css';
 import { Map, View } from 'ol';
 
+// Import Vector source and layer, and GeoJSON format.
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import GeoJSON from 'ol/format/GeoJSON';
+
 // Import defaults.
 import defaults from './defaults';
+
+// Import styles.
+import styles from './styles';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target }) => ({
@@ -22,5 +30,19 @@ const createInstance = ({ target }) => ({
       zoom: 2,
     }),
   }),
+
+  // Add a GeoJSON feature layer to the map.
+  addGeoJSONLayer(url, color) {
+    const style = styles(color);
+    const source = new VectorSource({
+      url,
+      format: new GeoJSON(),
+    });
+    const layer = new VectorLayer({
+      source,
+      style,
+    });
+    this.map.addLayer(layer);
+  },
 });
 export default createInstance;
