@@ -7,6 +7,8 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 
+import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
+
 // Import defaults.
 import defaults from './defaults';
 
@@ -43,6 +45,31 @@ const createInstance = ({ target }) => ({
       style,
     });
     this.map.addLayer(layer);
+
+    // Zoom to the combined extent of all sources as they are loaded.
+    const self = this;
+    source.on('change', () => { self.zoomToVectors(); });
+  },
+
+  // Zoom to all vector sources in the map.
+  zoomToVectors() {
+    const extent = extentCreateEmpty();
+    this.map.getLayers().forEach((layer) => {
+      if (typeof layer.getSource === 'function') {
+        const source = layer.getSource();
+        if (source !== 'null' && source instanceof VectorSource) {
+          if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+            extendExtend(extent, source.getExtent());
+            const fitOptions = {
+              size: this.map.getSize(),
+              constrainResolution: false,
+              padding: [20, 20, 20, 20],
+            };
+            this.map.getView().fit(extent, fitOptions);
+          }
+        }
+      }
+    });
   },
 });
 export default createInstance;
