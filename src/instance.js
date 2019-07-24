@@ -2,9 +2,11 @@
 import 'ol/ol.css';
 import { Map, View } from 'ol';
 
-// Import Vector source and layer, and GeoJSON format.
-import VectorLayer from 'ol/layer/Vector';
+// Import source types, layer types, and formats.
 import VectorSource from 'ol/source/Vector';
+import TileWMS from 'ol/source/TileWMS';
+import VectorLayer from 'ol/layer/Vector';
+import TileLayer from 'ol/layer/Tile';
 import GeoJSON from 'ol/format/GeoJSON';
 
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
@@ -51,6 +53,20 @@ const createInstance = ({ target }) => ({
     // Zoom to the combined extent of all sources as they are loaded.
     const self = this;
     source.on('change', () => { self.zoomToVectors(); });
+  },
+
+  // Add a WMS tile layer to the map.
+  addWMSTileLayer(title, url, params, visible = true) {
+    const source = new TileWMS({
+      url,
+      params,
+    });
+    const layer = new TileLayer({
+      title,
+      source,
+      visible,
+    });
+    this.map.addLayer(layer);
   },
 
   // Zoom to all vector sources in the map.
