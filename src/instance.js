@@ -34,15 +34,17 @@ const createInstance = ({ target }) => ({
   }),
 
   // Add a GeoJSON feature layer to the map.
-  addGeoJSONLayer(url, color) {
+  addGeoJSONLayer(title, url, color, visible = true) {
     const style = styles(color);
     const source = new VectorSource({
       url,
       format: new GeoJSON(),
     });
     const layer = new VectorLayer({
+      title,
       source,
       style,
+      visible,
     });
     this.map.addLayer(layer);
 
