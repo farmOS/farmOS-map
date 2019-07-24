@@ -14,6 +14,31 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 1. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
 2. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
+3. (optional) Add behaviors - see below.
+
+### Adding behaviors
+
+Behaviors allow you to make modifications to a map in a modular way, by defining
+JavaScript functions that will run automatically when a map is created.
+
+For example:
+
+```
+(function () {
+  farmOS.map.behaviors.myCustomizations = {
+    attach: function (instance) {
+
+      // Get the element ID.
+      var element_id = instance.target;
+
+      // Add a GeoJSON layer to the map with an ID of 'my-map';
+      if (element_id == 'my-map') {
+        instance.addGeoJSONLayer('my/custom/geo.json', 'yellow');
+      }
+    }
+  };
+}());
+```
 
 ## Development
 
