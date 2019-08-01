@@ -16,6 +16,52 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 2. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
 3. (optional) Add behaviors - see below.
 
+### Creating a Map
+
+The simplest way to create a map is to call the `create` method with an HTML
+element's ID. This will render a map with all the OpenLayers and farmOS defaults.
+However, you can also call it with an options object, as its second parameter,
+with a `controls` and/or `interactions` property. If a property is set to
+`false`, none of its corresponding default controls or interactions will be
+applied to the map. If the property is assigned to an array of OpenLayers
+controls or interactions, the defaults will be discarded and those controls or
+interactions will be used in their place. If the property is assigned to a
+callback function, that function will be called and passed the default controls
+or interactions. It must return a an array of OL controls/interactions, which
+will be attached to the map in the place of the defaults.
+
+For example:
+
+```js
+// Calling .create() with just an id renders a map with the farmOS defaults.
+const id = 'myMap';
+farmOS.map.create(id);
+
+// Passing an options object with interactions set to false will cancel the
+// interaction defaults.
+const opts1 = { interactions: false };
+farmOS.map.create(id, opts1);
+
+// An options object with an array of controls to replace the defaults.
+const opts2 = {
+  controls: [
+    new MyControl(),
+  ],
+};
+farmOS.map.create(id, opts2);
+
+// An options object with a function which alters the control defaults.
+const opts3 = {
+  controls: (defaults) => defaults.filter(def => (
+    def.constructor.name === 'Attribution'
+    )).concat([
+      new MyControl1(),
+      new MyControl2(),
+    ]),
+};
+farmOS.map.create(id, opts3);
+```
+
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
@@ -23,7 +69,7 @@ JavaScript functions that will run automatically when a map is created.
 
 For example:
 
-```
+```js
 (function () {
   farmOS.map.behaviors.myCustomizations = {
     attach: function (instance) {

@@ -18,7 +18,7 @@ import defaults from './defaults';
 import styles from './styles';
 
 // Define an object that represents a single farmOS map instance.
-const createInstance = ({ target }) => ({
+const createInstance = ({ target, options }) => ({
 
   // The target element ID for the map.
   target,
@@ -27,8 +27,8 @@ const createInstance = ({ target }) => ({
   map: new Map({
     target,
     layers: defaults.layers(),
-    controls: defaults.controls(),
-    interactions: defaults.interactions(),
+    controls: defaults.controls(options.controls),
+    interactions: defaults.interactions(options.interactions),
     view: new View({
       center: [0, 0],
       zoom: 2,

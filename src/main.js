@@ -20,8 +20,8 @@ window.farmOS.map = {
 
   // Create a new farmOS map attached to a target element ID and add it to the
   // global instances array.
-  create(target) {
-    const instance = createInstance({ target });
+  create(target, options) {
+    const instance = createInstance({ target, options });
 
     // Add the instance to the array.
     this.instances.push(instance);

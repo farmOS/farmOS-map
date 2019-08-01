@@ -40,8 +40,9 @@ const defaults = {
   },
 
   // Controls.
-  controls() {
-    return defaultControls().extend([
+  controls(options) {
+    // Extend the OpenLayers defaults with farmOS defaults.
+    const extendedDefaults = defaultControls().extend([
       new LayerSwitcher(),
       new FullScreen(),
       new ScaleLine(),
@@ -52,10 +53,39 @@ const defaults = {
         autoComplete: true,
       }),
     ]);
+    // If controls were set to 'false', don't attach any controls.
+    if (options === false) {
+      return [];
+    }
+    // If an array of controls was passed, use this instead of the defaults.
+    if (Array.isArray(options)) {
+      return options;
+    }
+    // If a callback function is provided, pass it the defaults
+    // and return what it evaluates to.
+    if (typeof options === 'function') {
+      return options(extendedDefaults.array_); // eslint-disable-line no-underscore-dangle
+    }
+    // Otherwise just return the defaults.
+    return extendedDefaults;
   },
 
   // Interactions.
-  interactions() {
+  interactions(options) {
+    // If interactions were set to 'false', don't attach any interactions.
+    if (options === false) {
+      return [];
+    }
+    // If an array of interactions was passed, use this instead of the defaults.
+    if (Array.isArray(options)) {
+      return options;
+    }
+    // If a callback function is provided, pass it the defaults
+    // and return what it evaluates to.
+    if (typeof options === 'function') {
+      return options(defaultInteractions().array_); // eslint-disable-line no-underscore-dangle
+    }
+    // Otherwise just return the defaults.
     return defaultInteractions();
   },
 };
