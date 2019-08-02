@@ -8,6 +8,7 @@ import TileWMS from 'ol/source/TileWMS';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
 import GeoJSON from 'ol/format/GeoJSON';
+import WKT from 'ol/format/WKT';
 
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
 
@@ -53,6 +54,31 @@ const createInstance = ({ target, options }) => ({
     // Zoom to the combined extent of all sources as they are loaded.
     const self = this;
     source.on('change', () => { self.zoomToVectors(); });
+  },
+
+  // Add Well Known Text (WKT) geometry to the map.
+  addWKTLayer(title, wkt, color, visible = true) {
+    const style = styles(color);
+    const isMultipart = wkt.includes('MULTIPOINT')
+      || wkt.includes('MULTILINESTRING')
+      || wkt.includes('MULTIPOLYGON')
+      || wkt.includes('GEOMETRYCOLLECTION');
+    let feature;
+    if (isMultipart) {
+      feature = new WKT().readFeatures(wkt);
+    } else {
+      feature = new WKT().readFeature(wkt);
+    }
+    const source = new VectorSource({
+      features: [feature],
+    });
+    const layer = new VectorLayer({
+      title,
+      source,
+      style,
+      visible,
+    });
+    this.map.addLayer(layer);
   },
 
   // Add a WMS tile layer to the map.

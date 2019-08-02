@@ -62,6 +62,21 @@ const opts3 = {
 farmOS.map.create(id, opts3);
 ```
 
+### Adding a Well Known Text (WKT) layer
+
+It is possible to add geometries in the Well Known Text format on a map instance
+by calling the `addWKTLayer` method on the instance.
+
+```js
+const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 42.54427527000766, -75.53589016199109 42.54412508386721, -75.53547173738478 42.54316467447933, -75.53547173738478 42.54301053332517, -75.53564876317976 42.54289196294764, -75.53582578897475 42.54281291590414, -75.53588747978209 42.54302634269183, -75.53643733263014 42.54424760416683))";
+myMap.addWKTLayer("my-polygon", wkt, "orange", true);
+```
+
+The first argument is a title for the layer; the second is the WKT string you'd
+like to render; the third is the stroke color of the geometry (default is 
+`"yellow"`); and the fourth is a boolean to set whether the layer is visible or
+not (default is `true`).
+
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
