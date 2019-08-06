@@ -62,6 +62,16 @@ const opts3 = {
 farmOS.map.create(id, opts3);
 ```
 
+### Tearing down a map
+
+It may be desirable to tear down a map instance when you no longer need it so
+that it can be garbage collected. To do so, you need to provide the instance's
+target id, and pass it to the `destroy` method:
+
+```js
+farmOS.map.destroy('my-map');
+```
+
 ### Adding a Well Known Text (WKT) layer
 
 It is possible to add geometries in the Well Known Text format on a map instance

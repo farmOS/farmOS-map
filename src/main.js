@@ -33,6 +33,15 @@ window.farmOS.map = {
     return instance;
   },
 
+  // Destroy a farmOS map instance and remove it from the instances array.
+  destroy(target) {
+    const i = this.targetIndex(target);
+    if (i > -1) {
+      this.instances[i].map.setTarget(null);
+      this.instances.splice(i, 1);
+    }
+  },
+
   // Attach behaviors to an instance.
   attachBehaviors(instance) {
     Object.keys(this.behaviors).forEach((key) => {
