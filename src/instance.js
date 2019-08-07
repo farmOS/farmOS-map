@@ -63,15 +63,10 @@ const createInstance = ({ target, options }) => ({
       || wkt.includes('MULTILINESTRING')
       || wkt.includes('MULTIPOLYGON')
       || wkt.includes('GEOMETRYCOLLECTION');
-    let feature;
-    if (isMultipart) {
-      feature = new WKT().readFeatures(wkt);
-    } else {
-      feature = new WKT().readFeature(wkt);
-    }
-    const source = new VectorSource({
-      features: [feature],
-    });
+    const features = isMultipart
+      ? new WKT().readFeatures(wkt)
+      : [new WKT().readFeature(wkt)];
+    const source = new VectorSource({ features });
     const layer = new VectorLayer({
       title,
       source,
