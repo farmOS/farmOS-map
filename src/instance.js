@@ -54,6 +54,8 @@ const createInstance = ({ target, options }) => ({
     // Zoom to the combined extent of all sources as they are loaded.
     const self = this;
     source.on('change', () => { self.zoomToVectors(); });
+
+    return layer;
   },
 
   // Add Well Known Text (WKT) geometry to the map.
@@ -74,6 +76,7 @@ const createInstance = ({ target, options }) => ({
       visible,
     });
     this.map.addLayer(layer);
+    return layer;
   },
 
   // Add a WMS tile layer to the map.
@@ -88,6 +91,7 @@ const createInstance = ({ target, options }) => ({
       visible,
     });
     this.map.addLayer(layer);
+    return layer;
   },
 
   // Zoom to all vector sources in the map.
