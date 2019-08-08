@@ -65,9 +65,13 @@ const createInstance = ({ target, options }) => ({
       || wkt.includes('MULTILINESTRING')
       || wkt.includes('MULTIPOLYGON')
       || wkt.includes('GEOMETRYCOLLECTION');
+    const opts = {
+      dataProjection: 'EPSG:4326',
+      featureProjection: 'EPSG:3857',
+    };
     const features = isMultipart
-      ? new WKT().readFeatures(wkt)
-      : [new WKT().readFeature(wkt)];
+      ? new WKT().readFeatures(wkt, opts)
+      : [new WKT().readFeature(wkt, opts)];
     const source = new VectorSource({ features });
     const layer = new VectorLayer({
       title,
