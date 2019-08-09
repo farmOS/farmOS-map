@@ -72,20 +72,41 @@ target id, and pass it to the `destroy` method:
 farmOS.map.destroy('my-map');
 ```
 
-### Adding a Well Known Text (WKT) layer
+### Adding layers
 
-It is possible to add geometries in the Well Known Text format on a map instance
-by calling the `addWKTLayer` method on the instance.
+To add vector or tile layers to the map, you can call the `addLayer` method. It takes a layer type as its first parameter, and a configuration object as its second parameter. The configuration parameter's properties may vary depending on the type of layer being added.
 
 ```js
-const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 42.54427527000766, -75.53589016199109 42.54412508386721, -75.53547173738478 42.54316467447933, -75.53547173738478 42.54301053332517, -75.53564876317976 42.54289196294764, -75.53582578897475 42.54281291590414, -75.53588747978209 42.54302634269183, -75.53643733263014 42.54424760416683))";
-const wktLayer = myMap.addWKTLayer("my-polygon", wkt, "orange", true);
-```
+// Adding a Well Known Text layer
+const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 42.54427527000766, -75.53589016199109 42.54412508386721, -75.53588747978209 42.54302634269183, -75.53643733263014 42.54424760416683))";
+const wktOpts = {
+  title: 'my-polygon', // defaults to 'wkt'
+  wkt, // REQUIRED!
+  color: 'orange', // defaults to 'yellow'
+  visible: true, // defaults to true
+};
+const wktLayer = myMap.addLayer('wkt', wktOpts);
 
-The first argument is a title for the layer; the second is the WKT string you'd
-like to render; the third is the stroke color of the geometry (default is 
-`"yellow"`); and the fourth is a boolean to set whether the layer is visible or
-not (default is `true`).
+// Adding a GeoJSON layer
+const geoJsonOpts = {
+  title: 'geojson' // defaults to 'geojson'
+  url: '/farm/areas/geojson/all', // REQUIRED!
+  color: 'grey', // defaults to 'yellow'
+  visible: true, // defaults to true
+}
+const geoJSONLayer = myMap.addLayer('', geoJsonOpts);
+
+const wmsOpts = {
+  title: 'soil-survey', // defaults to 'wms'
+  url: 'https://sdmdataaccess.nrcs.usda.gov/Spatial/SDM.wms', // REQUIRED!
+  params: {
+    LAYERS: 'MapunitPoly',
+    VERSION: '1.1.1',
+  }
+  visible: true // defaults to true
+};
+const wmsLayer = myMap.addLayer('wms', wmsOpts);
+```
 
 The method returns a reference to the newly created layer for later use.
 
