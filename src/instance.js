@@ -118,5 +118,22 @@ const createInstance = ({ target, options }) => ({
       }
     });
   },
+
+  // Zoom to the given layer source in the map.
+  zoomToLayer(layer) {
+    const extent = extentCreateEmpty();
+    const source = layer.getSource();
+    if (source !== 'null' && source instanceof VectorSource) {
+      if (source.getState() === 'ready' && source.getFeatures().length > 0) {
+        extendExtend(extent, source.getExtent());
+        const fitOptions = {
+          size: this.map.getSize(),
+          constrainResolution: false,
+          padding: [20, 20, 20, 20],
+        };
+        this.map.getView().fit(extent, fitOptions);
+      }
+    }
+  },
 });
 export default createInstance;
