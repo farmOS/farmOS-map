@@ -27,9 +27,29 @@ const createInstance = ({ target, options }) => {
     title = 'geojson', url, color, visible = true,
   }) {
     const style = styles(color);
+    const format = new GeoJSON();
     const source = new VectorSource({
-      url,
-      format: new GeoJSON(),
+      format,
+      // Supply a loader function so we can be sure xhr.withCredentials === true.
+      loader(extent, resolution, featureProjection) {
+        const xhr = new XMLHttpRequest();
+        const onError = () => source.removeLoadedExtent(extent);
+        xhr.open('GET', url);
+        xhr.withCredentials = true;
+        xhr.onerror = onError;
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const features = format.readFeatures(xhr.responseText, {
+              extent,
+              featureProjection,
+            });
+            source.addFeatures(features);
+          } else {
+            onError();
+          }
+        };
+        xhr.send();
+      },
     });
     const layer = new VectorLayer({
       title,
