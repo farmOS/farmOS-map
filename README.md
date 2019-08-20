@@ -145,7 +145,12 @@ For example:
 
       // Add a GeoJSON layer to the map with an ID of 'my-map';
       if (element_id == 'my-map') {
-        instance.addGeoJSONLayer('my/custom/geo.json', 'yellow');
+        var opts = {
+          title: 'My Layer',
+          url: 'my/custom/geo.json',
+          color: 'yellow',
+        };
+        instance.addLayer('geojson', opts);
       }
     }
   };
@@ -170,3 +175,4 @@ along with an `index.html` file that loads it, inside the `build` directory.
 This project has been sponsored by:
 
  * [Farmier](https://farmier.com)
+ * [Globetrotter Foundation](http://globetrotterfoundation.org)
