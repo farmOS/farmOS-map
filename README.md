@@ -89,12 +89,12 @@ const wktLayer = myMap.addLayer('wkt', wktOpts);
 
 // Adding a GeoJSON layer
 const geoJsonOpts = {
-  title: 'geojson' // defaults to 'geojson'
+  title: 'geojson', // defaults to 'geojson'
   url: '/farm/areas/geojson/all', // REQUIRED!
   color: 'grey', // defaults to 'yellow'
   visible: true, // defaults to true
 }
-const geoJSONLayer = myMap.addLayer('', geoJsonOpts);
+const geoJSONLayer = myMap.addLayer('geojson', geoJsonOpts);
 
 const wmsOpts = {
   title: 'soil-survey', // defaults to 'wms'
@@ -102,7 +102,7 @@ const wmsOpts = {
   params: {
     LAYERS: 'MapunitPoly',
     VERSION: '1.1.1',
-  }
+  },
   visible: true // defaults to true
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
