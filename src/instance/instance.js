@@ -6,7 +6,11 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
-import { forEachLayer, addLayer } from './methods/layer';
+import {
+  forEachLayer,
+  rememberLayer,
+  addLayer,
+} from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 
@@ -34,11 +38,19 @@ const createInstance = ({ target, options = {} }) => {
 
     // Add instance methods.
     forEachLayer,
+    rememberLayer,
     addLayer,
     addPopup,
     zoomToVectors,
     zoomToLayer,
   };
+
+  // Remember visibility state of base layers with localStorage.
+  instance.forEachLayer(instance.map.getLayerGroup(), (layer) => {
+    if (layer.get('type') === 'base') {
+      rememberLayer(layer);
+    }
+  });
 
   // Add drawing controls, if drawing is true.
   // Make the Edit control available at instance.edit.

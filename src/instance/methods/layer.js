@@ -42,6 +42,37 @@ export function forEachLayer(layer, fn) {
   });
 }
 
+// Load saved layer visibility state from localStorage.
+export function loadLayerVisibility(layer) {
+  const title = layer.get('title');
+  if (title) {
+    const itemName = `farmOS.map.layers.${title}.visible`;
+    const savedValue = localStorage.getItem(itemName);
+    if (savedValue) {
+      const visible = (localStorage.getItem(itemName) === 'true');
+      layer.setVisible(visible);
+    }
+  }
+}
+
+// Save layer visibility state to localStorage.
+export function saveLayerVisibility(layer) {
+  const title = layer.get('title');
+  if (title) {
+    const visible = layer.get('visible');
+    const itemName = `farmOS.map.layers.${title}.visible`;
+    localStorage.setItem(itemName, visible);
+  }
+}
+
+// Remember a layer's visibility state with localStorage.
+export function rememberLayer(layer) {
+  loadLayerVisibility(layer);
+  layer.on('change:visible', (e) => {
+    saveLayerVisibility(e.target);
+  });
+}
+
 // Add a Vector layer to the map.
 function addVectorLayer({
   title = 'vector', color, visible = true,
@@ -181,6 +212,11 @@ export function addLayer(type, opts) {
     // Otherwise, add the layer directly to the map.
     else {
       this.map.addLayer(layer);
+    }
+
+    // If this is a base layer, remember its visibility state with localStorage.
+    if (layer.get('type') === 'base') {
+      rememberLayer(layer);
     }
 
     // Return the layer.
