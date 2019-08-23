@@ -48,5 +48,9 @@ export default function enableGoogleMaps() {
 
   // Activate Google Maps.
   const olGM = new OLGoogleMaps({ map: this.map });
+  const gmap = olGM.getGoogleMapsMap();
   olGM.activate();
+
+  // Disable 45° Imagery.
+  gmap.setTilt(0);
 }
