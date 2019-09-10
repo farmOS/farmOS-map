@@ -114,7 +114,7 @@ The method returns a reference to the newly created layer for later use.
 
 There are two methods for controlling the zoom level. The first, `zoomToVectors`,
 automatically zooms to the bounding box of all vector source layers. It takes no
-arguments. The second, `zoomToLayer will zoom to a particular vector layer,
+arguments. The second, `zoomToLayer` will zoom to a particular vector layer,
 provided you pass a reference to that layer.
 
 For example:
