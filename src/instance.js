@@ -19,7 +19,7 @@ import defaults from './defaults';
 import styles from './styles';
 
 // Define an object that represents a single farmOS map instance.
-const createInstance = ({ target, options }) => {
+const createInstance = ({ target, options = {} }) => {
   let instance;
 
   // Add a GeoJSON feature layer to the map.
