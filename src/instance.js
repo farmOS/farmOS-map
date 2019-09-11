@@ -20,7 +20,6 @@ import styles from './styles';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
-  let instance;
 
   // Add a GeoJSON feature layer to the map.
   function addGeoJSONLayer({
@@ -57,7 +56,6 @@ const createInstance = ({ target, options = {} }) => {
       style,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
@@ -84,7 +82,6 @@ const createInstance = ({ target, options = {} }) => {
       style,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
@@ -101,11 +98,10 @@ const createInstance = ({ target, options = {} }) => {
       source,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
-  instance = {
+  const instance = {
     // The target element ID for the map.
     target,
 
@@ -123,23 +119,28 @@ const createInstance = ({ target, options = {} }) => {
 
     // Add a layer to the map by its type.
     addLayer(type, opts) {
+      let layer;
       if (type.toLowerCase() === 'geojson') {
         if (!opts.url) {
           throw new Error('Missing a GeoJSON url.');
         }
-        return addGeoJSONLayer(opts);
+        layer = addGeoJSONLayer(opts);
       }
       if (type.toLowerCase() === 'wkt') {
         if (!opts.wkt) {
           throw new Error('Missing a WKT string.');
         }
-        return addWKTLayer(opts);
+        layer = addWKTLayer(opts);
       }
       if (type.toLowerCase() === 'wms') {
         if (!opts.url) {
           throw new Error('Missing a WMS url.');
         }
-        return addWMSTileLayer(opts);
+        layer = addWMSTileLayer(opts);
+      }
+      if (layer) {
+        this.map.addLayer(layer);
+        return layer;
       }
       throw new Error('Invalid layer type.');
     },
