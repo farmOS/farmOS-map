@@ -123,9 +123,14 @@ For example:
 // Zoom to all vector layers
 myMap.zoomToVectors();
 
-// Create a layer then zoom to that layer
-const wktLayer = myMap.addWKTLayer("my-polygon", wkt, "orange", true);
-myMap.zoomToLayer(wktLayer);
+// Create a layer then zoom to that layer.
+const opts = {
+  title: 'Animals',
+  url: '/farm/assets/geojson/animal/full',
+  color: 'red',
+};
+const layer = myMap.addLayer('geojson', opts);
+myMap.zoomToLayer(layer);
 ```
 
 ### Adding behaviors
