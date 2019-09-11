@@ -7,6 +7,7 @@ import VectorSource from 'ol/source/Vector';
 import TileWMS from 'ol/source/TileWMS';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
+import LayerGroup from 'ol/layer/Group';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
@@ -20,7 +21,6 @@ import styles from './styles';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
-  let instance;
 
   // Add a GeoJSON feature layer to the map.
   function addGeoJSONLayer({
@@ -57,7 +57,6 @@ const createInstance = ({ target, options = {} }) => {
       style,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
@@ -84,7 +83,6 @@ const createInstance = ({ target, options = {} }) => {
       style,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
@@ -101,11 +99,10 @@ const createInstance = ({ target, options = {} }) => {
       source,
       visible,
     });
-    instance.map.addLayer(layer);
     return layer;
   }
 
-  instance = {
+  const instance = {
     // The target element ID for the map.
     target,
 
@@ -123,32 +120,60 @@ const createInstance = ({ target, options = {} }) => {
 
     // Add a layer to the map by its type.
     addLayer(type, opts) {
+      let layer;
       if (type.toLowerCase() === 'geojson') {
         if (!opts.url) {
           throw new Error('Missing a GeoJSON url.');
         }
-        return addGeoJSONLayer(opts);
+        layer = addGeoJSONLayer(opts);
       }
       if (type.toLowerCase() === 'wkt') {
         if (!opts.wkt) {
           throw new Error('Missing a WKT string.');
         }
-        return addWKTLayer(opts);
+        layer = addWKTLayer(opts);
       }
       if (type.toLowerCase() === 'wms') {
         if (!opts.url) {
           throw new Error('Missing a WMS url.');
         }
-        return addWMSTileLayer(opts);
+        layer = addWMSTileLayer(opts);
+      }
+
+      // If a layer was created, add it to the map.
+      // If a layer group is specified, search for it in the map, create it if
+      // it doesn't exist, and add the layer to it.
+      if (layer) {
+        if (opts.group) {
+          let group;
+          const mapLayersArray = this.map.getLayers().getArray();
+          for (let i = 0; i < mapLayersArray.length; i += 1) {
+            if (mapLayersArray[i].getLayers && mapLayersArray[i].get('title') === opts.group) {
+              group = mapLayersArray[i];
+            }
+          }
+          if (!group) {
+            group = new LayerGroup({ title: opts.group });
+            this.map.addLayer(group);
+          }
+          group.getLayers().push(layer);
+        } else {
+          this.map.addLayer(layer);
+        }
+        return layer;
       }
       throw new Error('Invalid layer type.');
     },
 
-    // Zoom to all vector sources in the map.
-    zoomToVectors() {
+    // Zoom to all vector sources in the map, recursing into layer groups.
+    zoomToVectors(optlayers = null) {
       const extent = extentCreateEmpty();
-      this.map.getLayers().forEach((layer) => {
-        if (typeof layer.getSource === 'function') {
+      const layers = optlayers || this.map.getLayers();
+      layers.forEach((layer) => {
+        if (layer.getLayers) {
+          const lyrs = layer.getLayers();
+          this.zoomToVectors(lyrs);
+        } else if (typeof layer.getSource === 'function') {
           const source = layer.getSource();
           if (source !== 'null' && source instanceof VectorSource) {
             if (source.getState() === 'ready' && source.getFeatures().length > 0) {

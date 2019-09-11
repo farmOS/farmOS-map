@@ -110,6 +110,23 @@ const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
 The method returns a reference to the newly created layer for later use.
 
+#### Layer groups
+
+Layers can optionally be placed inside layer groups. Simply provide a `group`
+option with the title of the group you would like to add the layer to. If the
+group does not exist, it will be created automatically.
+
+```js
+// Add a GeoJSON layer inside a layer group called "Assets"
+const opts = {
+  title: 'Animals',
+  url: '/farm/assets/geojson/animal/full',
+  color: 'red',
+  group: 'Assets',
+};
+const layer = myMap.addLayer('geojson', opts);
+```
+
 ### Controlling the zoom level
 
 There are two methods for controlling the zoom level. The first, `zoomToVectors`,
