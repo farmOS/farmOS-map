@@ -7,6 +7,7 @@ import VectorSource from 'ol/source/Vector';
 import TileWMS from 'ol/source/TileWMS';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
+import LayerGroup from 'ol/layer/Group';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
@@ -138,8 +139,27 @@ const createInstance = ({ target, options = {} }) => {
         }
         layer = addWMSTileLayer(opts);
       }
+
+      // If a layer was created, add it to the map.
+      // If a layer group is specified, search for it in the map, create it if
+      // it doesn't exist, and add the layer to it.
       if (layer) {
-        this.map.addLayer(layer);
+        if (opts.group) {
+          let group;
+          const mapLayersArray = this.map.getLayers().getArray();
+          for (let i = 0; i < mapLayersArray.length; i += 1) {
+            if (mapLayersArray[i].getLayers && mapLayersArray[i].get('title') === opts.group) {
+              group = mapLayersArray[i];
+            }
+          }
+          if (!group) {
+            group = new LayerGroup({ title: opts.group });
+            this.map.addLayer(group);
+          }
+          group.getLayers().push(layer);
+        } else {
+          this.map.addLayer(layer);
+        }
         return layer;
       }
       throw new Error('Invalid layer type.');
