@@ -165,11 +165,15 @@ const createInstance = ({ target, options = {} }) => {
       throw new Error('Invalid layer type.');
     },
 
-    // Zoom to all vector sources in the map.
-    zoomToVectors() {
+    // Zoom to all vector sources in the map, recursing into layer groups.
+    zoomToVectors(optlayers = null) {
       const extent = extentCreateEmpty();
-      this.map.getLayers().forEach((layer) => {
-        if (typeof layer.getSource === 'function') {
+      const layers = optlayers || this.map.getLayers();
+      layers.forEach((layer) => {
+        if (layer.getLayers) {
+          const lyrs = layer.getLayers();
+          this.zoomToVectors(lyrs);
+        } else if (typeof layer.getSource === 'function') {
           const source = layer.getSource();
           if (source !== 'null' && source instanceof VectorSource) {
             if (source.getState() === 'ready' && source.getFeatures().length > 0) {
