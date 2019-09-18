@@ -13,6 +13,10 @@ import WKT from 'ol/format/WKT';
 
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
 
+// Import OpenLayers Popup.
+import 'ol-popup/src/ol-popup.css';
+import Popup from 'ol-popup';
+
 // Import defaults.
 import defaults from './defaults';
 
@@ -163,6 +167,20 @@ const createInstance = ({ target, options = {} }) => {
         return layer;
       }
       throw new Error('Invalid layer type.');
+    },
+
+    // Add a popup to the map.
+    addPopup(callback) {
+      const popup = new Popup();
+      instance.map.addOverlay(popup);
+      instance.map.on('singleclick', (event) => {
+        const content = callback(event);
+        if (content) {
+          popup.show(event.coordinate, content);
+          popup.dispatchEvent('farmOS-map.popup');
+        }
+      });
+      return popup;
     },
 
     // Zoom to all vector sources in the map, recursing into layer groups.
