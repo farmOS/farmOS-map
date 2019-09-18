@@ -150,6 +150,26 @@ const layer = myMap.addLayer('geojson', opts);
 myMap.zoomToLayer(layer);
 ```
 
+### Popups
+
+You can add a popup to a map instance by providing a callback function that
+returns the popup content and passing it to `instance.addPopup()`. For example:
+
+```js
+var popup = instance.addPopup(function (event) {
+  return '<div><h2>Coordinates</h2><p>' + event.coordinate + '</p></div>';
+});
+```
+
+A `farmOS-map.popup` observable event is dispatched when the popup is displayed.
+You can use this to perform additional actions. For example:
+
+```js
+popup.on('farmOS-map.popup', function (event) {
+  console.log('Event: farmOS-map.popup');
+});
+```
+
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
