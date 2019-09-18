@@ -177,6 +177,7 @@ const createInstance = ({ target, options = {} }) => {
         const content = callback(event);
         if (content) {
           popup.show(event.coordinate, content);
+          popup.dispatchEvent('farmOS-map.popup');
         }
       });
       return popup;
