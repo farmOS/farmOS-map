@@ -121,6 +121,11 @@ class Geolocate extends Control {
     this.geolocation.on('change:accuracyGeometry', () => {
       this.updateFeatures();
     });
+
+    // When the position changes the first time, update the map view.
+    this.geolocation.once('change:position', () => {
+      this.updateView();
+    });
   }
 
   /**
@@ -148,17 +153,22 @@ class Geolocate extends Control {
   updateFeatures() {
 
     // Get the geolocated coordinates.
-    const coordinates = this.geolocation.getPosition();
+    this.coordinates = this.geolocation.getPosition();
 
     // Set the position geometry.
-    this.positionFeature.setGeometry(new Point(coordinates));
+    this.positionFeature.setGeometry(new Point(this.coordinates));
 
     // Set the accuracy geometry.
     this.accuracyFeature.setGeometry(this.geolocation.getAccuracyGeometry());
+  }
 
-    // Update the map center and zoom.
+  /**
+   * Update the map view's center and zoom based on the geolocation.
+   * @private
+   */
+  updateView() {
     const map = this.getMap();
-    map.getView().setCenter(coordinates);
+    map.getView().setCenter(this.coordinates);
     map.getView().setZoom(18);
   }
 }
