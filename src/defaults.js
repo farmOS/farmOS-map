@@ -19,6 +19,9 @@ import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
 // Import OL interactions.
 import { defaults as defaultInteractions } from 'ol/interaction';
 
+// Import Geolocate control.
+import Geolocate from './control/Geolocate';
+
 // Define an object that contains the default layers, controls, and interactions
 // that will be added to all farmOS maps.
 const defaults = {
@@ -46,6 +49,7 @@ const defaults = {
       new LayerSwitcher(),
       new FullScreen(),
       new ScaleLine(),
+      new Geolocate(),
       new Geocoder('nominatim', {
         provider: 'osm',
         placeholder: 'Search for address...',

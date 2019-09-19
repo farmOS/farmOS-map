@@ -1,0 +1,20 @@
+.ol-geolocate.ol-control {
+  top: 0.5em;
+  left: 3em;
+}
+
+.ol-geolocate.ol-control button {
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+.ol-geolocate.ol-control button.enable {
+  text-decoration: none;
+  background-color: #4c6079;
+  background-color: rgba(0,60,136,0.7);
+}
+
+.ol-geolocate.ol-control.active button {
+  background-color: #ffcc33;
+  background-color: rgba(255,204,51,0.7);
+}
