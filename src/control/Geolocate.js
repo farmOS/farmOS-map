@@ -69,7 +69,16 @@ class Geolocate extends Control {
    */
   handleClick(event) {
     event.preventDefault();
-    this.activate();
+
+    // Determine if the control is active. Defaults to false on the first click.
+    this.active = this.active || false;
+
+    // Activate or deactivate the class.
+    if (!this.active) {
+      this.activate();
+    } else {
+      this.deactivate();
+    }
   }
 
   /**
@@ -77,6 +86,12 @@ class Geolocate extends Control {
    * @private
    */
   activate() {
+    this.active = true;
+
+    // Add the "active" class.
+    this.element.classList.add('active');
+
+    // Get the map.
     const map = this.getMap();
 
     // Create a geolocation object.
@@ -99,28 +114,52 @@ class Geolocate extends Control {
     // Turn on geo tracking.
     this.geolocation.setTracking(true);
 
-    // When the position changes...
+    // When the position or accuracy changes, update the features.
     this.geolocation.on('change:position', () => {
-      // Get the geolocated coordinates.
-      const coordinates = this.geolocation.getPosition();
-
-      // Center on the position.
-      map.getView().setCenter(coordinates);
-
-      // Set the zoom to 18.
-      map.getView().setZoom(18);
-
-      // Set the geometry of the position feature.
-      this.positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
-
-      // Turn off geo tracking.
-      this.geolocation.setTracking(false);
+      this.updateFeatures();
     });
-
-    // When the accuracy changes...
     this.geolocation.on('change:accuracyGeometry', () => {
-      this.accuracyFeature.setGeometry(this.geolocation.getAccuracyGeometry());
+      this.updateFeatures();
     });
+  }
+
+  /**
+   * Deactivate the geolocate control.
+   * @private
+   */
+  deactivate() {
+    this.active = false;
+
+    // Remove the "active" class.
+    this.element.classList.remove('active');
+
+    // Turn off geo tracking.
+    this.geolocation.setTracking(false);
+
+    // Hide the features.
+    this.positionFeature.setGeometry();
+    this.accuracyFeature.setGeometry();
+  }
+
+  /**
+   * Update position and accuracy features.
+   * @private
+   */
+  updateFeatures() {
+
+    // Get the geolocated coordinates.
+    const coordinates = this.geolocation.getPosition();
+
+    // Set the position geometry.
+    this.positionFeature.setGeometry(new Point(coordinates));
+
+    // Set the accuracy geometry.
+    this.accuracyFeature.setGeometry(this.geolocation.getAccuracyGeometry());
+
+    // Update the map center and zoom.
+    const map = this.getMap();
+    map.getView().setCenter(coordinates);
+    map.getView().setZoom(18);
   }
 }
 

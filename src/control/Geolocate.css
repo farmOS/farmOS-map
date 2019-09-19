@@ -13,3 +13,8 @@
   background-color: #4c6079;
   background-color: rgba(0,60,136,0.7);
 }
+
+.ol-geolocate.ol-control.active button {
+  background-color: #ffcc33;
+  background-color: rgba(255,204,51,0.7);
+}
