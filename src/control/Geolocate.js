@@ -69,6 +69,14 @@ class Geolocate extends Control {
    */
   handleClick(event) {
     event.preventDefault();
+    this.activate();
+  }
+
+  /**
+   * Activate the geolocate control.
+   * @private
+   */
+  activate() {
     const map = this.getMap();
 
     // Create a geolocation object.
