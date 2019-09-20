@@ -103,14 +103,16 @@ const wmsOpts = {
     LAYERS: 'MapunitPoly',
     VERSION: '1.1.1',
   },
-  visible: true // defaults to true
+  visible: true, // defaults to true
+  base: false // defaults to false
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
 const xyzOpts = {
   title: 'mapbox', // defaults to 'xyz'
   url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=[APIKEY]', // REQUIRED!
-  visible: true // defaults to true
+  visible: true, // defaults to true
+  base: false // defaults to false
 };
 const xyzLayer = myMap.addLayer('xyz', xyzOpts);
 ```

@@ -93,7 +93,7 @@ const createInstance = ({ target, options = {} }) => {
 
   // Add a WMS tile layer to the map.
   function addWMSTileLayer({
-    title = 'wms', url, params, visible = true,
+    title = 'wms', url, params, visible = true, base = false,
   }) {
     const source = new TileWMS({
       url,
@@ -103,19 +103,21 @@ const createInstance = ({ target, options = {} }) => {
       title,
       source,
       visible,
+      type: base ? 'base' : 'normal',
     });
     return layer;
   }
 
   // Add an XYZ tile layer to the map.
   function addXYZTileLayer({
-    title = 'xyz', url, visible = true,
+    title = 'xyz', url, visible = true, base = false,
   }) {
     const source = new XYZ({ url });
     const layer = new TileLayer({
       title,
       source,
       visible,
+      type: base ? 'base' : 'normal',
     });
     return layer;
   }
