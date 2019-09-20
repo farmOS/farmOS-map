@@ -170,8 +170,10 @@ class Edit extends Control {
       this.selectInteraction.getFeatures().clear();
     }
 
-    // Toggle the active button styles.
-    this.toggleActiveButton(event.target.name);
+    // Toggle the active button styles (except delete).
+    if (event.target.name !== 'delete') {
+      this.toggleActiveButton(event.target.name);
+    }
   }
 
   /**
