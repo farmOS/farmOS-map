@@ -49,16 +49,19 @@ class Edit extends Control {
         name: 'polygon',
         label: '\u2B1F',
         tooltip: 'Draw a Polygon',
+        draw: 'Polygon',
       },
       {
         name: 'line',
         label: '\u2500',
         tooltip: 'Draw a Line',
+        draw: 'LineString',
       },
       {
         name: 'point',
         label: '\u2022',
         tooltip: 'Draw a Point',
+        draw: 'Point',
       },
       {
         name: 'select',
@@ -103,10 +106,14 @@ class Edit extends Control {
   addButton(element, options) {
     const { label, tooltip } = options;
     const button = document.createElement('button');
+    button.name = options.name;
     button.className = `ol-edit-${options.name}`;
     button.type = 'button';
     button.title = tooltip;
     button.innerHTML = label;
+    if (options.draw) {
+      button.draw = options.draw;
+    }
     button.addEventListener(EventType.CLICK, this.handleClick.bind(this), false);
     element.appendChild(button);
     return button;
@@ -119,6 +126,32 @@ class Edit extends Control {
    */
   handleClick(event) {
     event.preventDefault();
+
+    // If event.target.name isn't set, bail.
+    if (!event.target.name) {
+      return;
+    }
+
+    // If one of the drawing buttons was clicked, disable the select
+    // interactions, and enable the draw interaction, for either point, line,
+    // or polygon.
+    const drawingButtons = ['point', 'line', 'polygon'];
+    if (drawingButtons.includes(event.target.name)) {
+      this.disableSelect();
+      this.enableDraw(event.target.draw);
+    }
+
+    // If the select button was clicked, disable all draw interactions, and
+    // enable the select interactions.
+    else if (event.target.name === 'select') {
+      this.disableDraw();
+      this.enableSelect();
+    }
+
+    // If the delete button was clicked...
+    else if (event.target.name === 'delete') {
+
+    }
   }
 
   /**
