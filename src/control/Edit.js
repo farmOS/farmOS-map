@@ -120,6 +120,48 @@ class Edit extends Control {
   handleClick(event) {
     event.preventDefault();
   }
+
+  /**
+   * Enable draw interaction.
+   * @param {string} type The type of draw interaction (Point, Line, Polygon).
+   * @private
+   */
+  enableDraw(type) {
+    this.disableDraw();
+    this.drawInteraction = new Draw({
+      source: this.layer.getSource(),
+      type,
+    });
+    this.getMap().addInteraction(this.drawInteraction);
+  }
+
+  /**
+   * Disable draw interaction.
+   * @private
+   */
+  disableDraw() {
+    this.getMap().removeInteraction(this.drawInteraction);
+  }
+
+  /**
+   * Enable select, modify, and translate interactions.
+   * @private
+   */
+  enableSelect() {
+    this.getMap().addInteraction(this.selectInteraction);
+    this.getMap().addInteraction(this.modifyInteraction);
+    this.getMap().addInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Disable select, modify, and translate interactions.
+   * @private
+   */
+  disableSelect() {
+    this.getMap().removeInteraction(this.selectInteraction);
+    this.getMap().removeInteraction(this.modifyInteraction);
+    this.getMap().removeInteraction(this.translateInteraction);
+  }
 }
 
 export default Edit;
