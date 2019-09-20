@@ -1,6 +1,10 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
+import Draw from 'ol/interaction/Draw';
+import Select from 'ol/interaction/Select';
+import Modify from 'ol/interaction/Modify';
+import Translate from 'ol/interaction/Translate';
 
 import './Edit.css';
 
@@ -70,6 +74,24 @@ class Edit extends Control {
     for (let i = 0; i < buttons.length; i += 1) {
       this.addButton(element, buttons[i]);
     }
+
+    // Get the vector source from the layer.
+    this.layer = options.layer;
+
+    // Initialize interactions.
+    this.selectInteraction = new Select({
+      layers: [this.layer],
+    });
+    this.modifyInteraction = new Modify({
+      features: this.selectInteraction.getFeatures(),
+    });
+    this.translateInteraction = new Translate({
+      features: this.selectInteraction.getFeatures(),
+    });
+    this.drawInteraction = new Draw({
+      source: this.layer.getSource(),
+      type: 'Polygon',
+    });
   }
 
   /**
