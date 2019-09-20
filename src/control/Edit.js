@@ -1,3 +1,4 @@
+// /* eslint-disable */
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
@@ -44,6 +45,7 @@ class Edit extends Control {
     element.className = `${className} ${CLASS_UNSELECTABLE} ${CLASS_CONTROL}`;
 
     // Add buttons.
+    this.buttons = {};
     const buttons = [
       {
         name: 'polygon',
@@ -75,7 +77,7 @@ class Edit extends Control {
       },
     ];
     for (let i = 0; i < buttons.length; i += 1) {
-      this.addButton(element, buttons[i]);
+      this.buttons[buttons[i].name] = this.addButton(element, buttons[i]);
     }
 
     // Get the vector source from the layer.
@@ -152,6 +154,9 @@ class Edit extends Control {
     else if (event.target.name === 'delete') {
 
     }
+
+    // Toggle the active button styles.
+    this.toggleActiveButton(event.target.name);
   }
 
   /**
@@ -194,6 +199,21 @@ class Edit extends Control {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Toggle the active button style.
+   * @param {string} name The name of the button to make active.
+   * @private
+   */
+  toggleActiveButton(name) {
+    Object.keys(this.buttons).forEach((key) => {
+      if (this.buttons[key].name === name) {
+        this.buttons[key].classList.add('active');
+      } else {
+        this.buttons[key].classList.remove('active');
+      }
+    });
   }
 }
 
