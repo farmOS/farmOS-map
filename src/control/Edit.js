@@ -150,9 +150,10 @@ class Edit extends Control {
       this.enableSelect();
     }
 
-    // If the delete button was clicked...
+    // If the delete button was clicked, delete selected features.
     else if (event.target.name === 'delete') {
-
+      this.selectInteraction.getFeatures().forEach(f => this.layer.getSource().removeFeature(f));
+      this.selectInteraction.getFeatures().clear();
     }
 
     // Toggle the active button styles.
