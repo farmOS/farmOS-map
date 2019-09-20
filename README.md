@@ -179,6 +179,12 @@ popup.on('farmOS-map.popup', function (event) {
 });
 ```
 
+### Drawing controls
+
+Set `drawing: true` in the options passed to `farmOS.map.create()` to enable
+drawing controls. This will add buttons for drawing polygons, lines, and points.
+Features can be selected, modified, moved, and deleted.
+
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
