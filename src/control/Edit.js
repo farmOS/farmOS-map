@@ -74,6 +74,7 @@ class Edit extends Control {
         name: 'delete',
         label: '\u2716',
         tooltip: 'Delete selected feature',
+        visible: false,
       },
     ];
     for (let i = 0; i < buttons.length; i += 1) {
@@ -97,6 +98,16 @@ class Edit extends Control {
       source: this.layer.getSource(),
       type: 'Polygon',
     });
+
+    // When a select event fires, if there are features selected, show the
+    // delete button. Otherwise, hide it.
+    this.selectInteraction.on('select', (event) => {
+      if (event.selected.length) {
+        this.buttons.delete.style.visibility = 'visible';
+      } else {
+        this.buttons.delete.style.visibility = 'hidden';
+      }
+    });
   }
 
   /**
@@ -113,6 +124,9 @@ class Edit extends Control {
     button.type = 'button';
     button.title = tooltip;
     button.innerHTML = label;
+    if (options.visible === false) {
+      button.style.visibility = 'hidden';
+    }
     if (options.draw) {
       button.draw = options.draw;
     }
