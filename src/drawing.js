@@ -18,5 +18,8 @@ export default function addDrawingControls(map) {
 
   // Add the Edit control.
   const edit = new Edit({ layer });
-  map.addControl(edit);
+  const control = map.addControl(edit);
+
+  // Return the control.
+  return control;
 }

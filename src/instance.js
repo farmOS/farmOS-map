@@ -253,8 +253,9 @@ const createInstance = ({ target, options = {} }) => {
   };
 
   // Add drawing controls, if drawing is true.
+  // Make the Edit control available at instance.edit.
   if (options.drawing) {
-    addDrawingControls(instance.map);
+    instance.edit = addDrawingControls(instance.map);
   }
 
   return instance;
