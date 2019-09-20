@@ -24,6 +24,9 @@ import defaults from './defaults';
 // Import styles.
 import styles from './styles';
 
+// Import addDrawingControls function.
+import addDrawingControls from './drawing';
+
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
 
@@ -248,6 +251,11 @@ const createInstance = ({ target, options = {} }) => {
       }
     },
   };
+
+  // Add drawing controls, if drawing is true.
+  if (options.drawing) {
+    addDrawingControls(instance.map);
+  }
 
   return instance;
 };
