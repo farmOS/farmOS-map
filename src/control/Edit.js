@@ -103,9 +103,9 @@ class Edit extends Control {
     // delete button. Otherwise, hide it.
     this.selectInteraction.on('select', (event) => {
       if (event.selected.length) {
-        this.buttons.delete.style.visibility = 'visible';
+        this.buttons.delete.style.display = 'unset';
       } else {
-        this.buttons.delete.style.visibility = 'hidden';
+        this.buttons.delete.style.display = 'none';
       }
     });
   }
@@ -125,7 +125,7 @@ class Edit extends Control {
     button.title = tooltip;
     button.innerHTML = label;
     if (options.visible === false) {
-      button.style.visibility = 'hidden';
+      button.style.display = 'none';
     }
     if (options.draw) {
       button.draw = options.draw;
@@ -168,6 +168,7 @@ class Edit extends Control {
     else if (event.target.name === 'delete') {
       this.selectInteraction.getFeatures().forEach(f => this.layer.getSource().removeFeature(f));
       this.selectInteraction.getFeatures().clear();
+      this.buttons.delete.style.display = 'none';
     }
 
     // Toggle the active button styles (except delete).
