@@ -106,6 +106,13 @@ const wmsOpts = {
   visible: true // defaults to true
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
+
+const xyzOpts = {
+  title: 'mapbox', // defaults to 'xyz'
+  url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=[APIKEY]', // REQUIRED!
+  visible: true // defaults to true
+};
+const xyzLayer = myMap.addLayer('xyz', xyzOpts);
 ```
 
 The method returns a reference to the newly created layer for later use.

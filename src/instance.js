@@ -5,6 +5,7 @@ import { Map, View } from 'ol';
 // Import source types, layer types, and formats.
 import VectorSource from 'ol/source/Vector';
 import TileWMS from 'ol/source/TileWMS';
+import XYZ from 'ol/source/XYZ';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
 import LayerGroup from 'ol/layer/Group';
@@ -106,6 +107,19 @@ const createInstance = ({ target, options = {} }) => {
     return layer;
   }
 
+  // Add an XYZ tile layer to the map.
+  function addXYZTileLayer({
+    title = 'xyz', url, visible = true,
+  }) {
+    const source = new XYZ({ url });
+    const layer = new TileLayer({
+      title,
+      source,
+      visible,
+    });
+    return layer;
+  }
+
   const instance = {
     // The target element ID for the map.
     target,
@@ -142,6 +156,12 @@ const createInstance = ({ target, options = {} }) => {
           throw new Error('Missing a WMS url.');
         }
         layer = addWMSTileLayer(opts);
+      }
+      if (type.toLowerCase() === 'xyz') {
+        if (!opts.url) {
+          throw new Error('Missing an XYZ url.');
+        }
+        layer = addXYZTileLayer(opts);
       }
 
       // If a layer was created, add it to the map.
