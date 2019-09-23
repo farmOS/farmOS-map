@@ -6,7 +6,9 @@ import Draw from 'ol/interaction/Draw';
 import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
 import Translate from 'ol/interaction/Translate';
+import WKT from 'ol/format/WKT';
 
+import projection from '../projection';
 import './Edit.css';
 
 
@@ -233,6 +235,17 @@ class Edit extends Control {
       }
     });
   }
+
+  /**
+   * Getter that returns the geometry of all features in the drawing layer in
+   * Well Known Text (WKT) format.
+   * @api
+   */
+  getWKT() {
+    const features = this.layer.getSource().getFeatures();
+    return new WKT().writeFeatures(features, projection);
+  }
+
 }
 
 export default Edit;
