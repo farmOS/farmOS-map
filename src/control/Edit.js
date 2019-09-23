@@ -246,6 +246,26 @@ class Edit extends Control {
     return new WKT().writeFeatures(features, projection);
   }
 
+  /**
+   * Setter which accepts features in Well Known Text (WKT) format and sets them
+   * as the drawing layer's source features. This will clear all current
+   * features first.
+   * @param {string} string A string of WKT.
+   * @api
+   */
+  setWKT(wktString) {
+    const source = this.layer.getSource();
+    source.clear();
+    const isMultipart = wktString.includes('MULTIPOINT')
+      || wktString.includes('MULTILINESTRING')
+      || wktString.includes('MULTIPOLYGON')
+      || wktString.includes('GEOMETRYCOLLECTION');
+    const features = isMultipart
+      ? new WKT({ splitCollection: true }).readFeatures(wktString, projection)
+      : [new WKT().readFeature(wktString, projection)];
+    source.addFeatures(features);
+  }
+
 }
 
 export default Edit;
