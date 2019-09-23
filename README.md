@@ -183,7 +183,41 @@ popup.on('farmOS-map.popup', function (event) {
 
 Set `drawing: true` in the options passed to `farmOS.map.create()` to enable
 drawing controls. This will add buttons for drawing polygons, lines, and points.
-Features can be selected, modified, moved, and deleted.
+Features can be selected, modified, moved, and deleted. This will add the Edit
+control to the map instance as `instance.edit`.
+
+#### Importing and exporting WKT
+
+There are three methods on the Edit control for importing and exporting
+geometries in Well Known Text (WKT) format: `getWKT`, `setWKT` and `wktOn`.
+`getWKT` simply returns a string in WKT format for all the features on the
+drawing layer, while `setWKT` takes a string in WKT and adds it as a feature to
+the drawing layer. You can add event listeners for particular editing
+interactions with `wktOn`:
+
+```js
+const myMap = farmOS.map.create("map", { drawing: true });
+myMap.edit.wktOn("drawend", (wkt) => console.log(wkt));
+```
+
+The first parameter needs to be one of the supported event types, which
+correspond closely to the event types provide on OpenLayers' different editing
+interactions (see the chart below). The second parameter is a callback, which
+will be called whenever the event fires. The callback gets a string of WKT
+passed in as its argument.
+
+| Event Type         | Timing            | WKT Includes      | OL Interaction  |
+| :------------------| :---------------- | :-------------- | :-------------- |
+| `delete` | after a feature is deleted | all remaining features in the drawing layer | n/a |
+| `drawstart` | before drawing begins | all features in the drawing layer |[Draw](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Draw.html) |
+| `drawend` | after drawing stops | all features in the drawing layer| [Draw](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Draw.html) |
+| `modifystart` | before modifying begins | all features in the drawing layer | [Modify](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Modify.html)    |
+| `modifyend` | after modifications stop | all features in the drawing layer | [Modify](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Modify.html) |
+| `select` | whenever the selected feature changes | only the selected feature | [Select](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select.html) |
+| `translatestart` | before translation begins | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
+| `translating` | every mouse move while translating | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
+| `translateend` | after translation stops | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
+
 
 ### Adding behaviors
 
