@@ -25,7 +25,8 @@
       var options = {
         drawing: true,
       }
-      farmOS.map.create("map", options);
+      var myMap = farmOS.map.create("map", options);
+      myMap.edit.wktOn("drawend", console.log);
     </script>
   </body>
 </html>
