@@ -110,6 +110,14 @@ class Edit extends Control {
         this.buttons.delete.style.display = 'none';
       }
     });
+
+    // A collection of event listeners that have been added to the Draw
+    // interaction by the user, via addInteractionListener().
+    this.drawListeners = {
+      drawstart: [],
+      drawend: [],
+    };
+    this.deleteListeners = [];
   }
 
   /**
@@ -166,10 +174,15 @@ class Edit extends Control {
       this.enableSelect();
     }
 
-    // If the delete button was clicked, delete selected features.
+    // If the delete button was clicked, delete selected features, call event
+    // listeners (WKT is hardcoded as the format for now), and remove button.
     else if (event.target.name === 'delete') {
       this.selectInteraction.getFeatures().forEach(f => this.layer.getSource().removeFeature(f));
       this.selectInteraction.getFeatures().clear();
+      this.deleteListeners.forEach((cb) => {
+        const features = this.layer.getSource().getFeatures();
+        cb(new WKT().writeFeatures(features, projection));
+      });
       this.buttons.delete.style.display = 'none';
     }
 
@@ -191,6 +204,12 @@ class Edit extends Control {
       type,
     });
     this.getMap().addInteraction(this.drawInteraction);
+
+    // Add event listeners back to the newly instantiated Draw interaction. WKT
+    // is hardcoded for now, but we may need to accomodate GeoJSON in the future.
+    Object.entries(this.drawListeners).forEach(([eventName, cbs]) => {
+      cbs.forEach(cb => this.addInteractionListener(eventName, cb, new WKT()));
+    });
   }
 
   /**
@@ -237,6 +256,52 @@ class Edit extends Control {
   }
 
   /**
+   * Helper for attaching an event listener to interactions.
+   * @param {string} type The type of event.
+   * @param {function} cb The callback provided by the user.
+   * @param {ol.format} format The format for the output (eg, WKT, GeoJSON, etc).
+   * @private
+   */
+  addInteractionListener(type, cb, format) {
+    if (['drawstart', 'drawend'].includes(type)) {
+      this.drawInteraction.on(type, (e) => {
+        const features = this.layer.getSource().getFeatures().concat(e.feature);
+        const output = format.writeFeatures(features, projection);
+        cb(output);
+      });
+      if (!this.drawListeners[type].includes(cb)) {
+        this.drawListeners[type].push(cb);
+      }
+    } else if (['modifystart', 'modifyend'].includes(type)) {
+      this.modifyInteraction.on(type, () => {
+        const features = this.layer.getSource().getFeatures();
+        const output = format.writeFeatures(features, projection);
+        cb(output);
+      });
+    } else if (['select'].includes(type)) {
+      this.selectInteraction.on(type, (e) => {
+        const features = e.selected;
+        const output = format.writeFeatures(features, projection);
+        cb(output);
+      });
+    } else if (['translatestart', 'translating', 'translateend'].includes(type)) {
+      this.translateInteraction.on(type, () => {
+        const features = this.layer.getSource().getFeatures();
+        const output = format.writeFeatures(features, projection);
+        cb(output);
+      });
+    } else if (['delete'].includes(type)) {
+      if (!this.deleteListeners.includes(cb)) {
+        this.deleteListeners.push(cb);
+      }
+    } else {
+      throw new Error('Invalid event type. Valid options include: '
+      + '"drawstart", "drawend", "modifystart", "modifyend", "select"'
+      + '"translatestart", "translating", "translateend" or "delete"');
+    }
+  }
+
+  /**
    * Getter that returns the geometry of all features in the drawing layer in
    * Well Known Text (WKT) format.
    * @api
@@ -266,6 +331,17 @@ class Edit extends Control {
     source.addFeatures(features);
   }
 
+  /**
+   * Sets a listener on drawing interactions to retrieve the drawing layer in
+   * Well Known Text (WKT) format.
+   * @param {string} event The type of event.
+   * @param {function} cb A callback function provided by the user to be
+   * executed when the event fires.
+   * @api
+   */
+  wktOn(event, cb) {
+    this.addInteractionListener(event, cb, new WKT());
+  }
 }
 
 export default Edit;
