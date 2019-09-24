@@ -27,6 +27,7 @@ import './Geolocate.css';
  * @api
  */
 class Geolocate extends Control {
+
   /**
    * @param {Options=} opt_options Rotate options.
    */

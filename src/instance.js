@@ -123,6 +123,7 @@ const createInstance = ({ target, options = {} }) => {
   }
 
   const instance = {
+
     // The target element ID for the map.
     target,
 
