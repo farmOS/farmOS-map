@@ -208,7 +208,8 @@ passed in as its argument.
 
 | Event Type         | Timing            | WKT Includes      | OL Interaction  |
 | :------------------| :---------------- | :-------------- | :-------------- |
-| `delete` | after a feature is deleted | all remaining features in the drawing layer | n/a |
+| `featurechange`&ast; | after any feature change occurs | all features in the drawing layer | n/a |
+| `delete`&ast; | after a feature is deleted | all remaining features in the drawing layer | n/a |
 | `drawstart` | before drawing begins | all features in the drawing layer |[Draw](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Draw.html) |
 | `drawend` | after drawing stops | all features in the drawing layer| [Draw](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Draw.html) |
 | `modifystart` | before modifying begins | all features in the drawing layer | [Modify](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Modify.html)    |
@@ -218,6 +219,15 @@ passed in as its argument.
 | `translating` | every mouse move while translating | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
 | `translateend` | after translation stops | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
 
+&ast; Note that `featurechange` and `delete` are custom event types provided by
+farmOS-map (not by OpenLayers).
+
+The `featurechange` event is a shortcut that automatically assigns the callback
+to all events that fire when features are changed in the drawing layer,
+including `drawend`, `modifyend`, `translating`, `translateend`, and `delete`.
+This is useful if all you want to do is get WKT whenever features change.
+
+The `delete` event fires when the "Delete selected features" button is clicked.
 
 ### Adding behaviors
 
