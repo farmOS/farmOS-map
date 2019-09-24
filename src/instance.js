@@ -24,6 +24,12 @@ import defaults from './defaults';
 // Import styles.
 import styles from './styles';
 
+// Import addDrawingControls function.
+import addDrawingControls from './drawing';
+
+// Import the default projection configuration
+import projection from './projection';
+
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
 
@@ -74,13 +80,9 @@ const createInstance = ({ target, options = {} }) => {
       || wkt.includes('MULTILINESTRING')
       || wkt.includes('MULTIPOLYGON')
       || wkt.includes('GEOMETRYCOLLECTION');
-    const opts = {
-      dataProjection: 'EPSG:4326',
-      featureProjection: 'EPSG:3857',
-    };
     const features = isMultipart
-      ? new WKT().readFeatures(wkt, opts)
-      : [new WKT().readFeature(wkt, opts)];
+      ? new WKT().readFeatures(wkt, projection)
+      : [new WKT().readFeature(wkt, projection)];
     const source = new VectorSource({ features });
     const layer = new VectorLayer({
       title,
@@ -248,6 +250,12 @@ const createInstance = ({ target, options = {} }) => {
       }
     },
   };
+
+  // Add drawing controls, if drawing is true.
+  // Make the Edit control available at instance.edit.
+  if (options.drawing) {
+    instance.edit = addDrawingControls(instance.map);
+  }
 
   return instance;
 };

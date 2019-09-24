@@ -1,0 +1,14 @@
+.ol-edit.ol-control {
+  top: 0.5em;
+  left: 42%;
+}
+
+.ol-edit.ol-control button {
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+.ol-edit.ol-control button.active {
+  background-color: #ffcc33;
+  background-color: rgba(255,204,51,0.7);
+}
