@@ -315,7 +315,7 @@ class Edit extends Control {
    * Setter which accepts features in Well Known Text (WKT) format and sets them
    * as the drawing layer's source features. This will clear all current
    * features first.
-   * @param {string} string A string of WKT.
+   * @param {string} wktString A string of WKT.
    * @api
    */
   setWKT(wktString) {
