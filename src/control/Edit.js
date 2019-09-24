@@ -340,6 +340,22 @@ class Edit extends Control {
    * @api
    */
   wktOn(event, cb) {
+
+    // If event is "featurechange", add listeners for all event types.
+    if (event === 'featurechange') {
+      [
+        'drawend',
+        'modifyend',
+        'translating',
+        'translateend',
+        'delete',
+      ].forEach((type) => {
+        this.addInteractionListener(type, cb, new WKT());
+      });
+      return;
+    }
+
+    // Otherwise, add the individual event listener.
     this.addInteractionListener(event, cb, new WKT());
   }
 }
