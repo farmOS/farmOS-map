@@ -72,7 +72,7 @@ const defaults = {
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options === 'function') {
-      return options(extendedDefaults.array_); // eslint-disable-line no-underscore-dangle
+      return options(extendedDefaults.getArray());
     }
 
     // Otherwise just return the defaults.
@@ -95,7 +95,7 @@ const defaults = {
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options === 'function') {
-      return options(defaultInteractions().array_); // eslint-disable-line no-underscore-dangle
+      return options(defaultInteractions().getArray());
     }
 
     // Otherwise just return the defaults.
