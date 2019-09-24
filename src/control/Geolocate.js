@@ -29,7 +29,7 @@ import './Geolocate.css';
 class Geolocate extends Control {
 
   /**
-   * @param {Options=} opt_options Rotate options.
+   * @param {Options=} opts Geolocate options.
    */
   constructor(opts) {
     const options = opts || {};
