@@ -60,19 +60,19 @@ const defaults = {
     ]);
 
     // If controls were set to 'false', don't attach any controls.
-    if (options === false) {
+    if (options.controls === false) {
       return [];
     }
 
     // If an array of controls was passed, use this instead of the defaults.
-    if (Array.isArray(options)) {
-      return options;
+    if (Array.isArray(options.controls)) {
+      return options.controls;
     }
 
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
-    if (typeof options === 'function') {
-      return options(extendedDefaults.getArray());
+    if (typeof options.controls === 'function') {
+      return options.controls(extendedDefaults.getArray());
     }
 
     // Otherwise just return the defaults.
@@ -83,19 +83,19 @@ const defaults = {
   interactions(options) {
 
     // If interactions were set to 'false', don't attach any interactions.
-    if (options === false) {
+    if (options.interactions === false) {
       return [];
     }
 
     // If an array of interactions was passed, use this instead of the defaults.
-    if (Array.isArray(options)) {
-      return options;
+    if (Array.isArray(options.interactions)) {
+      return options.interactions;
     }
 
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
-    if (typeof options === 'function') {
-      return options(defaultInteractions().getArray());
+    if (typeof options.interactions === 'function') {
+      return options.interactions(defaultInteractions().getArray());
     }
 
     // Otherwise just return the defaults.

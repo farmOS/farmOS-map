@@ -133,8 +133,8 @@ const createInstance = ({ target, options = {} }) => {
     map: new Map({
       target,
       layers: defaults.layers(),
-      controls: defaults.controls(options.controls),
-      interactions: defaults.interactions(options.interactions),
+      controls: defaults.controls(options),
+      interactions: defaults.interactions(options),
       view: new View({
         center: [0, 0],
         zoom: 2,
