@@ -224,11 +224,17 @@ passed in as its argument.
 Behaviors allow you to make modifications to a map in a modular way, by defining
 JavaScript functions that will run automatically when a map is created.
 
+You can add your own behaviors by creating a JavaScript file (eg:
+`myMapCustomizations.js`), and including it after `farmOS-map.js` in your page.
+
+Your JavaScript file should extend the global `farmOS.map.behaviors` variable
+with a uniquely named object containing an `attach()` method.
+
 For example:
 
 ```js
 (function () {
-  farmOS.map.behaviors.myCustomizations = {
+  farmOS.map.behaviors.myMapCustomizations = {
     attach: function (instance) {
 
       // Get the element ID.
@@ -247,6 +253,18 @@ For example:
   };
 }());
 ```
+
+One of the benefits of allowing behaviors to be added to a map when it is
+created is that it allows other applications to modify maps in a modular way.
+In farmOS/Drupal, for example, maps can be built in a contextually-aware way,
+enabling/disabling features (eg: drawing controls) depending on which page you
+are looking at in the UI. This can be accomplished simply by adding behavior
+JavaScript files to pages via hooks in farmOS/Drupal modules.
+
+It can also be used for quick testing of the farmOS-map library. Simply create
+a behavior JavaScript file in the `static` directory, include it after
+`farmOS-map.js` in `static/index.html`, and run `npm run dev` to see your
+behavior in the development server.
 
 ## Development
 
