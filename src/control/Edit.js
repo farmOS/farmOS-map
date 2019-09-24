@@ -296,7 +296,7 @@ class Edit extends Control {
       }
     } else {
       throw new Error('Invalid event type. Valid options include: '
-      + '"drawstart", "drawend", "modifystart", "modifyend", "select"'
+      + '"drawstart", "drawend", "modifystart", "modifyend", "select", '
       + '"translatestart", "translating", "translateend" or "delete"');
     }
   }
