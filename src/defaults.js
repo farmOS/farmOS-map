@@ -45,11 +45,14 @@ const defaults = {
   // Controls.
   controls(options) {
 
+    // Determine the units to use for the ScaleLine control.
+    const units = (options.units === 'us') ? 'us' : 'metric';
+
     // Extend the OpenLayers defaults with farmOS defaults.
     const extendedDefaults = defaultControls().extend([
       new LayerSwitcher(),
       new FullScreen(),
-      new ScaleLine(),
+      new ScaleLine({ units }),
       new Geolocate(),
       new Geocoder('nominatim', {
         provider: 'osm',

@@ -26,6 +26,8 @@ properties to configure map defaults.
 
 Available properties include:
 
+- `units` - The system of measurement to use. Should be either `metric` or `us`.
+  Defaults to `metric`.
 - `drawing` - Boolean indicating whether or not the drawing controls should be
   enabled on the map. Defaults to `false`.
 - `controls` - See below.
@@ -49,8 +51,12 @@ For example:
 const id = 'myMap';
 farmOS.map.create(id);
 
-// Passing an options object with interactions set to false will cancel the
-// interaction defaults.
+// Passing an options object with units set to "us".
+const opts = { units: 'us' };
+farmOS.map.create(id, opts);
+
+// An options object with interactions set to false will cancel the interaction
+// defaults.
 const opts1 = { interactions: false };
 farmOS.map.create(id, opts1);
 
