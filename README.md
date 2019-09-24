@@ -20,15 +20,27 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 The simplest way to create a map is to call the `create` method with an HTML
 element's ID. This will render a map with all the OpenLayers and farmOS defaults.
-However, you can also call it with an options object, as its second parameter,
-with a `controls` and/or `interactions` property. If a property is set to
-`false`, none of its corresponding default controls or interactions will be
-applied to the map. If the property is assigned to an array of OpenLayers
-controls or interactions, the defaults will be discarded and those controls or
-interactions will be used in their place. If the property is assigned to a
-callback function, that function will be called and passed the default controls
-or interactions. It must return a an array of OL controls/interactions, which
-will be attached to the map in the place of the defaults.
+
+You can also call it with an options object, as its second parameter, with
+properties to configure map defaults.
+
+Available properties include:
+
+- `drawing` - Boolean indicating whether or not the drawing controls should be
+  enabled on the map. Defaults to `false`.
+- `controls` - See below.
+- `interactions` - See below.
+
+The `controls` and `interactions` properties provide options for customizing
+which OpenLayers controls and interactions are enabled by default in the map. If
+a property is set to `false`, none of its corresponding default controls or
+interactions will be applied to the map. If the property is assigned to an array
+of OpenLayers controls or interactions, the defaults will be discarded and those
+controls or interactions will be used in their place. If the property is
+assigned to a callback function, that function will be called and passed the
+default controls or interactions. It must return a an array of OL
+controls/interactions, which will be attached to the map in the place of the
+defaults.
 
 For example:
 
