@@ -197,7 +197,7 @@ interactions with `wktOn`:
 
 ```js
 const myMap = farmOS.map.create("map", { drawing: true });
-myMap.edit.wktOn("drawend", (wkt) => console.log(wkt));
+myMap.edit.wktOn("featurechange", (wkt) => console.log(wkt));
 ```
 
 The first parameter needs to be one of the supported event types, which
