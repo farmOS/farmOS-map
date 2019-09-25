@@ -21,12 +21,14 @@
   <body>
     <div id="map"></div>
     <script src="./farmOS-map.js"></script>
+    <script src="./mapbox.js"></script>
     <script>
       var options = {
         drawing: true,
+        units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);
-      myMap.edit.wktOn("drawend", console.log);
+      myMap.edit.wktOn("featurechange", console.log);
     </script>
   </body>
 </html>
