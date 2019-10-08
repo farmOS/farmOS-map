@@ -12,6 +12,8 @@ import LayerGroup from 'ol/layer/Group';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
+import { setWithCredentials } from 'ol/featureloader';
+
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
 
 // Import OpenLayers Popup.
@@ -33,35 +35,20 @@ import projection from './projection';
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
 
+  // Set withCredentials to true for all XHR requests made via OpenLayers'
+  // feature loader. Typically farmOS requires authentication in order to
+  // retrieve data from its GeoJSON endpoints. Setting withCredentials to true
+  // is a requirement for authentication credentials to be included in the
+  // request that OpenLayers makes.
+  setWithCredentials(true);
+
   // Add a GeoJSON feature layer to the map.
   function addGeoJSONLayer({
     title = 'geojson', url, color, visible = true,
   }) {
     const style = styles(color);
     const format = new GeoJSON();
-    const source = new VectorSource({
-      format,
-      // Supply a loader function so we can be sure xhr.withCredentials === true.
-      loader(extent, resolution, featureProjection) {
-        const xhr = new XMLHttpRequest();
-        const onError = () => source.removeLoadedExtent(extent);
-        xhr.open('GET', url);
-        xhr.withCredentials = true;
-        xhr.onerror = onError;
-        xhr.onload = () => {
-          if (xhr.status === 200) {
-            const features = format.readFeatures(xhr.responseText, {
-              extent,
-              featureProjection,
-            });
-            source.addFeatures(features);
-          } else {
-            onError();
-          }
-        };
-        xhr.send();
-      },
-    });
+    const source = new VectorSource({ url, format });
     const layer = new VectorLayer({
       title,
       source,
