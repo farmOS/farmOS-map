@@ -21,7 +21,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "ol": "^6.0.1",
+    "ol": "^6.1.0",
     "ol-geocoder": "^3.3.0",
     "ol-layerswitcher": "^3.3.0",
     "ol-popup": "^4.0.0"
