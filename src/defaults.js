@@ -85,6 +85,12 @@ const defaults = {
   // Interactions.
   interactions(options) {
 
+    // Define options that will be passed into default interactions.
+    //   - Only respond to user input if the map has focus.
+    const defaultInteractionOptions = {
+      onFocusOnly: true,
+    };
+
     // If interactions were set to 'false', don't attach any interactions.
     if (options.interactions === false) {
       return [];
@@ -98,11 +104,11 @@ const defaults = {
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.interactions === 'function') {
-      return options.interactions(defaultInteractions().getArray());
+      return options.interactions(defaultInteractions(defaultInteractionOptions).getArray());
     }
 
     // Otherwise just return the defaults.
-    return defaultInteractions();
+    return defaultInteractions(defaultInteractionOptions);
   },
 };
 export default defaults;
