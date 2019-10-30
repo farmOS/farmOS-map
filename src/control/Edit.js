@@ -131,9 +131,9 @@ class Edit extends Control {
     // delete button. Otherwise, hide it.
     this.selectInteraction.on('select', (event) => {
       if (event.selected.length) {
-        this.buttons.delete.style.display = 'block';
+        this.toggleDeleteButton(true);
       } else {
-        this.buttons.delete.style.display = 'none';
+        this.toggleDeleteButton(false);
       }
     });
 
@@ -190,7 +190,7 @@ class Edit extends Control {
       this.toggleActiveButton(event.target.name, false);
       this.disableAll();
       this.deselectFeatures();
-      this.buttons.delete.style.display = 'none';
+      this.toggleDeleteButton(false);
       return;
     }
 
@@ -229,7 +229,7 @@ class Edit extends Control {
         const features = this.layer.getSource().getFeatures();
         cb(new WKT().writeFeatures(features, projection));
       });
-      this.buttons.delete.style.display = 'none';
+      this.toggleDeleteButton(false);
     }
 
     // Toggle the active button styles (except delete).
@@ -333,7 +333,7 @@ class Edit extends Control {
    */
   deselectFeatures() {
     this.selectInteraction.getFeatures().clear();
-    this.buttons.delete.style.display = 'none';
+    this.toggleDeleteButton(false);
   }
 
   /**
@@ -352,6 +352,20 @@ class Edit extends Control {
         this.buttons[key].classList.remove('active');
       }
     });
+  }
+
+  /**
+   * Toggle delete button visibility.
+   * @param {bool} visible Whether or not to make the delete button visible.
+   * @private
+   */
+  toggleDeleteButton(visible) {
+    if (visible) {
+      this.buttons.delete.style.display = 'block';
+    }
+    else {
+      this.buttons.delete.style.display = 'none';
+    }
   }
 
   /**
