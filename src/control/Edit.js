@@ -2,7 +2,7 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
-import Draw from 'ol/interaction/Draw';
+import Draw, { createRegularPolygon } from 'ol/interaction/Draw';
 import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
 import Translate from 'ol/interaction/Translate';
@@ -46,7 +46,15 @@ class Edit extends Control {
     const className = options.className || 'ol-edit';
     element.className = `${className} ${CLASS_UNSELECTABLE} ${CLASS_CONTROL}`;
 
-    // Add buttons.
+    // Create elements to contain buttons for drawing and actions.
+    const drawButtonsDiv = document.createElement('div');
+    drawButtonsDiv.className = 'ol-edit-buttons draw';
+    element.appendChild(drawButtonsDiv);
+    const actionButtonsDiv = document.createElement('div');
+    actionButtonsDiv.className = 'ol-edit-buttons actions';
+    element.appendChild(actionButtonsDiv);
+
+    // Add buttons for drawing and actions.
     this.buttons = {};
     const buttons = [
       {
@@ -54,33 +62,51 @@ class Edit extends Control {
         label: '\u2B1F',
         tooltip: 'Draw a Polygon',
         draw: 'Polygon',
+        element: drawButtonsDiv,
       },
       {
         name: 'line',
         label: '\u2500',
         tooltip: 'Draw a Line',
         draw: 'LineString',
+        element: drawButtonsDiv,
       },
       {
         name: 'point',
         label: '\u2022',
         tooltip: 'Draw a Point',
         draw: 'Point',
+        element: drawButtonsDiv,
       },
       {
-        name: 'select',
+        name: 'circle',
+        label: '\u25EF',
+        tooltip: 'Draw a Circle',
+        draw: 'Circle',
+        element: drawButtonsDiv,
+      },
+      {
+        name: 'modify',
         label: '\u270d',
-        tooltip: 'Select/modify/move a feature',
+        tooltip: 'Modify features',
+        element: actionButtonsDiv,
+      },
+      {
+        name: 'move',
+        label: '\u21c4',
+        tooltip: 'Move features',
+        element: actionButtonsDiv,
       },
       {
         name: 'delete',
         label: '\u2716',
         tooltip: 'Delete selected feature',
         visible: false,
+        element: actionButtonsDiv,
       },
     ];
     for (let i = 0; i < buttons.length; i += 1) {
-      this.buttons[buttons[i].name] = this.addButton(element, buttons[i]);
+      this.buttons[buttons[i].name] = this.addButton(buttons[i].element, buttons[i]);
     }
 
     // Get the vector source from the layer.
@@ -105,9 +131,9 @@ class Edit extends Control {
     // delete button. Otherwise, hide it.
     this.selectInteraction.on('select', (event) => {
       if (event.selected.length) {
-        this.buttons.delete.style.display = 'unset';
+        this.toggleDeleteButton(true);
       } else {
-        this.buttons.delete.style.display = 'none';
+        this.toggleDeleteButton(false);
       }
     });
 
@@ -158,20 +184,40 @@ class Edit extends Control {
       return;
     }
 
-    // If one of the drawing buttons was clicked, disable the select
+    // If the button is already active, deactivate all buttons, disable all
+    // interactions, deselect all features, hide the delete button, and bail.
+    if (this.buttons[event.target.name].classList.contains('active')) {
+      this.toggleActiveButton(event.target.name, false);
+      this.disableAll();
+      this.deselectFeatures();
+      this.toggleDeleteButton(false);
+      return;
+    }
+
+    // If one of the drawing buttons was clicked, disable the modify and move
     // interactions, and enable the draw interaction, for either point, line,
-    // or polygon.
-    const drawingButtons = ['point', 'line', 'polygon'];
+    // polygon, or circle.
+    const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
-      this.disableSelect();
+      this.disableModify();
+      this.disableMove();
       this.enableDraw(event.target.draw);
     }
 
-    // If the select button was clicked, disable all draw interactions, and
-    // enable the select interactions.
-    else if (event.target.name === 'select') {
+    // If the modify button was clicked, disable all draw and move interactions,
+    // and enable the modify interactions.
+    else if (event.target.name === 'modify') {
       this.disableDraw();
-      this.enableSelect();
+      this.disableMove();
+      this.enableModify();
+    }
+
+    // If the move button was clicked, disable all draw and modify interactions,
+    // and enable the move interactions.
+    else if (event.target.name === 'move') {
+      this.disableDraw();
+      this.disableModify();
+      this.enableMove();
     }
 
     // If the delete button was clicked, delete selected features, call event
@@ -183,13 +229,16 @@ class Edit extends Control {
         const features = this.layer.getSource().getFeatures();
         cb(new WKT().writeFeatures(features, projection));
       });
-      this.buttons.delete.style.display = 'none';
+      this.toggleDeleteButton(false);
     }
 
     // Toggle the active button styles (except delete).
     if (event.target.name !== 'delete') {
       this.toggleActiveButton(event.target.name);
     }
+
+    // Deselect all features whenever a button is clicked.
+    this.deselectFeatures();
   }
 
   /**
@@ -198,10 +247,21 @@ class Edit extends Control {
    * @private
    */
   enableDraw(type) {
+
+    // Disable any drawing interactions that are currently active.
     this.disableDraw();
+
+    // In the case of circles, we convert to a polygon with 100 sides.
+    let geometryFunction;
+    if (type === 'Circle') {
+      geometryFunction = createRegularPolygon(100);
+    }
+
+    // Create the draw interaction and add it to the map.
     this.drawInteraction = new Draw({
       source: this.layer.getSource(),
       type,
+      geometryFunction,
     });
     this.getMap().addInteraction(this.drawInteraction);
 
@@ -221,38 +281,91 @@ class Edit extends Control {
   }
 
   /**
-   * Enable select, modify, and translate interactions.
+   * Enable select and modify interactions.
    * @private
    */
-  enableSelect() {
+  enableModify() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
+  }
+
+  /**
+   * Disable select and modify interactions.
+   * @private
+   */
+  disableModify() {
+    this.getMap().removeInteraction(this.selectInteraction);
+    this.getMap().removeInteraction(this.modifyInteraction);
+  }
+
+  /**
+   * Enable select and translate interactions.
+   * @private
+   */
+  enableMove() {
+    this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.translateInteraction);
   }
 
   /**
-   * Disable select, modify, and translate interactions.
+   * Disable select and translate interactions.
    * @private
    */
-  disableSelect() {
+  disableMove() {
+    this.getMap().removeInteraction(this.selectInteraction);
+    this.getMap().removeInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Disable all edit interactions.
+   * @private
+   */
+  disableAll() {
+    this.getMap().removeInteraction(this.drawInteraction);
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
   }
 
   /**
-   * Toggle the active button style.
-   * @param {string} name The name of the button to make active.
+   * Deselect all features in the select interaction.
    * @private
    */
-  toggleActiveButton(name) {
+  deselectFeatures() {
+    this.selectInteraction.getFeatures().clear();
+    this.toggleDeleteButton(false);
+  }
+
+  /**
+   * Toggle the active button style.
+   * @param {string} name The name of the button.
+   * @param {bool} activate Whether or not the make the button active. If true
+   *   (default), the button will receive the "active" class, and all other
+   *   buttons will lose it. If false, all buttons will lose the "active" class.
+   * @private
+   */
+  toggleActiveButton(name, activate = true) {
     Object.keys(this.buttons).forEach((key) => {
-      if (this.buttons[key].name === name) {
+      if (this.buttons[key].name === name && activate) {
         this.buttons[key].classList.add('active');
       } else {
         this.buttons[key].classList.remove('active');
       }
     });
+  }
+
+  /**
+   * Toggle delete button visibility.
+   * @param {bool} visible Whether or not to make the delete button visible.
+   * @private
+   */
+  toggleDeleteButton(visible) {
+    if (visible) {
+      this.buttons.delete.style.display = 'block';
+    }
+    else {
+      this.buttons.delete.style.display = 'none';
+    }
   }
 
   /**
