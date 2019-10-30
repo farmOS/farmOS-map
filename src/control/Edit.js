@@ -46,7 +46,15 @@ class Edit extends Control {
     const className = options.className || 'ol-edit';
     element.className = `${className} ${CLASS_UNSELECTABLE} ${CLASS_CONTROL}`;
 
-    // Add buttons.
+    // Create elements to contain buttons for drawing and actions.
+    const drawButtonsDiv = document.createElement('div');
+    drawButtonsDiv.className = 'ol-edit-buttons draw';
+    element.appendChild(drawButtonsDiv);
+    const actionButtonsDiv = document.createElement('div');
+    actionButtonsDiv.className = 'ol-edit-buttons actions';
+    element.appendChild(actionButtonsDiv);
+
+    // Add buttons for drawing and actions.
     this.buttons = {};
     const buttons = [
       {
@@ -54,39 +62,45 @@ class Edit extends Control {
         label: '\u2B1F',
         tooltip: 'Draw a Polygon',
         draw: 'Polygon',
+        element: drawButtonsDiv,
       },
       {
         name: 'line',
         label: '\u2500',
         tooltip: 'Draw a Line',
         draw: 'LineString',
+        element: drawButtonsDiv,
       },
       {
         name: 'point',
         label: '\u2022',
         tooltip: 'Draw a Point',
         draw: 'Point',
+        element: drawButtonsDiv,
       },
       {
         name: 'circle',
         label: '\u25EF',
         tooltip: 'Draw a Circle',
         draw: 'Circle',
+        element: drawButtonsDiv,
       },
       {
         name: 'select',
         label: '\u270d',
         tooltip: 'Select/modify/move a feature',
+        element: actionButtonsDiv,
       },
       {
         name: 'delete',
         label: '\u2716',
         tooltip: 'Delete selected feature',
         visible: false,
+        element: actionButtonsDiv,
       },
     ];
     for (let i = 0; i < buttons.length; i += 1) {
-      this.buttons[buttons[i].name] = this.addButton(element, buttons[i]);
+      this.buttons[buttons[i].name] = this.addButton(buttons[i].element, buttons[i]);
     }
 
     // Get the vector source from the layer.

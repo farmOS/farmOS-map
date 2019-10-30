@@ -3,6 +3,14 @@
   left: 42%;
 }
 
+.ol-edit.ol-control .ol-edit-buttons {
+  display: inline-block;
+}
+
+.ol-edit.ol-control .ol-edit-buttons.draw {
+  margin-right: 1em;
+}
+
 .ol-edit.ol-control button {
   display: inline-block;
   padding-bottom: 3px;
