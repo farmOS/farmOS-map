@@ -86,9 +86,15 @@ class Edit extends Control {
         element: drawButtonsDiv,
       },
       {
-        name: 'select',
+        name: 'modify',
         label: '\u270d',
-        tooltip: 'Select/modify/move a feature',
+        tooltip: 'Modify features',
+        element: actionButtonsDiv,
+      },
+      {
+        name: 'move',
+        label: '\u21c4',
+        tooltip: 'Move features',
         element: actionButtonsDiv,
       },
       {
@@ -178,20 +184,30 @@ class Edit extends Control {
       return;
     }
 
-    // If one of the drawing buttons was clicked, disable the select
+    // If one of the drawing buttons was clicked, disable the modify and move
     // interactions, and enable the draw interaction, for either point, line,
     // or polygon.
     const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
-      this.disableSelect();
+      this.disableModify();
+      this.disableMove();
       this.enableDraw(event.target.draw);
     }
 
-    // If the select button was clicked, disable all draw interactions, and
-    // enable the select interactions.
-    else if (event.target.name === 'select') {
+    // If the modify button was clicked, disable all draw and move interactions,
+    // and enable the modify interactions.
+    else if (event.target.name === 'modify') {
       this.disableDraw();
-      this.enableSelect();
+      this.disableMove();
+      this.enableModify();
+    }
+
+    // If the move button was clicked, disable all draw and modify interactions,
+    // and enable the move interactions.
+    else if (event.target.name === 'move') {
+      this.disableDraw();
+      this.disableModify();
+      this.enableMove();
     }
 
     // If the delete button was clicked, delete selected features, call event
@@ -252,22 +268,38 @@ class Edit extends Control {
   }
 
   /**
-   * Enable select, modify, and translate interactions.
+   * Enable select and modify interactions.
    * @private
    */
-  enableSelect() {
+  enableModify() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
+  }
+
+  /**
+   * Disable select and modify interactions.
+   * @private
+   */
+  disableModify() {
+    this.getMap().removeInteraction(this.selectInteraction);
+    this.getMap().removeInteraction(this.modifyInteraction);
+  }
+
+  /**
+   * Enable select and translate interactions.
+   * @private
+   */
+  enableMove() {
+    this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.translateInteraction);
   }
 
   /**
-   * Disable select, modify, and translate interactions.
+   * Disable select and translate interactions.
    * @private
    */
-  disableSelect() {
+  disableMove() {
     this.getMap().removeInteraction(this.selectInteraction);
-    this.getMap().removeInteraction(this.modifyInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
   }
 
