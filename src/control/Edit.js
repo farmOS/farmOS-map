@@ -184,6 +184,15 @@ class Edit extends Control {
       return;
     }
 
+    // If the button is already active, deactivate all buttons, disable all
+    // interactions, hide the delete button, and bail.
+    if (this.buttons[event.target.name].classList.contains('active')) {
+      this.toggleActiveButton(event.target.name, false);
+      this.disableAll();
+      this.buttons.delete.style.display = 'none';
+      return;
+    }
+
     // If one of the drawing buttons was clicked, disable the modify and move
     // interactions, and enable the draw interaction, for either point, line,
     // polygon, or circle.
@@ -304,13 +313,27 @@ class Edit extends Control {
   }
 
   /**
-   * Toggle the active button style.
-   * @param {string} name The name of the button to make active.
+   * Disable all edit interactions.
    * @private
    */
-  toggleActiveButton(name) {
+  disableAll() {
+    this.getMap().removeInteraction(this.drawInteraction);
+    this.getMap().removeInteraction(this.selectInteraction);
+    this.getMap().removeInteraction(this.modifyInteraction);
+    this.getMap().removeInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Toggle the active button style.
+   * @param {string} name The name of the button.
+   * @param {bool} activate Whether or not the make the button active. If true
+   *   (default), the button will receive the "active" class, and all other
+   *   buttons will lose it. If false, all buttons will lose the "active" class.
+   * @private
+   */
+  toggleActiveButton(name, activate = true) {
     Object.keys(this.buttons).forEach((key) => {
-      if (this.buttons[key].name === name) {
+      if (this.buttons[key].name === name && activate) {
         this.buttons[key].classList.add('active');
       } else {
         this.buttons[key].classList.remove('active');
