@@ -2,7 +2,7 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
-import Draw from 'ol/interaction/Draw';
+import Draw, { createRegularPolygon } from 'ol/interaction/Draw';
 import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
 import Translate from 'ol/interaction/Translate';
@@ -66,6 +66,12 @@ class Edit extends Control {
         label: '\u2022',
         tooltip: 'Draw a Point',
         draw: 'Point',
+      },
+      {
+        name: 'circle',
+        label: '\u25EF',
+        tooltip: 'Draw a Circle',
+        draw: 'Circle',
       },
       {
         name: 'select',
@@ -161,7 +167,7 @@ class Edit extends Control {
     // If one of the drawing buttons was clicked, disable the select
     // interactions, and enable the draw interaction, for either point, line,
     // or polygon.
-    const drawingButtons = ['point', 'line', 'polygon'];
+    const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
       this.disableSelect();
       this.enableDraw(event.target.draw);
@@ -198,10 +204,21 @@ class Edit extends Control {
    * @private
    */
   enableDraw(type) {
+
+    // Disable any drawing interactions that are currently active.
     this.disableDraw();
+
+    // In the case of circles, we convert to a polygon with 100 sides.
+    let geometryFunction;
+    if (type === 'Circle') {
+      geometryFunction = createRegularPolygon(100);
+    }
+
+    // Create the draw interaction and add it to the map.
     this.drawInteraction = new Draw({
       source: this.layer.getSource(),
       type,
+      geometryFunction,
     });
     this.getMap().addInteraction(this.drawInteraction);
 
