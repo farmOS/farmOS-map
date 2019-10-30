@@ -125,7 +125,7 @@ class Edit extends Control {
     // delete button. Otherwise, hide it.
     this.selectInteraction.on('select', (event) => {
       if (event.selected.length) {
-        this.buttons.delete.style.display = 'unset';
+        this.buttons.delete.style.display = 'block';
       } else {
         this.buttons.delete.style.display = 'none';
       }
