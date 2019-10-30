@@ -238,6 +238,18 @@ class Edit extends Control {
   }
 
   /**
+   * Callback for escape key press. Deactivate all edit features.
+   * @param {KeyboardEvent} event The event to handle
+   * @private
+   */
+  handleEscape(event) {
+    if (event.key === 'Escape') {
+      this.disableAll();
+      document.removeEventListener(EventType.KEYDOWN, this.handleEscape, false);
+    }
+  }
+
+  /**
    * Enable draw interaction.
    * @param {string} type The type of draw interaction (Point, Line, Polygon).
    * @private
@@ -266,6 +278,9 @@ class Edit extends Control {
     Object.entries(this.drawListeners).forEach(([eventName, cbs]) => {
       cbs.forEach(cb => this.addInteractionListener(eventName, cb, new WKT()));
     });
+
+    // Enable escape key detection.
+    this.enableEscape();
   }
 
   /**
@@ -283,6 +298,7 @@ class Edit extends Control {
   enableModify() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
+    this.enableEscape();
   }
 
   /**
@@ -301,6 +317,7 @@ class Edit extends Control {
   enableMove() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.translateInteraction);
+    this.enableEscape();
   }
 
   /**
@@ -310,6 +327,15 @@ class Edit extends Control {
   disableMove() {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Enable escape key listener.
+   * @private
+   */
+  enableEscape() {
+    this.handleEscape = this.handleEscape.bind(this);
+    document.addEventListener(EventType.KEYDOWN, this.handleEscape, false);
   }
 
   /**
