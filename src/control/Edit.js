@@ -186,7 +186,7 @@ class Edit extends Control {
 
     // If one of the drawing buttons was clicked, disable the modify and move
     // interactions, and enable the draw interaction, for either point, line,
-    // or polygon.
+    // polygon, or circle.
     const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
       this.disableModify();
