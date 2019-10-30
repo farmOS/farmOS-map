@@ -184,13 +184,9 @@ class Edit extends Control {
       return;
     }
 
-    // If the button is already active, deactivate all buttons, disable all
-    // interactions, deselect all features, hide the delete button, and bail.
+    // If the button is already active, disable all edit features.
     if (this.buttons[event.target.name].classList.contains('active')) {
-      this.toggleActiveButton(event.target.name, false);
       this.disableAll();
-      this.deselectFeatures();
-      this.toggleDeleteButton(false);
       return;
     }
 
@@ -317,7 +313,7 @@ class Edit extends Control {
   }
 
   /**
-   * Disable all edit interactions.
+   * Disable all edit interactions, deselect features, deactivate all buttons.
    * @private
    */
   disableAll() {
@@ -325,6 +321,9 @@ class Edit extends Control {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
+    this.deselectFeatures();
+    this.toggleActiveButton(false, false);
+    this.toggleDeleteButton(false);
   }
 
   /**
