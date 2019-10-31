@@ -6,7 +6,7 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
-import addLayer from './methods/layer';
+import { forEachLayer, addLayer } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 
@@ -33,6 +33,7 @@ const createInstance = ({ target, options = {} }) => {
     }),
 
     // Add instance methods.
+    forEachLayer,
     addLayer,
     addPopup,
     zoomToVectors,
