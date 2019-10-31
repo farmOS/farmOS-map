@@ -12,10 +12,10 @@ import WKT from 'ol/format/WKT';
 import { setWithCredentials } from 'ol/featureloader';
 
 // Import styles.
-import styles from '../styles';
+import styles from '../../styles';
 
 // Import the default projection configuration
-import projection from '../projection';
+import projection from '../../projection';
 
 // Set withCredentials to true for all XHR requests made via OpenLayers'
 // feature loader. Typically farmOS requires authentication in order to

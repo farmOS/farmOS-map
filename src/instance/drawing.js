@@ -1,8 +1,8 @@
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
-import Edit from './control/Edit';
-import styles from './styles';
+import Edit from '../control/Edit';
+import styles from '../styles';
 
 // Add drawing features.
 export default function addDrawingControls(map) {

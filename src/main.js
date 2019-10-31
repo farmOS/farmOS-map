@@ -1,5 +1,5 @@
 // Import farmOS map instance factory function.
-import createInstance from './instance';
+import createInstance from './instance/instance';
 
 // Define window.farmOS if it isn't already.
 if (typeof window.farmOS === 'undefined') {
