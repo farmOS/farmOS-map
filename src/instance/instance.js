@@ -10,8 +10,8 @@ import addLayer from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 
-// Import addDrawingControls function.
-import addDrawingControls from './drawing';
+// Import Edit control.
+import Edit from '../control/Edit';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
@@ -42,7 +42,14 @@ const createInstance = ({ target, options = {} }) => {
   // Add drawing controls, if drawing is true.
   // Make the Edit control available at instance.edit.
   if (options.drawing) {
-    instance.edit = addDrawingControls(instance.map);
+    const opts = {
+      title: 'Drawing',
+      group: 'Editable layers',
+      color: 'orange',
+    };
+    const layer = instance.addLayer('vector', opts);
+    instance.edit = new Edit({ layer });
+    instance.map.addControl(instance.edit);
   }
 
   return instance;
