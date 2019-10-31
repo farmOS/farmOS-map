@@ -6,6 +6,7 @@ import Draw, { createRegularPolygon } from 'ol/interaction/Draw';
 import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
 import Translate from 'ol/interaction/Translate';
+import Snap from 'ol/interaction/Snap';
 import WKT from 'ol/format/WKT';
 
 import projection from '../projection';
@@ -125,6 +126,9 @@ class Edit extends Control {
     this.drawInteraction = new Draw({
       source: this.layer.getSource(),
       type: 'Polygon',
+    });
+    this.snapInteraction = new Snap({
+      source: this.layer.getSource(),
     });
 
     // When a select event fires, if there are features selected, show the
@@ -273,6 +277,9 @@ class Edit extends Control {
     });
     this.getMap().addInteraction(this.drawInteraction);
 
+    // Add Snap interaction.
+    this.getMap().addInteraction(this.snapInteraction);
+
     // Add event listeners back to the newly instantiated Draw interaction. WKT
     // is hardcoded for now, but we may need to accomodate GeoJSON in the future.
     Object.entries(this.drawListeners).forEach(([eventName, cbs]) => {
@@ -284,30 +291,33 @@ class Edit extends Control {
   }
 
   /**
-   * Disable draw interaction.
+   * Disable draw and snap interactions.
    * @private
    */
   disableDraw() {
     this.getMap().removeInteraction(this.drawInteraction);
+    this.getMap().removeInteraction(this.snapInteraction);
   }
 
   /**
-   * Enable select and modify interactions.
+   * Enable select, modify, and snap interactions.
    * @private
    */
   enableModify() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
+    this.getMap().addInteraction(this.snapInteraction);
     this.enableEscape();
   }
 
   /**
-   * Disable select and modify interactions.
+   * Disable select, modify, and snap interactions.
    * @private
    */
   disableModify() {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
+    this.getMap().removeInteraction(this.snapInteraction);
   }
 
   /**
@@ -347,6 +357,7 @@ class Edit extends Control {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
+    this.getMap().removeInteraction(this.snapInteraction);
     this.deselectFeatures();
     this.toggleActiveButton(false, false);
     this.toggleDeleteButton(false);
