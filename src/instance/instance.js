@@ -6,13 +6,12 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
-import {
-  forEachLayer,
-  rememberLayer,
-  addLayer,
-} from './methods/layer';
+import { rememberLayer, addLayer } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
+
+// Import forEachLayer helper function.
+import forEachLayer from '../forEachLayer';
 
 // Import Edit control.
 import Edit from '../control/Edit';
@@ -37,7 +36,6 @@ const createInstance = ({ target, options = {} }) => {
     }),
 
     // Add instance methods.
-    forEachLayer,
     rememberLayer,
     addLayer,
     addPopup,
@@ -46,7 +44,7 @@ const createInstance = ({ target, options = {} }) => {
   };
 
   // Remember visibility state of base layers with localStorage.
-  instance.forEachLayer(instance.map.getLayerGroup(), (layer) => {
+  forEachLayer(instance.map.getLayerGroup(), (layer) => {
     if (layer.get('type') === 'base') {
       rememberLayer(layer);
     }
