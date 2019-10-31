@@ -20,7 +20,7 @@ import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 
 // Import Geolocate control.
-import Geolocate from './control/Geolocate';
+import Geolocate from '../control/Geolocate';
 
 // Define an object that contains the default layers, controls, and interactions
 // that will be added to all farmOS maps.
