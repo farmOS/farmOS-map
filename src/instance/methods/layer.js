@@ -158,9 +158,9 @@ export function addLayer(type, opts) {
   }
 
   // If a layer was created, add it to the map.
-  // If a layer group is specified, search for it in the map, create it if
-  // it doesn't exist, and add the layer to it.
   if (layer) {
+
+    // If a layer group is specified, create it if it doesn't already exist.
     if (opts.group) {
       let group;
       const mapLayersArray = this.map.getLayers().getArray();
@@ -173,10 +173,17 @@ export function addLayer(type, opts) {
         group = new LayerGroup({ title: opts.group });
         this.map.addLayer(group);
       }
+
+      // Add the layer to the group.
       group.getLayers().push(layer);
-    } else {
+    }
+
+    // Otherwise, add the layer directly to the map.
+    else {
       this.map.addLayer(layer);
     }
+
+    // Return the layer.
     return layer;
   }
   throw new Error('Invalid layer type.');
