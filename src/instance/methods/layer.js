@@ -24,6 +24,21 @@ import projection from '../../projection';
 // request that OpenLayers makes.
 setWithCredentials(true);
 
+// Add a Vector layer to the map.
+function addVectorLayer({
+  title = 'vector', color, visible = true,
+}) {
+  const style = styles(color);
+  const source = new VectorSource();
+  const layer = new VectorLayer({
+    title,
+    source,
+    style,
+    visible,
+  });
+  return layer;
+}
+
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
   title = 'geojson', url, color, visible = true,
@@ -96,6 +111,9 @@ function addXYZTileLayer({
 // Add a layer to the map by its type.
 export default function addLayer(type, opts) {
   let layer;
+  if (type.toLowerCase() === 'vector') {
+    layer = addVectorLayer(opts);
+  }
   if (type.toLowerCase() === 'geojson') {
     if (!opts.url) {
       throw new Error('Missing a GeoJSON url.');
