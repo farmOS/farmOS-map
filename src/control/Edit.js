@@ -7,9 +7,12 @@ import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
 import Translate from 'ol/interaction/Translate';
 import Snap from 'ol/interaction/Snap';
+import VectorSource from 'ol/source/Vector';
+import Collection from 'ol/Collection';
 import WKT from 'ol/format/WKT';
 
 import projection from '../projection';
+import forEachLayer from '../forEachLayer';
 import './Edit.css';
 
 
@@ -178,8 +181,12 @@ class Edit extends Control {
     // delete logic and then stop further execution of this function.
     if (event.target.name === 'delete') {
 
-      // Delete selected features.
-      this.selectInteraction.getFeatures().forEach(f => this.layer.getSource().removeFeature(f));
+      // Delete selected features from the drawing layer and the snap
+      // interaction's feature collection.
+      this.selectInteraction.getFeatures().forEach((f) => {
+        this.layer.getSource().removeFeature(f);
+        this.snapInteraction.removeFeature(f);
+      });
       this.selectInteraction.getFeatures().clear();
 
       // Call event listeners.
@@ -268,6 +275,14 @@ class Edit extends Control {
             cb(output);
           });
         });
+      }
+    });
+
+    // Add an event listener that adds newly drawn features to the snap
+    // interaction's feature collection (so that they can be snapped to).
+    this.drawInteraction.on('drawend', (event) => {
+      if (event.feature && this.snapInteraction) {
+        this.snapInteraction.addFeature(event.feature);
       }
     });
   }
@@ -402,7 +417,23 @@ class Edit extends Control {
   enableSnap() {
     if (!this.snapInteraction) {
       this.snapInteraction = new Snap({
-        source: this.layer.getSource(),
+        features: this.layer.getSource().getFeaturesCollection() || new Collection(),
+      });
+
+      // Load all vector layer features in the map and add them to the snap
+      // interaction's feature collection (so they can be snapped to).
+      forEachLayer(this.getMap().getLayerGroup(), (layer) => {
+        if (typeof layer.getSource === 'function') {
+          const source = layer.getSource();
+          if (source !== 'null' && source instanceof VectorSource) {
+            const features = source.getFeatures();
+            if (source.getState() === 'ready' && features.length > 0) {
+              features.forEach((feature) => {
+                this.snapInteraction.addFeature(feature);
+              });
+            }
+          }
+        }
       });
     }
     this.getMap().addInteraction(this.snapInteraction);
