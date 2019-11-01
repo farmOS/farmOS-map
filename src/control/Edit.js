@@ -206,20 +206,22 @@ class Edit extends Control {
     }
 
     // If the modify button was clicked, disable all draw and move interactions,
-    // and enable the modify and snap interactions.
+    // and enable the select, modify, and snap interactions.
     else if (event.target.name === 'modify') {
       this.disableDraw();
       this.disableMove();
+      this.enableSelect();
       this.enableModify();
       this.enableSnap();
     }
 
     // If the move button was clicked, disable all draw, modify, and snap
-    // interactions, and enable the move interactions.
+    // interactions, and enable the select and move interactions.
     else if (event.target.name === 'move') {
       this.disableDraw();
       this.disableModify();
       this.disableSnap();
+      this.enableSelect();
       this.enableMove();
     }
 
@@ -300,17 +302,30 @@ class Edit extends Control {
   }
 
   /**
-   * Enable select and modify interactions.
+   * Enable select interaction.
+   */
+  enableSelect() {
+    this.getMap().addInteraction(this.selectInteraction);
+  }
+
+  /**
+   * Disable select interaction.
+   */
+  disableSelect() {
+    this.getMap().removeInteraction(this.selectInteraction);
+  }
+
+  /**
+   * Enable modify interaction.
    * @private
    */
   enableModify() {
-    this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
     this.enableEscape();
   }
 
   /**
-   * Disable select and modify interactions.
+   * Disable modify interaction.
    * @private
    */
   disableModify() {
@@ -323,7 +338,6 @@ class Edit extends Control {
    * @private
    */
   enableMove() {
-    this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.translateInteraction);
     this.enableEscape();
   }
