@@ -113,40 +113,18 @@ class Edit extends Control {
     // Get the vector source from the layer.
     this.layer = options.layer;
 
-    // Initialize interactions.
-    this.selectInteraction = new Select({
-      layers: [this.layer],
-    });
-    this.modifyInteraction = new Modify({
-      features: this.selectInteraction.getFeatures(),
-    });
-    this.translateInteraction = new Translate({
-      features: this.selectInteraction.getFeatures(),
-    });
-    this.drawInteraction = new Draw({
-      source: this.layer.getSource(),
-      type: 'Polygon',
-    });
-    this.snapInteraction = new Snap({
-      source: this.layer.getSource(),
-    });
-
-    // When a select event fires, if there are features selected, show the
-    // delete button. Otherwise, hide it.
-    this.selectInteraction.on('select', (event) => {
-      if (event.selected.length) {
-        this.toggleDeleteButton(true);
-      } else {
-        this.toggleDeleteButton(false);
-      }
-    });
-
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of
     // objects, each with a callback and a format.
     this.eventListeners = {
       drawstart: [],
       drawend: [],
+      modifystart: [],
+      modifyend: [],
+      translatestart: [],
+      translating: [],
+      translateend: [],
+      select: [],
       delete: [],
     };
   }
@@ -284,7 +262,12 @@ class Edit extends Control {
     // Add event listeners back to the newly instantiated Draw interaction.
     Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
       if (['drawstart', 'drawend'].includes(eventName)) {
-        listeners.forEach(({ cb, format }) => this.addInteractionListener(eventName, cb, format));
+        listeners.forEach(({ cb, format }) => {
+          this.drawInteraction.on(eventName, (e) => {
+            const output = format.writeFeatures(this.getFeatures().concat(e.feature), projection);
+            cb(output);
+          });
+        });
       }
     });
   }
@@ -294,13 +277,42 @@ class Edit extends Control {
    * @private
    */
   disableDraw() {
-    this.getMap().removeInteraction(this.drawInteraction);
+    if (this.drawInteraction) {
+      this.getMap().removeInteraction(this.drawInteraction);
+    }
   }
 
   /**
    * Enable select interaction.
    */
   enableSelect() {
+    if (!this.selectInteraction) {
+      this.selectInteraction = new Select({
+        layers: [this.layer],
+      });
+
+      // Add event listeners to the newly instantiated Select interaction.
+      Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
+        if (['select'].includes(eventName)) {
+          listeners.forEach(({ cb, format }) => {
+            this.selectInteraction.on(eventName, (e) => {
+              const output = format.writeFeatures(e.selected, projection);
+              cb(output);
+            });
+          });
+        }
+      });
+
+      // When a select event fires, if there are features selected, show the
+      // delete button. Otherwise, hide it.
+      this.selectInteraction.on('select', (event) => {
+        if (event.selected.length) {
+          this.toggleDeleteButton(true);
+        } else {
+          this.toggleDeleteButton(false);
+        }
+      });
+    }
     this.getMap().addInteraction(this.selectInteraction);
   }
 
@@ -308,7 +320,9 @@ class Edit extends Control {
    * Disable select interaction.
    */
   disableSelect() {
-    this.getMap().removeInteraction(this.selectInteraction);
+    if (this.selectInteraction) {
+      this.getMap().removeInteraction(this.selectInteraction);
+    }
   }
 
   /**
@@ -316,6 +330,23 @@ class Edit extends Control {
    * @private
    */
   enableModify() {
+    if (!this.modifyInteraction) {
+      this.modifyInteraction = new Modify({
+        features: this.selectInteraction.getFeatures(),
+      });
+
+      // Add event listeners to the newly instantiated Modify interaction.
+      Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
+        if (['modifystart', 'modifyend'].includes(eventName)) {
+          listeners.forEach(({ cb, format }) => {
+            this.modifyInteraction.on(eventName, () => {
+              const output = format.writeFeatures(this.getFeatures(), projection);
+              cb(output);
+            });
+          });
+        }
+      });
+    }
     this.getMap().addInteraction(this.modifyInteraction);
   }
 
@@ -324,7 +355,9 @@ class Edit extends Control {
    * @private
    */
   disableModify() {
-    this.getMap().removeInteraction(this.modifyInteraction);
+    if (this.modifyInteraction) {
+      this.getMap().removeInteraction(this.modifyInteraction);
+    }
   }
 
   /**
@@ -332,6 +365,23 @@ class Edit extends Control {
    * @private
    */
   enableMove() {
+    if (!this.translateInteraction) {
+      this.translateInteraction = new Translate({
+        features: this.selectInteraction.getFeatures(),
+      });
+
+      // Add event listeners to the newly instantiated Translate interaction.
+      Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
+        if (['translatestart', 'translating', 'translateend'].includes(eventName)) {
+          listeners.forEach(({ cb, format }) => {
+            this.translateInteraction.on(eventName, () => {
+              const output = format.writeFeatures(this.getFeatures(), projection);
+              cb(output);
+            });
+          });
+        }
+      });
+    }
     this.getMap().addInteraction(this.translateInteraction);
   }
 
@@ -340,7 +390,9 @@ class Edit extends Control {
    * @private
    */
   disableMove() {
-    this.getMap().removeInteraction(this.translateInteraction);
+    if (this.translateInteraction) {
+      this.getMap().removeInteraction(this.translateInteraction);
+    }
   }
 
   /**
@@ -348,6 +400,11 @@ class Edit extends Control {
    * @private
    */
   enableSnap() {
+    if (!this.snapInteraction) {
+      this.snapInteraction = new Snap({
+        source: this.layer.getSource(),
+      });
+    }
     this.getMap().addInteraction(this.snapInteraction);
   }
 
@@ -356,7 +413,9 @@ class Edit extends Control {
    * @private
    */
   disableSnap() {
-    this.getMap().removeInteraction(this.snapInteraction);
+    if (this.snapInteraction) {
+      this.getMap().removeInteraction(this.snapInteraction);
+    }
   }
 
   /**
@@ -388,7 +447,9 @@ class Edit extends Control {
    * @private
    */
   deselectFeatures() {
-    this.selectInteraction.getFeatures().clear();
+    if (this.selectInteraction) {
+      this.selectInteraction.getFeatures().clear();
+    }
     this.toggleDeleteButton(false);
   }
 
@@ -446,34 +507,8 @@ class Edit extends Control {
     if (!validTypes.includes(type)) {
       throw new Error(`Invalid event type. Valid options include: ${validTypes.join(', ')}`);
     }
-    if (['drawstart', 'drawend'].includes(type)) {
-      this.drawInteraction.on(type, (e) => {
-        const output = format.writeFeatures(this.getFeatures().concat(e.feature), projection);
-        cb(output);
-      });
-      if (!this.eventListeners[type].includes({ cb, format })) {
-        this.eventListeners[type].push({ cb, format });
-      }
-    } else if (['modifystart', 'modifyend'].includes(type)) {
-      this.modifyInteraction.on(type, () => {
-        const output = format.writeFeatures(this.getFeatures(), projection);
-        cb(output);
-      });
-    } else if (['select'].includes(type)) {
-      this.selectInteraction.on(type, (e) => {
-        const features = e.selected;
-        const output = format.writeFeatures(features, projection);
-        cb(output);
-      });
-    } else if (['translatestart', 'translating', 'translateend'].includes(type)) {
-      this.translateInteraction.on(type, () => {
-        const output = format.writeFeatures(this.getFeatures(), projection);
-        cb(output);
-      });
-    } else if (['delete'].includes(type)) {
-      if (!this.eventListeners.delete.includes({ cb, format })) {
-        this.eventListeners.delete.push({ cb, format });
-      }
+    if (!this.eventListeners[type].includes({ cb, format })) {
+      this.eventListeners[type].push({ cb, format });
     }
   }
 
