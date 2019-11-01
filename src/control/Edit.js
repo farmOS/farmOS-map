@@ -194,33 +194,29 @@ class Edit extends Control {
       return;
     }
 
-    // If one of the drawing buttons was clicked, disable the modify and move
-    // interactions, and enable the draw interaction (for either point, line,
-    // polygon, or circle), and the snap interaction.
+    // If one of the drawing buttons was clicked, disable all edit features,
+    // then enable the draw interaction (for either point, line, polygon, or
+    // circle), and the snap interaction.
     const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
-      this.disableModify();
-      this.disableMove();
+      this.disableAll();
       this.enableDraw(event.target.draw);
       this.enableSnap();
     }
 
-    // If the modify button was clicked, disable all draw and move interactions,
-    // and enable the select, modify, and snap interactions.
+    // If the modify button was clicked, disable all edit features, then enable
+    // the select, modify, and snap interactions.
     else if (event.target.name === 'modify') {
-      this.disableDraw();
-      this.disableMove();
+      this.disableAll();
       this.enableSelect();
       this.enableModify();
       this.enableSnap();
     }
 
-    // If the move button was clicked, disable all draw, modify, and snap
-    // interactions, and enable the select and move interactions.
+    // If the move button was clicked, disable all edit features, then enable
+    // the select and move interactions.
     else if (event.target.name === 'move') {
-      this.disableDraw();
-      this.disableModify();
-      this.disableSnap();
+      this.disableAll();
       this.enableSelect();
       this.enableMove();
     }
@@ -241,9 +237,6 @@ class Edit extends Control {
     if (event.target.name !== 'delete') {
       this.toggleActiveButton(event.target.name);
     }
-
-    // Deselect all features whenever a button is clicked.
-    this.deselectFeatures();
   }
 
   /**
@@ -264,9 +257,6 @@ class Edit extends Control {
    * @private
    */
   enableDraw(type) {
-
-    // Disable any drawing interactions that are currently active.
-    this.disableDraw();
 
     // In the case of circles, we convert to a polygon with 100 sides.
     let geometryFunction;
@@ -329,7 +319,6 @@ class Edit extends Control {
    * @private
    */
   disableModify() {
-    this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
   }
 
@@ -347,7 +336,6 @@ class Edit extends Control {
    * @private
    */
   disableMove() {
-    this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
   }
 
@@ -381,11 +369,11 @@ class Edit extends Control {
    * @private
    */
   disableAll() {
-    this.getMap().removeInteraction(this.drawInteraction);
-    this.getMap().removeInteraction(this.selectInteraction);
-    this.getMap().removeInteraction(this.modifyInteraction);
-    this.getMap().removeInteraction(this.translateInteraction);
-    this.getMap().removeInteraction(this.snapInteraction);
+    this.disableDraw();
+    this.disableSelect();
+    this.disableModify();
+    this.disableMove();
+    this.disableSnap();
     this.deselectFeatures();
     this.toggleActiveButton(false, false);
     this.toggleDeleteButton(false);
