@@ -195,28 +195,31 @@ class Edit extends Control {
     }
 
     // If one of the drawing buttons was clicked, disable the modify and move
-    // interactions, and enable the draw interaction, for either point, line,
-    // polygon, or circle.
+    // interactions, and enable the draw interaction (for either point, line,
+    // polygon, or circle), and the snap interaction.
     const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
       this.disableModify();
       this.disableMove();
       this.enableDraw(event.target.draw);
+      this.enableSnap();
     }
 
     // If the modify button was clicked, disable all draw and move interactions,
-    // and enable the modify interactions.
+    // and enable the modify and snap interactions.
     else if (event.target.name === 'modify') {
       this.disableDraw();
       this.disableMove();
       this.enableModify();
+      this.enableSnap();
     }
 
-    // If the move button was clicked, disable all draw and modify interactions,
-    // and enable the move interactions.
+    // If the move button was clicked, disable all draw, modify, and snap
+    // interactions, and enable the move interactions.
     else if (event.target.name === 'move') {
       this.disableDraw();
       this.disableModify();
+      this.disableSnap();
       this.enableMove();
     }
 
@@ -277,8 +280,6 @@ class Edit extends Control {
     });
     this.getMap().addInteraction(this.drawInteraction);
 
-    // Add Snap interaction.
-    this.getMap().addInteraction(this.snapInteraction);
 
     // Add event listeners back to the newly instantiated Draw interaction. WKT
     // is hardcoded for now, but we may need to accomodate GeoJSON in the future.
@@ -291,33 +292,30 @@ class Edit extends Control {
   }
 
   /**
-   * Disable draw and snap interactions.
+   * Disable draw interaction.
    * @private
    */
   disableDraw() {
     this.getMap().removeInteraction(this.drawInteraction);
-    this.getMap().removeInteraction(this.snapInteraction);
   }
 
   /**
-   * Enable select, modify, and snap interactions.
+   * Enable select and modify interactions.
    * @private
    */
   enableModify() {
     this.getMap().addInteraction(this.selectInteraction);
     this.getMap().addInteraction(this.modifyInteraction);
-    this.getMap().addInteraction(this.snapInteraction);
     this.enableEscape();
   }
 
   /**
-   * Disable select, modify, and snap interactions.
+   * Disable select and modify interactions.
    * @private
    */
   disableModify() {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.modifyInteraction);
-    this.getMap().removeInteraction(this.snapInteraction);
   }
 
   /**
@@ -337,6 +335,22 @@ class Edit extends Control {
   disableMove() {
     this.getMap().removeInteraction(this.selectInteraction);
     this.getMap().removeInteraction(this.translateInteraction);
+  }
+
+  /**
+   * Enable snap interaction.
+   * @private
+   */
+  enableSnap() {
+    this.getMap().addInteraction(this.snapInteraction);
+  }
+
+  /**
+   * Disable snap interaction.
+   * @private
+   */
+  disableSnap() {
+    this.getMap().removeInteraction(this.snapInteraction);
   }
 
   /**
