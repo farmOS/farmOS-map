@@ -188,57 +188,57 @@ class Edit extends Control {
       return;
     }
 
-    // If the button is already active, disable all edit features.
-    if (this.buttons[event.target.name].classList.contains('active')) {
-      this.disableAll();
-      return;
-    }
+    // First, check to see if the delete button was clicked, because it is an
+    // exception to the general button behaviors that follow. If so, handle the
+    // delete logic and then stop further execution of this function.
+    if (event.target.name === 'delete') {
 
-    // If one of the drawing buttons was clicked, disable all edit features,
-    // then enable the draw interaction (for either point, line, polygon, or
-    // circle), the snap interaction, and escape key detection.
-    const drawingButtons = ['point', 'line', 'polygon', 'circle'];
-    if (drawingButtons.includes(event.target.name)) {
-      this.disableAll();
-      this.enableDraw(event.target.draw);
-      this.enableSnap();
-      this.enableEscape();
-    }
-
-    // If the modify button was clicked, disable all edit features, then enable
-    // the select, modify, and snap interactions, and escape key detection.
-    else if (event.target.name === 'modify') {
-      this.disableAll();
-      this.enableSelect();
-      this.enableModify();
-      this.enableSnap();
-      this.enableEscape();
-    }
-
-    // If the move button was clicked, disable all edit features, then enable
-    // the select and move interactions, and escape key detection.
-    else if (event.target.name === 'move') {
-      this.disableAll();
-      this.enableSelect();
-      this.enableMove();
-      this.enableEscape();
-    }
-
-    // If the delete button was clicked, delete selected features, call event
-    // listeners (WKT is hardcoded as the format for now), and remove button.
-    else if (event.target.name === 'delete') {
+      // Delete selected features.
       this.selectInteraction.getFeatures().forEach(f => this.layer.getSource().removeFeature(f));
       this.selectInteraction.getFeatures().clear();
+
+      // Call event listeners (WKT is hardcoded as the format for now).
       this.deleteListeners.forEach((cb) => {
         const features = this.layer.getSource().getFeatures();
         cb(new WKT().writeFeatures(features, projection));
       });
+
+      // Remove the delete button.
       this.toggleDeleteButton(false);
+
+      // Prevent further execution of this function.
+      return;
     }
 
-    // Toggle the active button styles (except delete).
-    if (event.target.name !== 'delete') {
-      this.toggleActiveButton(event.target.name);
+    // Disable all edit features.
+    this.disableAll();
+
+    // Toggle the active button styles.
+    this.toggleActiveButton(event.target.name);
+
+    // Enable escape key detection.
+    this.enableEscape();
+
+    // If one of the drawing buttons was clicked, enable the draw and snap
+    // interactions.
+    const drawingButtons = ['point', 'line', 'polygon', 'circle'];
+    if (drawingButtons.includes(event.target.name)) {
+      this.enableDraw(event.target.draw);
+      this.enableSnap();
+    }
+
+    // If the modify button was clicked, enable the select, modify, and snap
+    // interactions.
+    else if (event.target.name === 'modify') {
+      this.enableSelect();
+      this.enableModify();
+      this.enableSnap();
+    }
+
+    // If the move button was clicked, enable the select and move interactions.
+    else if (event.target.name === 'move') {
+      this.enableSelect();
+      this.enableMove();
     }
   }
 
