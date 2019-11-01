@@ -196,29 +196,32 @@ class Edit extends Control {
 
     // If one of the drawing buttons was clicked, disable all edit features,
     // then enable the draw interaction (for either point, line, polygon, or
-    // circle), and the snap interaction.
+    // circle), the snap interaction, and escape key detection.
     const drawingButtons = ['point', 'line', 'polygon', 'circle'];
     if (drawingButtons.includes(event.target.name)) {
       this.disableAll();
       this.enableDraw(event.target.draw);
       this.enableSnap();
+      this.enableEscape();
     }
 
     // If the modify button was clicked, disable all edit features, then enable
-    // the select, modify, and snap interactions.
+    // the select, modify, and snap interactions, and escape key detection.
     else if (event.target.name === 'modify') {
       this.disableAll();
       this.enableSelect();
       this.enableModify();
       this.enableSnap();
+      this.enableEscape();
     }
 
     // If the move button was clicked, disable all edit features, then enable
-    // the select and move interactions.
+    // the select and move interactions, and escape key detection.
     else if (event.target.name === 'move') {
       this.disableAll();
       this.enableSelect();
       this.enableMove();
+      this.enableEscape();
     }
 
     // If the delete button was clicked, delete selected features, call event
@@ -278,9 +281,6 @@ class Edit extends Control {
     Object.entries(this.drawListeners).forEach(([eventName, cbs]) => {
       cbs.forEach(cb => this.addInteractionListener(eventName, cb, new WKT()));
     });
-
-    // Enable escape key detection.
-    this.enableEscape();
   }
 
   /**
@@ -311,7 +311,6 @@ class Edit extends Control {
    */
   enableModify() {
     this.getMap().addInteraction(this.modifyInteraction);
-    this.enableEscape();
   }
 
   /**
@@ -328,7 +327,6 @@ class Edit extends Control {
    */
   enableMove() {
     this.getMap().addInteraction(this.translateInteraction);
-    this.enableEscape();
   }
 
   /**
