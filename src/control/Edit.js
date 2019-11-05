@@ -9,6 +9,7 @@ import Translate from 'ol/interaction/Translate';
 import Snap from 'ol/interaction/Snap';
 import VectorSource from 'ol/source/Vector';
 import Collection from 'ol/Collection';
+import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
 import projection from '../projection';
@@ -581,6 +582,30 @@ class Edit extends Control {
   }
 
   /**
+   * Getter that returns the geometry of all features in the drawing layer in
+   * GeoJSON format.
+   * @api
+   */
+  getGeoJSON() {
+    const features = this.layer.getSource().getFeatures();
+    return new GeoJSON().writeFeatures(features, projection);
+  }
+
+  /**
+   * Setter which accepts features in GeoJSON format and sets them as the
+   * drawing layer's source features. This will clear all current features
+   * first.
+   * @param {string} geoJSONString A string of GeoJSON.
+   * @api
+   */
+  setGeoJSON(geoJSONString) {
+    const source = this.layer.getSource();
+    source.clear();
+    const features = new GeoJSON().readFeatures(geoJSONString, projection);
+    source.addFeatures(features);
+  }
+
+  /**
    * Sets a listener on drawing interactions to retrieve the drawing layer in
    * Well Known Text (WKT) format.
    * @param {string} event The type of event.
@@ -589,6 +614,32 @@ class Edit extends Control {
    * @api
    */
   wktOn(event, cb) {
+    this.formatOn(event, cb, new WKT());
+  }
+
+  /**
+   * Sets a listener on drawing interactions to retrieve the drawing layer in
+   * GeoJSON format.
+   * @param {string} event The type of event.
+   * @param {function} cb A callback function provided by the user to be
+   * executed when the event fires.
+   * @api
+   */
+  geoJSONOn(event, cb) {
+    this.formatOn(event, cb, new GeoJSON());
+  }
+
+  /**
+   * Internal helper function used by wktOn() and geoJSONOn(). Adds a special
+   * "featurechange" event type which encompasses all events that change
+   * feature geometry on the drawing layer.
+   * @param {string} event The type of event.
+   * @param {function} cb A callback function provided by the user to be
+   * executed when the event fires.
+   * @param {ol.format} format The OpenLayers format (eg: WKT, GeoJSON, etc).
+   * @private
+   */
+  formatOn(event, cb, format) {
 
     // If event is "featurechange", add listeners for all event types.
     if (event === 'featurechange') {
@@ -599,13 +650,13 @@ class Edit extends Control {
         'translateend',
         'delete',
       ].forEach((type) => {
-        this.addInteractionListener(type, cb, new WKT());
+        this.addInteractionListener(type, cb, format);
       });
       return;
     }
 
     // Otherwise, add the individual event listener.
-    this.addInteractionListener(event, cb, new WKT());
+    this.addInteractionListener(event, cb, format);
   }
 }
 
