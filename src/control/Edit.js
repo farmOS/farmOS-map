@@ -141,13 +141,13 @@ class Edit extends Control {
       }
     });
 
-    // A collection of event listeners that have been added to the Draw
-    // interaction by the user, via addInteractionListener().
-    this.drawListeners = {
+    // Collections of interaction event listeners that have been added by the
+    // user via addInteractionListener().
+    this.eventListeners = {
       drawstart: [],
       drawend: [],
+      delete: [],
     };
-    this.deleteListeners = [];
   }
 
   /**
@@ -204,7 +204,7 @@ class Edit extends Control {
       this.selectInteraction.getFeatures().clear();
 
       // Call event listeners (WKT is hardcoded as the format for now).
-      this.deleteListeners.forEach((cb) => {
+      this.eventListeners.delete.forEach((cb) => {
         const features = this.layer.getSource().getFeatures();
         cb(new WKT().writeFeatures(features, projection));
       });
@@ -281,11 +281,12 @@ class Edit extends Control {
     });
     this.getMap().addInteraction(this.drawInteraction);
 
-
     // Add event listeners back to the newly instantiated Draw interaction. WKT
     // is hardcoded for now, but we may need to accomodate GeoJSON in the future.
-    Object.entries(this.drawListeners).forEach(([eventName, cbs]) => {
-      cbs.forEach(cb => this.addInteractionListener(eventName, cb, new WKT()));
+    Object.entries(this.eventListeners).forEach(([eventName, cbs]) => {
+      if (['drawstart', 'drawend'].includes(eventName)) {
+        cbs.forEach(cb => this.addInteractionListener(eventName, cb, new WKT()));
+      }
     });
   }
 
@@ -438,8 +439,8 @@ class Edit extends Control {
         const output = format.writeFeatures(features, projection);
         cb(output);
       });
-      if (!this.drawListeners[type].includes(cb)) {
-        this.drawListeners[type].push(cb);
+      if (!this.eventListeners[type].includes(cb)) {
+        this.eventListeners[type].push(cb);
       }
     } else if (['modifystart', 'modifyend'].includes(type)) {
       this.modifyInteraction.on(type, () => {
@@ -460,8 +461,8 @@ class Edit extends Control {
         cb(output);
       });
     } else if (['delete'].includes(type)) {
-      if (!this.deleteListeners.includes(cb)) {
-        this.deleteListeners.push(cb);
+      if (!this.eventListeners.delete.includes(cb)) {
+        this.eventListeners.delete.push(cb);
       }
     } else {
       throw new Error('Invalid event type. Valid options include: '
