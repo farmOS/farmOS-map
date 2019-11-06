@@ -10,6 +10,11 @@ import VectorSource from 'ol/source/Vector';
 import Collection from 'ol/Collection';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
+import Overlay from 'ol/Overlay';
+import LineString from 'ol/geom/LineString';
+import Polygon from 'ol/geom/Polygon';
+import { unByKey } from 'ol/Observable';
+import { getArea, getLength } from 'ol/sphere';
 
 import projection from '../../projection';
 import forEachLayer from '../../forEachLayer';
@@ -279,6 +284,44 @@ class Edit extends Control {
       }
     });
 
+    /**
+     * See: https://openlayers.org/en/latest/examples/measure.html
+     */
+    this.createMeasureTooltip();
+    let listener;
+    this.drawInteraction.on('drawstart', (event) => {
+      // set sketch
+      this.sketch = event.feature;
+
+      /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
+      let tooltipCoord = event.coordinate;
+
+      listener = this.sketch.getGeometry().on('change', (e) => {
+        const geom = e.target;
+        let output;
+        if (geom instanceof Polygon) {
+          output = Edit.formatArea(geom);
+          tooltipCoord = geom.getInteriorPoint().getCoordinates();
+        } else if (geom instanceof LineString) {
+          output = Edit.formatLength(geom);
+          tooltipCoord = geom.getLastCoordinate();
+        }
+        this.measureTooltipElement.innerHTML = output;
+        this.measureTooltip.setPosition(tooltipCoord);
+      });
+    });
+
+    this.drawInteraction.on('drawend', () => {
+      this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
+      this.measureTooltip.setOffset([0, -7]);
+      // unset sketch
+      this.sketch = null;
+      // unset tooltip so that a new one can be created
+      this.measureTooltipElement = null;
+      this.createMeasureTooltip();
+      unByKey(listener);
+    });
+
     // Add an event listener that adds newly drawn features to the snap
     // interaction's feature collection (so that they can be snapped to).
     this.drawInteraction.on('drawend', (event) => {
@@ -515,6 +558,55 @@ class Edit extends Control {
     else {
       this.buttons.delete.style.display = 'none';
     }
+  }
+
+  /**
+   * Format length output.
+   * @param {LineString} line The line.
+   * @return {string} The formatted length.
+   */
+  static formatLength(line) {
+    const length = getLength(line);
+    let output;
+    if (length > 100) {
+      output = `${Math.round(length / 1000 * 100) / 100} km`;
+    } else {
+      output = `${Math.round(length * 100) / 100} m`;
+    }
+    return output;
+  }
+
+  /**
+   * Format area output.
+   * @param {Polygon} polygon The polygon.
+   * @return {string} Formatted area.
+   */
+  static formatArea(polygon) {
+    const area = getArea(polygon);
+    let output;
+    if (area > 10000) {
+      output = `${Math.round(area / 1000000 * 100)} km<sup>2</sup>`;
+    } else {
+      output = `${Math.round(area * 100) / 100} m<sup>2</sup>`;
+    }
+    return output;
+  }
+
+  /**
+   * Creates a new measure tooltip
+   */
+  createMeasureTooltip() {
+    if (this.measureTooltipElement) {
+      this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
+    }
+    this.measureTooltipElement = document.createElement('div');
+    this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+    this.measureTooltip = new Overlay({
+      element: this.measureTooltipElement,
+      offset: [0, -15],
+      positioning: 'bottom-center',
+    });
+    this.getMap().addOverlay(this.measureTooltip);
   }
 
   /**
