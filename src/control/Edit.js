@@ -206,8 +206,7 @@ class Edit extends Control {
 
       // Call event listeners.
       this.eventListeners.delete.forEach(({ cb, format }) => {
-        const features = this.layer.getSource().getFeatures();
-        cb(format.writeFeatures(features, projection));
+        cb(format.writeFeatures(this.getFeatures(), projection));
       });
 
       // Remove the delete button.
@@ -449,8 +448,7 @@ class Edit extends Control {
     }
     if (['drawstart', 'drawend'].includes(type)) {
       this.drawInteraction.on(type, (e) => {
-        const features = this.layer.getSource().getFeatures().concat(e.feature);
-        const output = format.writeFeatures(features, projection);
+        const output = format.writeFeatures(this.getFeatures().concat(e.feature), projection);
         cb(output);
       });
       if (!this.eventListeners[type].includes({ cb, format })) {
@@ -458,8 +456,7 @@ class Edit extends Control {
       }
     } else if (['modifystart', 'modifyend'].includes(type)) {
       this.modifyInteraction.on(type, () => {
-        const features = this.layer.getSource().getFeatures();
-        const output = format.writeFeatures(features, projection);
+        const output = format.writeFeatures(this.getFeatures(), projection);
         cb(output);
       });
     } else if (['select'].includes(type)) {
@@ -470,8 +467,7 @@ class Edit extends Control {
       });
     } else if (['translatestart', 'translating', 'translateend'].includes(type)) {
       this.translateInteraction.on(type, () => {
-        const features = this.layer.getSource().getFeatures();
-        const output = format.writeFeatures(features, projection);
+        const output = format.writeFeatures(this.getFeatures(), projection);
         cb(output);
       });
     } else if (['delete'].includes(type)) {
@@ -482,13 +478,20 @@ class Edit extends Control {
   }
 
   /**
+   * Getter that returns the features in the drawing layer.
+   * @api
+   */
+  getFeatures() {
+    return this.layer.getSource().getFeatures();
+  }
+
+  /**
    * Getter that returns the geometry of all features in the drawing layer in
    * Well Known Text (WKT) format.
    * @api
    */
   getWKT() {
-    const features = this.layer.getSource().getFeatures();
-    return new WKT().writeFeatures(features, projection);
+    return new WKT().writeFeatures(this.getFeatures(), projection);
   }
 
   /**
