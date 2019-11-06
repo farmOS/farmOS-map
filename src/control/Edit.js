@@ -433,6 +433,20 @@ class Edit extends Control {
    * @private
    */
   addInteractionListener(type, cb, format) {
+    const validTypes = [
+      'drawstart',
+      'drawend',
+      'modifystart',
+      'modifyend',
+      'translatestart',
+      'translating',
+      'translateend',
+      'select',
+      'delete',
+    ];
+    if (!validTypes.includes(type)) {
+      throw new Error(`Invalid event type. Valid options include: ${validTypes.join(', ')}`);
+    }
     if (['drawstart', 'drawend'].includes(type)) {
       this.drawInteraction.on(type, (e) => {
         const features = this.layer.getSource().getFeatures().concat(e.feature);
@@ -464,10 +478,6 @@ class Edit extends Control {
       if (!this.eventListeners.delete.includes({ cb, format })) {
         this.eventListeners.delete.push({ cb, format });
       }
-    } else {
-      throw new Error('Invalid event type. Valid options include: '
-      + '"drawstart", "drawend", "modifystart", "modifyend", "select", '
-      + '"translatestart", "translating", "translateend" or "delete"');
     }
   }
 
