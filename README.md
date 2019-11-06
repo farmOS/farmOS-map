@@ -217,14 +217,17 @@ drawing controls. This will add buttons for drawing polygons, lines, and points.
 Features can be selected, modified, moved, and deleted. This will add the Edit
 control to the map instance as `instance.edit`.
 
-#### Importing and exporting WKT
+#### Importing and exporting WKT / GeoJSON
 
-There are three methods on the Edit control for importing and exporting
-geometries in Well Known Text (WKT) format: `getWKT`, `setWKT` and `wktOn`.
-`getWKT` simply returns a string in WKT format for all the features on the
-drawing layer, while `setWKT` takes a string in WKT and adds it as a feature to
-the drawing layer. You can add event listeners for particular editing
-interactions with `wktOn`:
+There are some methods on the Edit control for importing and exporting
+geometries in Well Known Text (WKT) and GeoJSON format:
+
+- `getWKT` / `getGeoJSON` - returns a string containing all the features on the
+  drawing layer.
+- `setWKT` / `setGeoJSON` - takes a string and adds its features to the drawing
+  layer. This replaces any existing features in the layer.
+- `wktOn` / `geoJSONOn` - add event listeners for particular editing
+  interactions. See example below:
 
 ```js
 const myMap = farmOS.map.create("map", { drawing: true });
@@ -234,10 +237,10 @@ myMap.edit.wktOn("featurechange", (wkt) => console.log(wkt));
 The first parameter needs to be one of the supported event types, which
 correspond closely to the event types provide on OpenLayers' different editing
 interactions (see the chart below). The second parameter is a callback, which
-will be called whenever the event fires. The callback gets a string of WKT
-passed in as its argument.
+will be called whenever the event fires. The callback gets a string of WKT /
+GeoJSON passed in as its argument.
 
-| Event Type         | Timing            | WKT Includes      | OL Interaction  |
+| Event Type         | Timing            | Includes        | OL Interaction  |
 | :------------------| :---------------- | :-------------- | :-------------- |
 | `featurechange`&ast; | after any feature change occurs | all features in the drawing layer | n/a |
 | `delete`&ast; | after a feature is deleted | all remaining features in the drawing layer | n/a |
@@ -256,7 +259,8 @@ farmOS-map (not by OpenLayers).
 The `featurechange` event is a shortcut that automatically assigns the callback
 to all events that fire when features are changed in the drawing layer,
 including `drawend`, `modifyend`, `translating`, `translateend`, and `delete`.
-This is useful if all you want to do is get WKT whenever features change.
+This is useful if all you want to do is get WKT / GeoJSON whenever features
+change.
 
 The `delete` event fires when the "Delete selected features" button is clicked.
 
