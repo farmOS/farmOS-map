@@ -309,8 +309,6 @@ class Edit extends Control {
     });
 
     this.drawInteraction.on('drawend', () => {
-      this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
-      this.measureTooltip.setOffset([0, -7]);
       // unset tooltip so that a new one can be created
       this.measureTooltipElement = null;
       this.createMeasureTooltip();
