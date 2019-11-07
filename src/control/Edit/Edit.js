@@ -288,12 +288,11 @@ class Edit extends Control {
      * See: https://openlayers.org/en/latest/examples/measure.html
      */
     this.createMeasureTooltip();
-    let listener;
     this.drawInteraction.on('drawstart', (event) => {
       /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
       let tooltipCoord = event.coordinate;
 
-      listener = event.feature.getGeometry().on('change', (e) => {
+      this.measureListener = event.feature.getGeometry().on('change', (e) => {
         const geom = e.target;
         let output;
         if (geom instanceof Polygon) {
@@ -314,7 +313,7 @@ class Edit extends Control {
       // unset tooltip so that a new one can be created
       this.measureTooltipElement = null;
       this.createMeasureTooltip();
-      unByKey(listener);
+      unByKey(this.measureListener);
     });
 
     // Add an event listener that adds newly drawn features to the snap
