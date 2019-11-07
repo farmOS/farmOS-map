@@ -188,6 +188,12 @@ class Edit extends Control {
       return;
     }
 
+    // If the button is already active, disable all edit features.
+    if (this.buttons[event.target.name].classList.contains('active')) {
+      this.disableAll();
+      return;
+    }
+
     // First, check to see if the delete button was clicked, because it is an
     // exception to the general button behaviors that follow. If so, handle the
     // delete logic and then stop further execution of this function.
