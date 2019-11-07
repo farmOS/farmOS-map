@@ -290,13 +290,10 @@ class Edit extends Control {
     this.createMeasureTooltip();
     let listener;
     this.drawInteraction.on('drawstart', (event) => {
-      // set sketch
-      this.sketch = event.feature;
-
       /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
       let tooltipCoord = event.coordinate;
 
-      listener = this.sketch.getGeometry().on('change', (e) => {
+      listener = event.feature.getGeometry().on('change', (e) => {
         const geom = e.target;
         let output;
         if (geom instanceof Polygon) {
@@ -314,8 +311,6 @@ class Edit extends Control {
     this.drawInteraction.on('drawend', () => {
       this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
       this.measureTooltip.setOffset([0, -7]);
-      // unset sketch
-      this.sketch = null;
       // unset tooltip so that a new one can be created
       this.measureTooltipElement = null;
       this.createMeasureTooltip();
