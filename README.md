@@ -12,7 +12,7 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 ## Usage
 
-1. Create an HTML element with an ID, eg: `<div id="farm-map" tabindex="0"></div>`
+1. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
 2. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
 3. (optional) Add behaviors - see below.
 
@@ -38,11 +38,13 @@ which OpenLayers controls and interactions are enabled by default in the map. If
 a property is set to `false`, none of its corresponding default controls or
 interactions will be applied to the map. If the property is assigned to an array
 of OpenLayers controls or interactions, the defaults will be discarded and those
-controls or interactions will be used in their place. If the property is
-assigned to a callback function, that function will be called and passed the
-default controls or interactions. It must return a an array of OL
-controls/interactions, which will be attached to the map in the place of the
-defaults.
+controls or interactions will be used in their place. If the property is an
+object, it is assumed that it is `options` that will be passed into the
+`defaultControls()` or `defaultInteractions()` functions that return OpenLayers
+defaults. If the property is assigned to a callback function, that function will
+be called and passed the default controls or interactions. It must return a an
+array of OL controls/interactions, which will be attached to the map in the
+place of the defaults.
 
 For example:
 
@@ -68,8 +70,19 @@ const opts2 = {
 };
 farmOS.map.create(id, opts2);
 
-// An options object with a function which alters the control defaults.
+// An options object with a options for default interactions.
+// See: https://openlayers.org/en/latest/apidoc/module-ol_interaction.html
 const opts3 = {
+  interactions: {
+    // Require focus for mouseScrollZoom and dragPan interactions.
+    // tabindex needs to be set on the map element for this to work.
+    onFocusOnly: true,
+  },
+};
+farmOS.map.create(id, opts3);
+
+// An options object with a function which alters the control defaults.
+const opts4 = {
   controls: (defaults) => defaults.filter(def => (
     def.constructor.name === 'Attribution'
     )).concat([
@@ -77,7 +90,7 @@ const opts3 = {
       new MyControl2(),
     ]),
 };
-farmOS.map.create(id, opts3);
+farmOS.map.create(id, opts4);
 ```
 
 ### Tearing down a map

@@ -25,6 +25,11 @@
     <script>
       var options = {
         drawing: true,
+        interactions: {
+          // Require focus for mouseScrollZoom and dragPan interactions.
+          // tabindex needs to be set on the map element for this to work.
+          onFocusOnly: true,
+        },
         units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);

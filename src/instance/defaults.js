@@ -48,8 +48,8 @@ const defaults = {
     // Determine the units to use for the ScaleLine control.
     const units = (options.units === 'us') ? 'us' : 'metric';
 
-    // Extend the OpenLayers defaults with farmOS defaults.
-    const extendedDefaults = defaultControls().extend([
+    // Define default farmOS controls.
+    const farmMapDefaults = [
       new LayerSwitcher(),
       new FullScreen(),
       new ScaleLine({ units }),
@@ -60,7 +60,7 @@ const defaults = {
         limit: 5,
         autoComplete: true,
       }),
-    ]);
+    ];
 
     // If controls were set to 'false', don't attach any controls.
     if (options.controls === false) {
@@ -72,24 +72,24 @@ const defaults = {
       return options.controls;
     }
 
+    // If an object was passed, assume that it is options that will be passed to
+    // defaultControls().
+    if (typeof options.controls === 'object') {
+      return defaultControls(options.controls).extend(farmMapDefaults);
+    }
+
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.controls === 'function') {
-      return options.controls(extendedDefaults.getArray());
+      return options.controls(defaultControls().extend(farmMapDefaults).getArray());
     }
 
     // Otherwise just return the defaults.
-    return extendedDefaults;
+    return defaultControls().extend(farmMapDefaults);
   },
 
   // Interactions.
   interactions(options) {
-
-    // Define options that will be passed into default interactions.
-    //   - Only respond to user input if the map has focus.
-    const defaultInteractionOptions = {
-      onFocusOnly: true,
-    };
 
     // If interactions were set to 'false', don't attach any interactions.
     if (options.interactions === false) {
@@ -101,14 +101,20 @@ const defaults = {
       return options.interactions;
     }
 
+    // If an object was passed, assume that it is options that will be passed to
+    // defaultInteractions().
+    if (typeof options.interactions === 'object') {
+      return defaultInteractions(options.interactions);
+    }
+
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.interactions === 'function') {
-      return options.interactions(defaultInteractions(defaultInteractionOptions).getArray());
+      return options.interactions(defaultInteractions().getArray());
     }
 
     // Otherwise just return the defaults.
-    return defaultInteractions(defaultInteractionOptions);
+    return defaultInteractions();
   },
 };
 export default defaults;
