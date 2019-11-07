@@ -11,8 +11,8 @@ import Collection from 'ol/Collection';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
-import projection from '../projection';
-import forEachLayer from '../forEachLayer';
+import projection from '../../projection';
+import forEachLayer from '../../forEachLayer';
 import './Edit.css';
 
 

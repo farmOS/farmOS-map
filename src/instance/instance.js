@@ -14,7 +14,7 @@ import { zoomToVectors, zoomToLayer } from './methods/zoom';
 import forEachLayer from '../forEachLayer';
 
 // Import Edit control.
-import Edit from '../control/Edit';
+import Edit from '../control/Edit/Edit';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
