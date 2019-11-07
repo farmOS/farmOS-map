@@ -568,6 +568,7 @@ class Edit extends Control {
       element: this.measureTooltipElement,
       offset: [0, -15],
       positioning: 'bottom-center',
+      stopEvent: false,
     });
     this.getMap().addOverlay(this.measureTooltip);
   }
