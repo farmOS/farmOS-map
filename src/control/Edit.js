@@ -137,6 +137,7 @@ class Edit extends Control {
    * Helper for creating a button element.
    * @param {DOMElement} element The main control element.
    * @param {object} options Options for the button.
+   * @return {DOMElement} The new button element.
    * @private
    */
   addButton(element, options) {
