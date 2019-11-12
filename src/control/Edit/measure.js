@@ -113,10 +113,9 @@ export function initMeasure(optMap, optLayer, optUnits) {
 
 /**
  * Start measuring.
- * @param {ol.Map} map The map to add overlay to.
  * @param {ol.Feature} feature The feature being measured.
  */
-export function startMeasure(map, feature) {
+export function startMeasure(feature) {
 
   // Get the feature ID. If no ID is set, generate one.
   let id = feature.getId();
@@ -145,21 +144,16 @@ export function startMeasure(map, feature) {
 
 /**
  * Stop measuring.
- * If the map parameter is set, any overlays that no longer correspond to a
- * feature in the drawing layer will be removed.
- * @param {ol.Map} map The map to remove overlays from.
  */
-export function stopMeasure(map = false) {
+export function stopMeasure() {
 
   // Remove any overlays that no longer correspond to drawn features.
-  if (map) {
-    Object.keys(measures).forEach((id) => {
-      if (!layer.getSource().getFeatureById(id)) {
-        map.removeOverlay(measures[id]);
-        delete measures[id];
-      }
-    });
-  }
+  Object.keys(measures).forEach((id) => {
+    if (!layer.getSource().getFeatureById(id)) {
+      map.removeOverlay(measures[id]);
+      delete measures[id];
+    }
+  });
 
   // Stop listening for measurement changes.
   measureListeners.forEach(listener => unByKey(listener));

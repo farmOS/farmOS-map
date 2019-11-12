@@ -203,7 +203,7 @@ class Edit extends Control {
       this.selectInteraction.getFeatures().clear();
 
       // Clear any measurements that no longer correspond to features.
-      stopMeasure(this.getMap());
+      stopMeasure();
 
       // Call event listeners.
       this.eventListeners.delete.forEach(({ cb, format }) => {
@@ -296,7 +296,7 @@ class Edit extends Control {
 
     // When drawing a new shape, create a measurement tooltip.
     this.drawInteraction.on('drawstart', (event) => {
-      startMeasure(this.getMap(), event.feature);
+      startMeasure(event.feature);
     });
     this.drawInteraction.on('drawend', () => {
       stopMeasure();
@@ -318,7 +318,7 @@ class Edit extends Control {
   disableDraw() {
     if (this.drawInteraction) {
       this.getMap().removeInteraction(this.drawInteraction);
-      stopMeasure(this.getMap());
+      stopMeasure();
     }
   }
 
@@ -390,7 +390,7 @@ class Edit extends Control {
       // When shapes are modified, update their length/area measurements.
       this.modifyInteraction.on('modifystart', (event) => {
         event.features.forEach((feature) => {
-          startMeasure(this.getMap(), feature);
+          startMeasure(feature);
         });
       });
       this.modifyInteraction.on('modifyend', () => {
@@ -436,7 +436,7 @@ class Edit extends Control {
       // When shapes are moved, update their length/area measurements.
       this.translateInteraction.on('translatestart', (event) => {
         event.features.forEach((feature) => {
-          startMeasure(this.getMap(), feature);
+          startMeasure(feature);
         });
       });
       this.translateInteraction.on('translateend', () => {
