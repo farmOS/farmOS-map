@@ -10,15 +10,11 @@ import VectorSource from 'ol/source/Vector';
 import Collection from 'ol/Collection';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
-import Overlay from 'ol/Overlay';
-import LineString from 'ol/geom/LineString';
-import Polygon from 'ol/geom/Polygon';
-import { unByKey } from 'ol/Observable';
 
 import projection from '../../projection';
 import forEachLayer from '../../forEachLayer';
 
-import { formatLength, formatArea } from './measure';
+import { startMeasure, stopMeasure } from './measure';
 import './Edit.css';
 
 
@@ -285,34 +281,12 @@ class Edit extends Control {
       }
     });
 
-    /**
-     * See: https://openlayers.org/en/latest/examples/measure.html
-     */
-    this.createMeasureTooltip();
+    // When drawing a new shape, create a measurement tooltip.
     this.drawInteraction.on('drawstart', (event) => {
-      /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
-      let tooltipCoord = event.coordinate;
-
-      this.measureListener = event.feature.getGeometry().on('change', (e) => {
-        const geom = e.target;
-        let output;
-        if (geom instanceof Polygon) {
-          output = formatArea(geom);
-          tooltipCoord = geom.getInteriorPoint().getCoordinates();
-        } else if (geom instanceof LineString) {
-          output = formatLength(geom);
-          tooltipCoord = geom.getLastCoordinate();
-        }
-        this.measureTooltipElement.innerHTML = output;
-        this.measureTooltip.setPosition(tooltipCoord);
-      });
+      startMeasure(this.getMap(), event.feature);
     });
-
     this.drawInteraction.on('drawend', () => {
-      // unset tooltip so that a new one can be created
-      this.measureTooltipElement = null;
-      this.createMeasureTooltip();
-      unByKey(this.measureListener);
+      stopMeasure();
     });
 
     // Add an event listener that adds newly drawn features to the snap
@@ -331,6 +305,7 @@ class Edit extends Control {
   disableDraw() {
     if (this.drawInteraction) {
       this.getMap().removeInteraction(this.drawInteraction);
+      stopMeasure(this.getMap(), this.layer);
     }
   }
 
@@ -551,24 +526,6 @@ class Edit extends Control {
     else {
       this.buttons.delete.style.display = 'none';
     }
-  }
-
-  /**
-   * Creates a new measure tooltip
-   */
-  createMeasureTooltip() {
-    if (this.measureTooltipElement) {
-      this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
-    }
-    this.measureTooltipElement = document.createElement('div');
-    this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
-    this.measureTooltip = new Overlay({
-      element: this.measureTooltipElement,
-      offset: [0, -15],
-      positioning: 'bottom-center',
-      stopEvent: false,
-    });
-    this.getMap().addOverlay(this.measureTooltip);
   }
 
   /**
