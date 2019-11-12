@@ -76,6 +76,20 @@ function formatArea(polygon) {
 }
 
 /**
+ * Get the feature ID. If no ID is set, generate one.
+ * @param {ol.Feature} feature The feature.
+ */
+function getFeatureId(feature) {
+  let id = feature.getId();
+  if (!id) {
+    id = `measureFeature${featureId}`;
+    feature.setId(id);
+    featureId += 1;
+  }
+  return id;
+}
+
+/**
  * Update a measurement, given a geometry.
  * @param {ol.Overlay} measure The measure overlay.
  * @param {ol.SimpleGeometry} geom The geomtery to measure (Polygon or
@@ -98,6 +112,23 @@ function updateMeasure(measure, geom) {
 }
 
 /**
+ * Create a measurement overlay for a feature.
+ * @param {ol.Feature} feature The feature to create a measurement for.
+ */
+function createMeasure(feature) {
+  const id = getFeatureId(feature);
+  const element = document.createElement('div');
+  element.className = 'ol-tooltip ol-tooltip-measure';
+  measures[id] = new Overlay({
+    element,
+    offset: [0, -15],
+    positioning: 'bottom-center',
+    stopEvent: false,
+  });
+  map.addOverlay(measures[id]);
+}
+
+/**
  * Initialize measure functionality.
  * @param {ol.Map} map The map that measurements will be added to.
  * @param {ol.Layer} layer The layer that contains drawing features.
@@ -117,25 +148,12 @@ export function initMeasure(optMap, optLayer, optUnits) {
  */
 export function startMeasure(feature) {
 
-  // Get the feature ID. If no ID is set, generate one.
-  let id = feature.getId();
-  if (!id) {
-    id = `measureFeature${featureId}`;
-    feature.setId(id);
-    featureId += 1;
-  }
+  // Get the feature ID.
+  const id = getFeatureId(feature);
 
   // If a measurement overlay does not exist for the feature, create it.
   if (!measures[id]) {
-    const element = document.createElement('div');
-    element.className = 'ol-tooltip ol-tooltip-measure';
-    measures[id] = new Overlay({
-      element,
-      offset: [0, -15],
-      positioning: 'bottom-center',
-      stopEvent: false,
-    });
-    map.addOverlay(measures[id]);
+    createMeasure(feature);
   }
 
   // Listen for changes to the feature, and update its measurement.
