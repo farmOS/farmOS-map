@@ -7,9 +7,8 @@ import { getArea, getLength } from 'ol/sphere';
 // Store measurement overlays keyed by the ID of the feature they measure.
 const measures = {};
 
-// This will be used to maintain a listener for changes to shapes, so the
-// current measurement can be updated as shapes change.
-let measureListener;
+// Store measurement listeners for changes to shapes.
+const measureListeners = [];
 
 // Maintain a counter for feature IDs.
 let featureId = 0;
@@ -97,7 +96,7 @@ export function startMeasure(map, feature) {
   }
 
   // Listen for changes to the feature, and update its measurement.
-  measureListener = feature.getGeometry().on('change', e => updateMeasure(measures[id], e.target));
+  measureListeners[id] = feature.getGeometry().on('change', e => updateMeasure(measures[id], e.target));
 }
 
 /**
@@ -120,5 +119,5 @@ export function stopMeasure(map = false, layer = false) {
   }
 
   // Stop listening for measurement changes.
-  unByKey(measureListener);
+  measureListeners.forEach(listener => unByKey(listener));
 }
