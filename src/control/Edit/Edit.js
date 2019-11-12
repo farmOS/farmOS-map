@@ -376,6 +376,16 @@ class Edit extends Control {
           });
         }
       });
+
+      // When shapes are modified, update their length/area measurements.
+      this.modifyInteraction.on('modifystart', (event) => {
+        event.features.forEach((feature) => {
+          startMeasure(this.getMap(), feature);
+        });
+      });
+      this.modifyInteraction.on('modifyend', () => {
+        stopMeasure();
+      });
     }
     this.getMap().addInteraction(this.modifyInteraction);
   }
@@ -387,6 +397,7 @@ class Edit extends Control {
   disableModify() {
     if (this.modifyInteraction) {
       this.getMap().removeInteraction(this.modifyInteraction);
+      stopMeasure();
     }
   }
 
@@ -411,6 +422,16 @@ class Edit extends Control {
           });
         }
       });
+
+      // When shapes are moved, update their length/area measurements.
+      this.translateInteraction.on('translatestart', (event) => {
+        event.features.forEach((feature) => {
+          startMeasure(this.getMap(), feature);
+        });
+      });
+      this.translateInteraction.on('translateend', () => {
+        stopMeasure();
+      });
     }
     this.getMap().addInteraction(this.translateInteraction);
   }
@@ -422,6 +443,7 @@ class Edit extends Control {
   disableMove() {
     if (this.translateInteraction) {
       this.getMap().removeInteraction(this.translateInteraction);
+      stopMeasure();
     }
   }
 
