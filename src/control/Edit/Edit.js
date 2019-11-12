@@ -115,11 +115,12 @@ class Edit extends Control {
       this.buttons[buttons[i].name] = this.addButton(buttons[i].element, buttons[i]);
     }
 
-    // Get the vector source from the layer.
+    // Get the drawing layer from the options.
     this.layer = options.layer;
 
-    // Initialize line/area measurement with the system of measurement.
-    initMeasure(options.units);
+    // Initialize line/area measurement with the drawing layer and the system of
+    // measurement.
+    initMeasure(this.layer, options.units);
 
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of
@@ -196,7 +197,7 @@ class Edit extends Control {
       this.selectInteraction.getFeatures().clear();
 
       // Clear any measurements that no longer correspond to features.
-      stopMeasure(this.getMap(), this.layer);
+      stopMeasure(this.getMap());
 
       // Call event listeners.
       this.eventListeners.delete.forEach(({ cb, format }) => {
@@ -311,7 +312,7 @@ class Edit extends Control {
   disableDraw() {
     if (this.drawInteraction) {
       this.getMap().removeInteraction(this.drawInteraction);
-      stopMeasure(this.getMap(), this.layer);
+      stopMeasure(this.getMap());
     }
   }
 

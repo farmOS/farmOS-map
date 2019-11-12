@@ -10,6 +10,9 @@ const measures = {};
 // Store measurement listeners for changes to shapes.
 const measureListeners = [];
 
+// Remember the layer that contains drawing features.
+let drawingLayer;
+
 // Remember the system of measurement (us or metric). See initMeasure().
 let systemOfMeasure;
 
@@ -96,9 +99,11 @@ function updateMeasure(measure, geom) {
 
 /**
  * Initialize measure functionality.
+ * @param {ol.Layer} layer The layer that contains drawing features.
  * @param {string} units The system of measurement to use (us or metric).
  */
-export function initMeasure(units) {
+export function initMeasure(layer, units) {
+  drawingLayer = layer;
   systemOfMeasure = units;
 }
 
@@ -136,17 +141,16 @@ export function startMeasure(map, feature) {
 
 /**
  * Stop measuring.
- * If both map and layer parameters are set, any overlays that no longer
- * correspond to a feature in the layer will be removed.
+ * If the map parameter is set, any overlays that no longer correspond to a
+ * feature in the drawing layer will be removed.
  * @param {ol.Map} map The map to remove overlays from.
- * @param {ol.Layer|bool} layer The layer to remove overlays from.
  */
-export function stopMeasure(map = false, layer = false) {
+export function stopMeasure(map = false) {
 
   // Remove any overlays that no longer correspond to drawn features.
-  if (layer) {
+  if (map) {
     Object.keys(measures).forEach((id) => {
-      if (!layer.getSource().getFeatureById(id)) {
+      if (!drawingLayer.getSource().getFeatureById(id)) {
         map.removeOverlay(measures[id]);
         delete measures[id];
       }
