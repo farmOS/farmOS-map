@@ -192,6 +192,9 @@ class Edit extends Control {
       });
       this.selectInteraction.getFeatures().clear();
 
+      // Clear any measurements that no longer correspond to features.
+      stopMeasure(this.getMap(), this.layer);
+
       // Call event listeners.
       this.eventListeners.delete.forEach(({ cb, format }) => {
         cb(format.writeFeatures(this.getFeatures(), projection));
