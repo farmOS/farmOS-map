@@ -126,6 +126,7 @@ function createMeasure(feature) {
     stopEvent: false,
   });
   map.addOverlay(measures[id]);
+  updateMeasure(measures[id], feature.getGeometry());
 }
 
 /**
@@ -140,6 +141,11 @@ export function initMeasure(optMap, optLayer, optUnits) {
   map = optMap;
   layer = optLayer;
   units = optUnits;
+
+  // If the drawing layer contains any features, add measurements for each.
+  layer.getSource().getFeatures().forEach((feature) => {
+    createMeasure(feature);
+  });
 }
 
 /**
