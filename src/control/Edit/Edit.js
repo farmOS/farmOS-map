@@ -14,7 +14,7 @@ import WKT from 'ol/format/WKT';
 import projection from '../../projection';
 import forEachLayer from '../../forEachLayer';
 
-import { startMeasure, stopMeasure } from './measure';
+import { initMeasure, startMeasure, stopMeasure } from './measure';
 import './Edit.css';
 
 
@@ -117,6 +117,9 @@ class Edit extends Control {
 
     // Get the vector source from the layer.
     this.layer = options.layer;
+
+    // Initialize line/area measurement with the system of measurement.
+    initMeasure(options.units);
 
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of

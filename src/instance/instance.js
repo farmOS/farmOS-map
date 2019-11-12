@@ -59,7 +59,8 @@ const createInstance = ({ target, options = {} }) => {
       color: 'orange',
     };
     const layer = instance.addLayer('vector', opts);
-    instance.edit = new Edit({ layer });
+    const units = (options.units === 'us') ? 'us' : 'metric';
+    instance.edit = new Edit({ layer, units });
     instance.map.addControl(instance.edit);
   }
 

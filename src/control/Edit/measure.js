@@ -10,6 +10,9 @@ const measures = {};
 // Store measurement listeners for changes to shapes.
 const measureListeners = [];
 
+// Remember the system of measurement (us or metric). See initMeasure().
+let systemOfMeasure;
+
 // Maintain a counter for feature IDs.
 let featureId = 0;
 
@@ -65,6 +68,14 @@ function updateMeasure(measure, geom) {
   measure.setPosition(coordinates);
   const element = measure.getElement();
   element.innerHTML = measurement;
+}
+
+/**
+ * Initialize measure functionality.
+ * @param {string} units The system of measurement to use (us or metric).
+ */
+export function initMeasure(units) {
+  systemOfMeasure = units;
 }
 
 /**
