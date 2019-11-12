@@ -118,9 +118,8 @@ class Edit extends Control {
     // Get the drawing layer from the options.
     this.layer = options.layer;
 
-    // Initialize line/area measurement with the drawing layer and the system of
-    // measurement.
-    initMeasure(this.layer, options.units);
+    // Get the system of measurement from the options.
+    this.units = options.units;
 
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of
@@ -136,6 +135,13 @@ class Edit extends Control {
       select: [],
       delete: [],
     };
+  }
+
+  /**
+   * Initialize line/area measurements.
+   */
+  measure() {
+    initMeasure(this.getMap(), this.layer, this.units);
   }
 
   /**

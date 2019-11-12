@@ -10,11 +10,11 @@ const measures = {};
 // Store measurement listeners for changes to shapes.
 const measureListeners = [];
 
-// Remember the layer that contains drawing features.
-let drawingLayer;
-
-// Remember the system of measurement (us or metric). See initMeasure().
-let systemOfMeasure;
+// Remember the map, drawing layer, and system of measurement.
+// See initMeasure().
+let map;
+let layer;
+let units;
 
 // Define conversion units and their coefficients.
 const m = 1;
@@ -36,7 +36,7 @@ let featureId = 0;
  */
 function formatLength(line) {
   const length = getLength(line);
-  switch (systemOfMeasure) {
+  switch (units) {
     case 'metric':
       if (length * km > 0.25) {
         return `${(length * km).toFixed(2)} km`;
@@ -59,7 +59,7 @@ function formatLength(line) {
  */
 function formatArea(polygon) {
   const area = getArea(polygon);
-  switch (systemOfMeasure) {
+  switch (units) {
     case 'metric':
       if (area * ha > 0.25) {
         return `${(area * ha).toFixed(2)} ha`;
@@ -99,12 +99,16 @@ function updateMeasure(measure, geom) {
 
 /**
  * Initialize measure functionality.
+ * @param {ol.Map} map The map that measurements will be added to.
  * @param {ol.Layer} layer The layer that contains drawing features.
  * @param {string} units The system of measurement to use (us or metric).
  */
-export function initMeasure(layer, units) {
-  drawingLayer = layer;
-  systemOfMeasure = units;
+export function initMeasure(optMap, optLayer, optUnits) {
+
+  // Save the map, drawing layer, and system of measurement for later use.
+  map = optMap;
+  layer = optLayer;
+  units = optUnits;
 }
 
 /**
@@ -150,7 +154,7 @@ export function stopMeasure(map = false) {
   // Remove any overlays that no longer correspond to drawn features.
   if (map) {
     Object.keys(measures).forEach((id) => {
-      if (!drawingLayer.getSource().getFeatureById(id)) {
+      if (!layer.getSource().getFeatureById(id)) {
         map.removeOverlay(measures[id]);
         delete measures[id];
       }

@@ -62,6 +62,7 @@ const createInstance = ({ target, options = {} }) => {
     const units = (options.units === 'us') ? 'us' : 'metric';
     instance.edit = new Edit({ layer, units });
     instance.map.addControl(instance.edit);
+    instance.edit.measure();
   }
 
   return instance;
