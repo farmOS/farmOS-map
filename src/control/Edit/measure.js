@@ -13,6 +13,16 @@ const measureListeners = [];
 // Remember the system of measurement (us or metric). See initMeasure().
 let systemOfMeasure;
 
+// Define conversion units and their coefficients.
+const m = 1;
+const km = 0.001;
+const ft = 3.28084;
+const mi = 0.0006213712;
+const sqM = 1;
+const ha = 0.0001;
+const sqFt = 10.76391;
+const ac = 0.0002471052;
+
 // Maintain a counter for feature IDs.
 let featureId = 0;
 
@@ -23,13 +33,20 @@ let featureId = 0;
  */
 function formatLength(line) {
   const length = getLength(line);
-  let output;
-  if (length > 100) {
-    output = `${Math.round(length / 1000 * 100) / 100} km`;
-  } else {
-    output = `${Math.round(length * 100) / 100} m`;
+  switch (systemOfMeasure) {
+    case 'metric':
+      if (length * km > 0.25) {
+        return `${(length * km).toFixed(2)} km`;
+      }
+      return `${(length * m).toFixed(0)} m`;
+    case 'us':
+      if (length * mi > 0.25) {
+        return `${(length * mi).toFixed(2)} mi`;
+      }
+      return `${(length * ft).toFixed(0)} ft`;
+    default:
+      return '';
   }
-  return output;
 }
 
 /**
@@ -39,13 +56,20 @@ function formatLength(line) {
  */
 function formatArea(polygon) {
   const area = getArea(polygon);
-  let output;
-  if (area > 10000) {
-    output = `${Math.round(area / 1000000 * 100)} km<sup>2</sup>`;
-  } else {
-    output = `${Math.round(area * 100) / 100} m<sup>2</sup>`;
+  switch (systemOfMeasure) {
+    case 'metric':
+      if (area * ha > 0.25) {
+        return `${(area * ha).toFixed(2)} ha`;
+      }
+      return `${(area * sqM).toFixed(0)} m<sup>2</sup>`;
+    case 'us':
+      if (area * ac > 0.25) {
+        return `${(area * ac).toFixed(2)} ac`;
+      }
+      return `${(area * sqFt).toFixed(0)} ft<sup>2</sup>`;
+    default:
+      return '';
   }
-  return output;
 }
 
 /**
