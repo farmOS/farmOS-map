@@ -298,8 +298,8 @@ class Edit extends Control {
     this.drawInteraction.on('drawstart', (event) => {
       startMeasure(event.feature);
     });
-    this.drawInteraction.on('drawend', () => {
-      stopMeasure();
+    this.drawInteraction.on('drawend', (event) => {
+      stopMeasure(event.feature);
     });
 
     // Add an event listener that adds newly drawn features to the snap

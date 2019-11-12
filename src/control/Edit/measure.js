@@ -162,17 +162,30 @@ export function startMeasure(feature) {
 
 /**
  * Stop measuring.
+ * @param {ol.Feature|bool} feature Optionally provide a feature which will be
+ * included in the cleanup comparison code. This is used when the `drawend`
+ * event fires, because the new feature is not yet added to the source layer.
  */
-export function stopMeasure() {
-
-  // Remove any overlays that no longer correspond to drawn features.
-  Object.keys(measures).forEach((id) => {
-    if (!layer.getSource().getFeatureById(id)) {
-      map.removeOverlay(measures[id]);
-      delete measures[id];
-    }
-  });
+export function stopMeasure(feature = false) {
 
   // Stop listening for measurement changes.
   measureListeners.forEach(listener => unByKey(listener));
+
+  // Remove any overlays that no longer correspond to drawn features.
+  Object.keys(measures).forEach((id) => {
+
+    // If a feature with this ID exists in the source, skip it.
+    if (layer.getSource().getFeatureById(id)) {
+      return;
+    }
+
+    // If a feature was passed into this function, and its ID matches, skip it.
+    if (feature && feature.getId() === id) {
+      return;
+    }
+
+    // Remove the overlay.
+    map.removeOverlay(measures[id]);
+    delete measures[id];
+  });
 }
