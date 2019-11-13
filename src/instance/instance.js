@@ -14,7 +14,7 @@ import { zoomToVectors, zoomToLayer } from './methods/zoom';
 import forEachLayer from '../forEachLayer';
 
 // Import Edit control.
-import Edit from '../control/Edit';
+import Edit from '../control/Edit/Edit';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
@@ -59,8 +59,10 @@ const createInstance = ({ target, options = {} }) => {
       color: 'orange',
     };
     const layer = instance.addLayer('vector', opts);
-    instance.edit = new Edit({ layer });
+    const units = (options.units === 'us') ? 'us' : 'metric';
+    instance.edit = new Edit({ layer, units });
     instance.map.addControl(instance.edit);
+    instance.edit.measure();
   }
 
   return instance;
