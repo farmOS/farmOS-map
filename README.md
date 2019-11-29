@@ -149,6 +149,13 @@ const xyzOpts = {
   base: false // defaults to false
 };
 const xyzLayer = myMap.addLayer('xyz', xyzOpts);
+
+// Adding a vector layer.
+const vectorOpts = {
+  title: 'Drawing',
+  color: 'orange',
+};
+const vectorLayer = myMap.addLayer('vector', vectorOpts);
 ```
 
 The method returns a reference to the newly created layer for later use.
