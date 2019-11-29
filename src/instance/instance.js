@@ -23,6 +23,9 @@ const createInstance = ({ target, options = {} }) => {
     // The target element ID for the map.
     target,
 
+    // The instance initialization options.
+    options,
+
     // The OpenLayers map object.
     map: new Map({
       target,
