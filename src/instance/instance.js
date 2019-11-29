@@ -52,11 +52,6 @@ const createInstance = ({ target, options = {} }) => {
     }
   });
 
-  // Add drawing controls, if drawing is true.
-  if (options.drawing) {
-    instance.enableDraw();
-  }
-
   return instance;
 };
 export default createInstance;

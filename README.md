@@ -28,8 +28,6 @@ Available properties include:
 
 - `units` - The system of measurement to use. Should be either `metric` or `us`.
   Defaults to `metric`.
-- `drawing` - Boolean indicating whether or not the drawing controls should be
-  enabled on the map. Defaults to `false`.
 - `controls` - See below.
 - `interactions` - See below.
 
@@ -224,10 +222,18 @@ popup.on('farmOS-map.popup', function (event) {
 
 ### Drawing controls
 
-Set `drawing: true` in the options passed to `farmOS.map.create()` to enable
-drawing controls. This will add buttons for drawing polygons, lines, and points.
-Features can be selected, modified, moved, and deleted. This will add the Edit
-control to the map instance as `instance.edit`.
+Call the `enableDraw()` method on the instance returned by `farmOS.map.create()`
+to enable drawing controls. This will add buttons for drawing polygons, lines,
+and points. Features can be selected, modified, moved, and deleted.
+
+This will add the Edit control to the map instance as `instance.edit`.
+
+```js
+const myMap = farmOS.map.create("map");
+myMap.enableDraw();
+```
+
+A new drawing layer will be automatically created and added to the map.
 
 #### Importing and exporting WKT / GeoJSON
 
