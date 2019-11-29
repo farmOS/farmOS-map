@@ -105,7 +105,10 @@ farmOS.map.destroy('my-map');
 
 ### Adding layers
 
-To add vector or tile layers to the map, you can call the `addLayer` method. It takes a layer type as its first parameter, and a configuration object as its second parameter. The configuration parameter's properties may vary depending on the type of layer being added.
+To add vector or tile layers to the map, you can call the `addLayer` method. It
+takes a layer type as its first parameter, and a configuration object as its
+second parameter. The configuration parameter's properties may vary depending on
+the type of layer being added.
 
 ```js
 // Adding a Well Known Text layer
