@@ -130,6 +130,7 @@ const geoJsonOpts = {
 }
 const geoJSONLayer = myMap.addLayer('geojson', geoJsonOpts);
 
+// Adding a WMS layer.
 const wmsOpts = {
   title: 'soil-survey', // defaults to 'wms'
   url: 'https://sdmdataaccess.nrcs.usda.gov/Spatial/SDM.wms', // REQUIRED!
@@ -142,6 +143,7 @@ const wmsOpts = {
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
+// Adding an XYZ layer.
 const xyzOpts = {
   title: 'mapbox', // defaults to 'xyz'
   url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=[APIKEY]', // REQUIRED!
