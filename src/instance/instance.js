@@ -6,15 +6,13 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
+import enableDraw from './methods/edit';
 import { rememberLayer, addLayer } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 
 // Import forEachLayer helper function.
 import forEachLayer from '../forEachLayer';
-
-// Import Edit control.
-import Edit from '../control/Edit/Edit';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
@@ -39,6 +37,7 @@ const createInstance = ({ target, options = {} }) => {
     }),
 
     // Add instance methods.
+    enableDraw,
     rememberLayer,
     addLayer,
     addPopup,
@@ -54,18 +53,8 @@ const createInstance = ({ target, options = {} }) => {
   });
 
   // Add drawing controls, if drawing is true.
-  // Make the Edit control available at instance.edit.
   if (options.drawing) {
-    const opts = {
-      title: 'Drawing',
-      group: 'Editable layers',
-      color: 'orange',
-    };
-    const layer = instance.addLayer('vector', opts);
-    const units = (options.units === 'us') ? 'us' : 'metric';
-    instance.edit = new Edit({ layer, units });
-    instance.map.addControl(instance.edit);
-    instance.edit.measure();
+    instance.enableDraw();
   }
 
   return instance;
