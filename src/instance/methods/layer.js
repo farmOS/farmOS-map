@@ -201,6 +201,9 @@ export default function addLayer(type, opts) {
       rememberLayer(layer);
     }
 
+    // Dispatch an event.
+    this.map.dispatchEvent('farmOS-map.layer', layer);
+
     // Return the layer.
     return layer;
   }
