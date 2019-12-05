@@ -240,15 +240,13 @@ const drawingLayer = myMap.addLayer('wkt', wktString);
 myMap.enableDraw({ layer: drawingLayer });
 ```
 
-#### Importing and exporting WKT / GeoJSON
+#### Exporting WKT / GeoJSON
 
-There are some methods on the Edit control for importing and exporting
+There are some methods on the Edit control for exporting
 geometries in Well Known Text (WKT) and GeoJSON format:
 
 - `getWKT` / `getGeoJSON` - returns a string containing all the features on the
   drawing layer.
-- `setWKT` / `setGeoJSON` - takes a string and adds its features to the drawing
-  layer. This replaces any existing features in the layer.
 - `wktOn` / `geoJSONOn` - add event listeners for particular editing
   interactions. See example below:
 

@@ -608,26 +608,6 @@ class Edit extends Control {
   }
 
   /**
-   * Setter which accepts features in Well Known Text (WKT) format and sets them
-   * as the drawing layer's source features. This will clear all current
-   * features first.
-   * @param {string} wktString A string of WKT.
-   * @api
-   */
-  setWKT(wktString) {
-    const source = this.layer.getSource();
-    source.clear();
-    const isMultipart = wktString.includes('MULTIPOINT')
-      || wktString.includes('MULTILINESTRING')
-      || wktString.includes('MULTIPOLYGON')
-      || wktString.includes('GEOMETRYCOLLECTION');
-    const features = isMultipart
-      ? new WKT({ splitCollection: true }).readFeatures(wktString, projection)
-      : [new WKT().readFeature(wktString, projection)];
-    source.addFeatures(features);
-  }
-
-  /**
    * Getter that returns the geometry of all features in the drawing layer in
    * GeoJSON format.
    * @api
@@ -635,20 +615,6 @@ class Edit extends Control {
   getGeoJSON() {
     const features = this.layer.getSource().getFeatures();
     return new GeoJSON().writeFeatures(features, projection);
-  }
-
-  /**
-   * Setter which accepts features in GeoJSON format and sets them as the
-   * drawing layer's source features. This will clear all current features
-   * first.
-   * @param {string} geoJSONString A string of GeoJSON.
-   * @api
-   */
-  setGeoJSON(geoJSONString) {
-    const source = this.layer.getSource();
-    source.clear();
-    const features = new GeoJSON().readFeatures(geoJSONString, projection);
-    source.addFeatures(features);
   }
 
   /**
