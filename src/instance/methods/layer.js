@@ -140,7 +140,7 @@ function addXYZTileLayer({
 }
 
 // Add a layer to the map by its type.
-export function addLayer(type, opts) {
+export default function addLayer(type, opts) {
   let layer;
   if (type.toLowerCase() === 'vector') {
     layer = addVectorLayer(opts);
