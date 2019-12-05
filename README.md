@@ -233,7 +233,12 @@ const myMap = farmOS.map.create("map");
 myMap.enableDraw();
 ```
 
-A new drawing layer will be automatically created and added to the map.
+A new drawing layer will be automatically created and added to the map, unless you provide a vector layer as an option:
+
+```js
+const drawingLayer = myMap.addLayer('wkt', wktString);
+myMap.enableDraw({ layer: drawingLayer });
+```
 
 #### Importing and exporting WKT / GeoJSON
 

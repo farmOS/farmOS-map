@@ -4,7 +4,7 @@ import Edit from '../../control/Edit/Edit';
 /**
  * Enable the drawing controls in the map.
  */
-export default function enableDraw() {
+export default function enableDraw({ layer } = {}) {
 
   // Create a drawing layer.
   const opts = {
@@ -12,14 +12,14 @@ export default function enableDraw() {
     group: 'Editable layers',
     color: 'orange',
   };
-  const layer = this.addLayer('vector', opts);
+  const drawingLayer = layer || this.addLayer('vector', opts);
 
   // Get the units from instance options.
   const units = (this.options.units === 'us') ? 'us' : 'metric';
 
   // Create the Edit control and add it to the map.
   // Make it available at instance.edit.
-  this.edit = new Edit({ layer, units });
+  this.edit = new Edit({ layer: drawingLayer, units });
   this.map.addControl(this.edit);
 
   // Enable geometry measurements.
