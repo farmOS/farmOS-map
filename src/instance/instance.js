@@ -7,12 +7,9 @@ import defaults from './defaults';
 
 // Import instance methods.
 import enableDraw from './methods/edit';
-import { rememberLayer, addLayer } from './methods/layer';
+import addLayer from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
-
-// Import forEachLayer helper function.
-import forEachLayer from '../forEachLayer';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
@@ -38,19 +35,12 @@ const createInstance = ({ target, options = {} }) => {
 
     // Add instance methods.
     enableDraw,
-    rememberLayer,
     addLayer,
     addPopup,
     zoomToVectors,
     zoomToLayer,
   };
 
-  // Remember visibility state of base layers with localStorage.
-  forEachLayer(instance.map.getLayerGroup(), (layer) => {
-    if (layer.get('type') === 'base') {
-      rememberLayer(layer);
-    }
-  });
 
   return instance;
 };
