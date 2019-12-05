@@ -1,6 +1,9 @@
 // Import farmOS map instance factory function.
 import createInstance from './instance/instance';
 
+// Import default behaviors.
+import defaultBehaviors from './behavior/defaults';
+
 // Import farmOS-map CSS.
 import './styles.css';
 
@@ -47,10 +50,14 @@ window.farmOS.map = {
 
   // Attach behaviors to an instance.
   attachBehaviors(instance) {
+    const behaviors = defaultBehaviors;
     Object.keys(this.behaviors).forEach((key) => {
       if (typeof this.behaviors[key].attach === 'function') {
-        this.behaviors[key].attach(instance);
+        behaviors[key] = this.behaviors[key];
       }
+    });
+    Object.keys(behaviors).forEach((key) => {
+      behaviors[key].attach(instance);
     });
   },
 
