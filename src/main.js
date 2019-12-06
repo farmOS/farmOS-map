@@ -1,6 +1,9 @@
 // Import farmOS map instance factory function.
 import createInstance from './instance/instance';
 
+// Import farmOS-map CSS.
+import './styles.css';
+
 // Define window.farmOS if it isn't already.
 if (typeof window.farmOS === 'undefined') {
   window.farmOS = {};
