@@ -4,15 +4,15 @@ import VectorSource from 'ol/source/Vector';
 // Import extent functions.
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
 
+// Import forEachLayer helper function.
+import forEachLayer from '../../forEachLayer';
+
 // Zoom to all vector sources in the map, recursing into layer groups.
 export function zoomToVectors(optlayers = null) {
   const extent = extentCreateEmpty();
-  const layers = optlayers || this.map.getLayers();
-  layers.forEach((layer) => {
-    if (layer.getLayers) {
-      const lyrs = layer.getLayers();
-      this.zoomToVectors(lyrs);
-    } else if (typeof layer.getSource === 'function') {
+  const layers = optlayers || this.map.getLayerGroup();
+  forEachLayer(layers, (layer) => {
+    if (typeof layer.getSource === 'function') {
       const source = layer.getSource();
       if (source !== 'null' && source instanceof VectorSource) {
         if (source.getState() === 'ready' && source.getFeatures().length > 0) {
