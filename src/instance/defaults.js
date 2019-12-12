@@ -17,12 +17,15 @@ import Geocoder from 'ol-geocoder';
 import {
   defaults as defaultControls,
   FullScreen,
+  Rotate,
   ScaleLine,
 } from 'ol/control';
 
 // Import OL interactions.
 import {
   defaults as defaultInteractions,
+  DragRotateAndZoom,
+  PinchRotate,
 } from 'ol/interaction';
 
 // Import Geolocate control.
@@ -58,6 +61,7 @@ const defaults = {
     const farmMapDefaults = [
       new LayerSwitcher(),
       new FullScreen(),
+      new Rotate({ autoHide: false }),
       new ScaleLine({ units }),
       new Geolocate(),
       new Geocoder('nominatim', {
@@ -99,6 +103,8 @@ const defaults = {
 
     // Define default farmOS interactions.
     const farmMapDefaults = [
+      new DragRotateAndZoom(),
+      new PinchRotate(),
     ];
 
     // If interactions were set to 'false', don't attach any interactions.

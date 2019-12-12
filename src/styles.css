@@ -54,6 +54,9 @@
 .ol-edit.ol-control {
   top: 5.5em;
 }
+.ol-rotate.ol-control {
+  right: 3.5em;
+}
 .layer-switcher {
   top: 3.5em;
 }
