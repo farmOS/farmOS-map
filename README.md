@@ -156,6 +156,15 @@ const vectorOpts = {
   color: 'orange',
 };
 const vectorLayer = myMap.addLayer('vector', vectorOpts);
+
+// Add a cluster layer.
+// This expects a GeoJSON URL containing centroid points for clustering.
+const clusterOpts = {
+  title: 'Animal Cluster', // defaults to 'cluster'
+  url: '/farm/assets/geojson/cluster/animal', // REQUIRED!
+  visible: true, // defaults to true
+};
+const clusterLayer = myMap.addLayer('cluster', clusterOpts);
 ```
 
 The method returns a reference to the newly created layer for later use.

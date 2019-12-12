@@ -1,5 +1,6 @@
 // Import source types, layer types, and formats.
 import VectorSource from 'ol/source/Vector';
+import Cluster from 'ol/source/Cluster';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
 import LayerGroup from 'ol/layer/Group';
@@ -12,7 +13,7 @@ import WKT from 'ol/format/WKT';
 import { setWithCredentials } from 'ol/featureloader';
 
 // Import styles.
-import styles from '../../styles';
+import styles, { clusterStyle } from '../../styles';
 
 // Import the default projection configuration
 import projection from '../../projection';
@@ -37,6 +38,28 @@ function addVectorLayer({
     visible,
   });
   return layer;
+}
+
+// Add a cluster layer to the map.
+function addClusterLayer({
+  title = 'cluster', url, visible = true,
+}) {
+  const format = new GeoJSON();
+  const centroidSource = new VectorSource({
+    url,
+    format,
+  });
+  const clusterSource = new Cluster({
+    distance: 50,
+    source: centroidSource,
+  });
+  const clusterLayer = new VectorLayer({
+    title,
+    source: clusterSource,
+    style: clusterStyle,
+    visible,
+  });
+  return clusterLayer;
 }
 
 // Add a GeoJSON feature layer to the map.
@@ -113,6 +136,12 @@ export default function addLayer(type, opts) {
   let layer;
   if (type.toLowerCase() === 'vector') {
     layer = addVectorLayer(opts);
+  }
+  if (type.toLowerCase() === 'cluster') {
+    if (!opts.url) {
+      throw new Error('Missing a Cluster GeoJSON url.');
+    }
+    layer = addClusterLayer(opts);
   }
   if (type.toLowerCase() === 'geojson') {
     if (!opts.url) {

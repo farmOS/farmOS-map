@@ -2,6 +2,7 @@ import Style from 'ol/style/Style';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/style/Circle';
+import Text from 'ol/style/Text';
 
 // Define the available colors and their associated RGBA values.
 const colors = {
@@ -36,3 +37,31 @@ const styles = (color) => {
   });
 };
 export default styles;
+
+// Provide a standard cluster style.
+const styleCache = {};
+export function clusterStyle(feature) {
+  const size = feature.get('features').length;
+  let style = styleCache[size];
+  if (!style) {
+    style = new Style({
+      image: new Circle({
+        radius: 14,
+        stroke: new Stroke({
+          color: 'rgba(255,255,255,1)',
+        }),
+        fill: new Fill({
+          color: 'green',
+        }),
+      }),
+      text: new Text({
+        text: size.toString(),
+        fill: new Fill({
+          color: 'rgba(255,255,255,1)',
+        }),
+      }),
+    });
+    styleCache[size] = style;
+  }
+  return style;
+}
