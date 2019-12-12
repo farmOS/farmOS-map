@@ -91,6 +91,10 @@ const defaults = {
   // Interactions.
   interactions(options) {
 
+    // Define default farmOS interactions.
+    const farmMapDefaults = [
+    ];
+
     // If interactions were set to 'false', don't attach any interactions.
     if (options.interactions === false) {
       return [];
@@ -104,17 +108,17 @@ const defaults = {
     // If an object was passed, assume that it is options that will be passed to
     // defaultInteractions().
     if (typeof options.interactions === 'object') {
-      return defaultInteractions(options.interactions);
+      return defaultInteractions(options.interactions).extend(farmMapDefaults);
     }
 
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.interactions === 'function') {
-      return options.interactions(defaultInteractions().getArray());
+      return options.interactions(defaultInteractions().extend(farmMapDefaults).getArray());
     }
 
     // Otherwise just return the defaults.
-    return defaultInteractions();
+    return defaultInteractions().extend(farmMapDefaults);
   },
 };
 export default defaults;
