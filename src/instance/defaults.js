@@ -14,10 +14,16 @@ import 'ol-geocoder/dist/ol-geocoder.css';
 import Geocoder from 'ol-geocoder';
 
 // Import OL controls.
-import { defaults as defaultControls, FullScreen, ScaleLine } from 'ol/control';
+import {
+  defaults as defaultControls,
+  FullScreen,
+  ScaleLine,
+} from 'ol/control';
 
 // Import OL interactions.
-import { defaults as defaultInteractions } from 'ol/interaction';
+import {
+  defaults as defaultInteractions,
+} from 'ol/interaction';
 
 // Import Geolocate control.
 import Geolocate from '../control/Geolocate/Geolocate';
