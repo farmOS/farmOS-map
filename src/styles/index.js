@@ -19,21 +19,22 @@ const colors = {
 // Returns an OpenLayers Style for a given color.
 const styles = (color) => {
   const rgba = colors[color] ? colors[color] : colors.yellow;
-  const fill = new Fill({
-    color: 'rgba(0,0,0,0)',
-  });
   const stroke = new Stroke({
     color: rgba,
     width: 2,
   });
-  return new Style({
-    image: new Circle({
-      fill,
-      stroke,
-      radius: 4,
-    }),
-    fill,
+  const fill = new Fill({
+    color: 'rgba(0,0,0,0)',
+  });
+  const image = new Circle({
     stroke,
+    fill,
+    radius: 4,
+  });
+  return new Style({
+    stroke,
+    fill,
+    image,
   });
 };
 export default styles;
