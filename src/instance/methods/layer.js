@@ -88,7 +88,7 @@ function addWKTLayer({
     || wkt.includes('MULTIPOLYGON')
     || wkt.includes('GEOMETRYCOLLECTION');
   const features = isMultipart
-    ? new WKT().readFeatures(wkt, projection)
+    ? new WKT({ splitCollection: true }).readFeatures(wkt, projection)
     : [new WKT().readFeature(wkt, projection)];
   const source = new VectorSource({ features });
   const layer = new VectorLayer({
