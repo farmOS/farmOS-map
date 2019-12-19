@@ -19,7 +19,6 @@ export function zoomToVectors(optlayers = null) {
           extendExtend(extent, source.getExtent());
           const fitOptions = {
             size: this.map.getSize(),
-            constrainResolution: false,
             padding: [20, 20, 20, 20],
           };
           this.map.getView().fit(extent, fitOptions);
@@ -38,7 +37,6 @@ export function zoomToLayer(layer) {
       extendExtend(extent, source.getExtent());
       const fitOptions = {
         size: this.map.getSize(),
-        constrainResolution: false,
         padding: [20, 20, 20, 20],
       };
       this.map.getView().fit(extent, fitOptions);
