@@ -45,6 +45,11 @@ export default function enableGoogleMaps() {
   const interactions = this.map.getInteractions();
   interactions.extend(defaultGoogleInteractions());
 
+  // Constrain the resolution of the map view because Google Maps API does not
+  // support fractional zoom levels.
+  // See: https://issuetracker.google.com/issues/35828923
+  this.map.getView().setConstrainResolution(true);
+
   // Activate Google Maps.
   const olGM = new OLGoogleMaps({ map: this.map });
   const gmap = olGM.getGoogleMapsMap();
