@@ -131,12 +131,18 @@ function addXYZTileLayer({
   return layer;
 }
 
-// Get a layer by name.
-export function getLayerByName(name) {
-  const mapLayersArray = this.map.getLayers().getArray();
-  for (let i = 0; i < mapLayersArray.length; i += 1) {
-    if (mapLayersArray[i].getLayers && mapLayersArray[i].get('title') === name) {
-      return mapLayersArray[i];
+// Get a layer by name, recursing into layer groups.
+export function getLayerByName(name, optlayers = null) {
+  const layers = optlayers || this.map.getLayers().getArray();
+  for (let i = 0; i < layers.length; i += 1) {
+    if (layers[i].getLayers) {
+      const childLayerName = getLayerByName(name, layers[i].getLayers().getArray());
+      if (childLayerName) {
+        return childLayerName;
+      }
+    }
+    if (layers[i].get('title') === name) {
+      return layers[i];
     }
   }
   return false;
