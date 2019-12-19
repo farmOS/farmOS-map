@@ -131,6 +131,17 @@ function addXYZTileLayer({
   return layer;
 }
 
+// Get a layer by name.
+export function getLayerByName(name) {
+  const mapLayersArray = this.map.getLayers().getArray();
+  for (let i = 0; i < mapLayersArray.length; i += 1) {
+    if (mapLayersArray[i].getLayers && mapLayersArray[i].get('title') === name) {
+      return mapLayersArray[i];
+    }
+  }
+  return false;
+}
+
 // Add a layer to the map by its type.
 export default function addLayer(type, opts) {
   let layer;
@@ -174,12 +185,7 @@ export default function addLayer(type, opts) {
     // If a layer group is specified, create it if it doesn't already exist.
     if (opts.group) {
       let group;
-      const mapLayersArray = this.map.getLayers().getArray();
-      for (let i = 0; i < mapLayersArray.length; i += 1) {
-        if (mapLayersArray[i].getLayers && mapLayersArray[i].get('title') === opts.group) {
-          group = mapLayersArray[i];
-        }
-      }
+      group = this.getLayerByName(opts.group);
       if (!group) {
         group = new LayerGroup({ title: opts.group });
         this.map.addLayer(group);
