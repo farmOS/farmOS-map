@@ -40,6 +40,7 @@ const defaults = {
     return [
       new LayerGroup({
         title: 'Base layers',
+        fold: 'close',
         layers: [
           new TileLayer({
             title: 'OpenStreetMap',

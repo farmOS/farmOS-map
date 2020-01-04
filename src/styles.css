@@ -21,7 +21,7 @@
 .ol-geocoder .gcd-gl-btn:after {
   content: '\1f50d';
 }
-.layer-switcher button {
+.layer-switcher > button {
   background-size: 1.5em 1.5em;
 }
 
