@@ -4,6 +4,10 @@ import OLGoogleMaps from 'olgm/OLGoogleMaps';
 import GoogleLayer from 'olgm/layer/Google';
 import { defaults as defaultGoogleInteractions } from 'olgm/interaction';
 
+// Add CSS override to fix font family/size issue described here:
+// https://github.com/farmOS/farmOS-map/issues/8#issuecomment-568076505
+import './google.css';
+
 // Enable Google Maps.
 // Note that this assumes the Google Maps API JavaScript was loaded onto the
 // page with a valid API key. See README.md.
