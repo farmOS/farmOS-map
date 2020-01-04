@@ -108,6 +108,11 @@ takes a layer type as its first parameter, and a configuration object as its
 second parameter. The configuration parameter's properties may vary depending on
 the type of layer being added.
 
+The order of layers in the map and layer switcher is determined by the order in
+which they are added to the map. Layers will be added to the top of the stack
+(appearing higher in the layer switcher), unless they are in the `Base layers`
+group, in which case they will be added to the bottom of the base layers list.
+
 ```js
 // Adding a Well Known Text layer
 const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 42.54427527000766, -75.53589016199109 42.54412508386721, -75.53588747978209 42.54302634269183, -75.53643733263014 42.54424760416683))";
