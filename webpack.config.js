@@ -1,15 +1,16 @@
-const package = require('./package.json');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const info = require('./package.json');
+
 module.exports = {
-  entry: __dirname + '/src/main.js',
+  entry: `${__dirname}/src/main.js`,
   output: {
-    path: __dirname + '/build',
-    filename: 'farmOS-map.js'
+    path: `${__dirname}/build`,
+    filename: 'farmOS-map.js',
   },
   performance: {
-    hints: false
+    hints: false,
   },
   module: {
     rules: [
@@ -17,15 +18,15 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ]
-      }
-    ]
+          { loader: 'css-loader' },
+        ],
+      },
+    ],
   },
   plugins: [
-    new webpack.BannerPlugin('farmOS-map v' + package.version),
+    new webpack.BannerPlugin(`farmOS-map v${info.version}`),
     new CopyWebpackPlugin([
-      { from: 'static' }
-    ])
-  ]
+      { from: 'static' },
+    ]),
+  ],
 };
