@@ -56,8 +56,14 @@ export default function enableGoogleMaps() {
   // See: https://issuetracker.google.com/issues/35828923
   this.map.getView().setConstrainResolution(true);
 
+  // Do not let OLGoogleMaps manage vector layers. It does not support all
+  // geometry types, and it does not support clusters.
+  const watch = {
+    vector: false,
+  };
+
   // Activate Google Maps.
-  const olGM = new OLGoogleMaps({ map: this.map });
+  const olGM = new OLGoogleMaps({ map: this.map, watch });
   const gmap = olGM.getGoogleMapsMap();
   olGM.activate();
 
