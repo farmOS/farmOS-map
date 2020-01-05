@@ -28,7 +28,7 @@
   "dependencies": {
     "ol": "^6.1.0",
     "ol-geocoder": "^4.0.0",
-    "ol-layerswitcher": "^3.3.0",
+    "ol-layerswitcher": "github:mstenta/ol-layerswitcher#farmOS-map",
     "ol-popup": "^4.0.0"
   }
 }
