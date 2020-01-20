@@ -12,7 +12,10 @@ import './google.css';
 // page with a valid API key. See README.md.
 export default function enableGoogleMaps() {
 
-  // Define the Google layers that we will add.
+  // Find the "Base layers" layer group.
+  const group = this.getLayerByName('Base layers');
+
+  // Build all the layers and add them to the group.
   const googleLayers = [
     {
       title: 'Google Hybrid',
@@ -30,21 +33,16 @@ export default function enableGoogleMaps() {
       title: 'Google Roadmap',
       mapTypeId: 'roadmap',
     },
-  ];
-
-  // Find the "Base layers" layer group.
-  const group = this.getLayerByName('Base layers');
-
-  // Build all the layers and add them to the group.
-  for (let i = 0; i < googleLayers.length; i += 1) {
+  ].map((options) => {
     const layer = new GoogleLayer({
-      title: googleLayers[i].title,
+      title: options.title,
       type: 'base',
       visible: false,
-      mapTypeId: googleLayers[i].mapTypeId,
+      mapTypeId: options.mapTypeId,
     });
     group.getLayers().insertAt(0, layer);
-  }
+    return layer;
+  });
 
   // Constrain the resolution of the map view because Google Maps API does not
   // support fractional zoom levels.
