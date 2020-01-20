@@ -42,7 +42,6 @@ const createInstance = ({ target, options = {} }) => {
     zoomToLayer,
   };
 
-
   return instance;
 };
 export default createInstance;
