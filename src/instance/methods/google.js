@@ -62,4 +62,38 @@ export default function enableGoogleMaps() {
 
   // Disable 45° Imagery.
   gmap.setTilt(0);
+
+  // Google Maps has a limitation in the way it handles maximum zoom levels.
+  // If the OpenLayers map is zoomed beyond the maximum zoom level supported by
+  // the Google layer (which varies by location), the OL map will zoom, but the
+  // Google map will not. This can cause issues if you are viewing/drawing
+  // vector shapes and using the Google layer as a guide, because it will not
+  // stay in sync with the OpenLayers zoom level.
+  //
+  // To get around this, we listen for changes in the map resolution, and if we
+  // find that the Google Maps zoom level is less than the OpenLayers zoom level
+  // (indicating that it wasn't able to zoom farther), then change the map type
+  // to the roadmap, which may still be incorrect but at least it is less
+  // distracting than satellite/terrain.
+  //
+  // For reference:
+  //   - https://www.drupal.org/project/farm_map/issues/2680273
+  //   - https://github.com/mapgears/ol3-google-maps/issues/216#issuecomment-571177483
+  let mapTypeId;
+  googleLayers.forEach((layer) => {
+    layer.on('change:visible', (e) => {
+      if (e.target.getVisible() && e.target.get('mapTypeId')) {
+        mapTypeId = e.target.get('mapTypeId');
+      }
+    });
+  });
+  this.map.getView().on('change:resolution', () => {
+    const zoom = this.map.getView().getZoom();
+    gmap.setZoom(zoom);
+    if (gmap.getZoom() < zoom) {
+      gmap.setMapTypeId('roadmap');
+    } else {
+      gmap.setMapTypeId(mapTypeId);
+    }
+  });
 }
