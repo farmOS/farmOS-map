@@ -33,8 +33,10 @@ export default function enableGoogleMaps() {
     },
   ];
 
-  // Build all the layers and add them to the map, under all other layers.
-  const layers = this.map.getLayers();
+  // Find the "Base layers" layer group.
+  const group = this.getLayerByName('Base layers');
+
+  // Build all the layers and add them to the group.
   for (let i = 0; i < googleLayers.length; i += 1) {
     const layer = new GoogleLayer({
       title: googleLayers[i].title,
@@ -42,7 +44,7 @@ export default function enableGoogleMaps() {
       visible: false,
       mapTypeId: googleLayers[i].mapTypeId,
     });
-    layers.insertAt(0, layer);
+    group.getLayers().insertAt(0, layer);
   }
 
   // Add interactions.
