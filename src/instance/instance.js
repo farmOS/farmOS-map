@@ -45,6 +45,11 @@ const createInstance = ({ target, options = {} }) => {
     attachBehavior,
   };
 
+  // Attach default behaviors.
+  defaults.behaviors().forEach((behavior) => {
+    instance.attachBehavior(behavior);
+  });
+
   return instance;
 };
 export default createInstance;
