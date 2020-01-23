@@ -302,9 +302,10 @@ The `delete` event fires when the "Delete selected features" button is clicked.
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
-JavaScript functions that will run automatically when a map is created.
+JavaScript functions that will run automatically when a map during map creation,
+or any time afterwards.
 
-You can add your own behaviors by creating a JavaScript file (eg:
+One way you can add your own behaviors is by creating a JavaScript file (eg:
 `myMapCustomizations.js`), and including it after `farmOS-map.js` in your page.
 
 Your JavaScript file should extend the global `farmOS.map.behaviors` variable
@@ -337,14 +338,28 @@ For example:
 One of the benefits of allowing behaviors to be added to a map when it is
 created is that it allows other applications to modify maps in a modular way.
 In farmOS/Drupal, for example, maps can be built in a contextually-aware way,
-enabling/disabling features (eg: drawing controls) depending on which page you
-are looking at in the UI. This can be accomplished simply by adding behavior
+enabling/disabling features (eg: drawing controls) depending on where the map is
+being used in the UI. This can be accomplished simply by adding behavior
 JavaScript files to pages via hooks in farmOS/Drupal modules.
 
 It can also be used for quick testing of the farmOS-map library. Simply create
 a behavior JavaScript file in the `static` directory, include it after
 `farmOS-map.js` in `static/index.html`, and run `npm run dev` to see your
 behavior in the development server.
+
+Behaviors can also be applied to a map after it has been loaded. To do this,
+simply run `instance.attachBehavior(myBehavior)` with a behavior object that has
+an `attach(instance)` method. For example (given a map `instance`):
+
+```js
+const myBehavior = {
+  attach(instance) {
+    // Run my behavior logic on the instance.
+  },
+};
+
+instance.attachBehavior(myBehavior);
+```
 
 ## Development
 
