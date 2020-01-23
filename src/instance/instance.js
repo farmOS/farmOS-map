@@ -10,7 +10,7 @@ import enableDraw from './methods/edit';
 import addLayer, { getLayerByName } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
-import { attachBehavior } from './methods/behavior';
+import { addBehavior, attachBehavior } from './methods/behavior';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
@@ -41,6 +41,7 @@ const createInstance = ({ target, options = {} }) => {
     getLayerByName,
     zoomToVectors,
     zoomToLayer,
+    addBehavior,
     attachBehavior,
   };
 
