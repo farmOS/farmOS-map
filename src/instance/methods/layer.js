@@ -27,7 +27,7 @@ setWithCredentials(true);
 
 // Add a Vector layer to the map.
 function addVectorLayer({
-  title = 'vector', color, visible = true,
+  title = 'vector', color = 'orange', visible = true,
 }) {
   const style = styles(color);
   const source = new VectorSource();
@@ -64,7 +64,7 @@ function addClusterLayer({
 
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
-  title = 'geojson', url, color, visible = true,
+  title = 'geojson', url, color = 'orange', visible = true,
 }) {
   const style = styles(color);
   const format = new GeoJSON();
@@ -80,7 +80,7 @@ function addGeoJSONLayer({
 
 // Add Well Known Text (WKT) geometry to the map.
 function addWKTLayer({
-  title = 'wkt', wkt, color, visible = true,
+  title = 'wkt', wkt, color = 'orange', visible = true,
 }) {
   const style = styles(color);
   const isMultipart = wkt.includes('MULTIPOINT')

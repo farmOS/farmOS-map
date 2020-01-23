@@ -119,7 +119,7 @@ const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 4
 const wktOpts = {
   title: 'my-polygon', // defaults to 'wkt'
   wkt, // REQUIRED!
-  color: 'orange', // defaults to 'yellow'
+  color: 'orange', // defaults to 'orange'
   visible: true, // defaults to true
 };
 const wktLayer = myMap.addLayer('wkt', wktOpts);
@@ -128,7 +128,7 @@ const wktLayer = myMap.addLayer('wkt', wktOpts);
 const geoJsonOpts = {
   title: 'geojson', // defaults to 'geojson'
   url: '/farm/areas/geojson/all', // REQUIRED!
-  color: 'grey', // defaults to 'yellow'
+  color: 'grey', // defaults to 'orange'
   visible: true, // defaults to true
 }
 const geoJSONLayer = myMap.addLayer('geojson', geoJsonOpts);
