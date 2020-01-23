@@ -27,7 +27,7 @@
         units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);
-      myMap.enableDraw();
+      myMap.addBehavior("edit");
       myMap.edit.wktOn("featurechange", console.log);
       myMap.edit.geoJSONOn("featurechange", console.log);
     </script>

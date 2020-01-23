@@ -6,7 +6,6 @@ import { Map, View } from 'ol';
 import defaults from './defaults';
 
 // Import instance methods.
-import enableDraw from './methods/edit';
 import addLayer, { getLayerByName } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
@@ -35,7 +34,6 @@ const createInstance = ({ target, options = {} }) => {
     }),
 
     // Add instance methods.
-    enableDraw,
     addLayer,
     addPopup,
     getLayerByName,

@@ -236,22 +236,24 @@ popup.on('farmOS-map.popup', function (event) {
 
 ### Drawing controls
 
-Call the `enableDraw()` method on the instance returned by `farmOS.map.create()`
-to enable drawing controls. This will add buttons for drawing polygons, lines,
-and points. Features can be selected, modified, moved, and deleted.
+Call the `addBehavior('edit')` method on the instance returned by
+`farmOS.map.create()` to enable drawing controls. This will add buttons for
+drawing polygons, lines, and points. Features can be selected, modified, moved,
+and deleted.
 
 This will add the Edit control to the map instance as `instance.edit`.
 
 ```js
 const myMap = farmOS.map.create("map");
-myMap.enableDraw();
+myMap.addBehavior('edit');
 ```
 
-A new drawing layer will be automatically created and added to the map, unless you provide a vector layer as an option:
+A new drawing layer will be automatically created and added to the map, unless
+you provide a vector layer as an option:
 
 ```js
-const drawingLayer = myMap.addLayer('wkt', wktString);
-myMap.enableDraw({ layer: drawingLayer });
+const drawingLayer = myMap.addLayer('vector');
+myMap.addBehavior('edit', { layer: drawingLayer });
 ```
 
 #### Exporting WKT / GeoJSON
