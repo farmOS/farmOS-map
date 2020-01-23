@@ -57,7 +57,7 @@ window.farmOS.map = {
       }
     });
     Object.keys(behaviors).forEach((key) => {
-      behaviors[key].attach(instance);
+      instance.attachBehavior(behaviors[key]);
     });
   },
 
