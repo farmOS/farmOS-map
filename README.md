@@ -398,7 +398,7 @@ To add Google Maps layers to a map, perform the following steps:
 ```
 
 3. After calling `var instance = farmOS.map.create(target)`, call
-   `instance.enableGoogleMaps();`.
+   `instance.addBehavior('google');`.
 
 It is important to set the `height` of the map element, otherwise the Google
 Maps layers will not work.

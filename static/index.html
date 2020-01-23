@@ -28,7 +28,7 @@
         units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);
-      // myMap.enableGoogleMaps();
+      // myMap.addBehavior("google");
       myMap.addBehavior("edit");
       myMap.addBehavior("measure", { layer: myMap.edit.layer });
       myMap.edit.wktOn("featurechange", console.log);
