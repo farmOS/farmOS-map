@@ -149,7 +149,7 @@ export function getLayerByName(name, optlayers = null) {
 }
 
 // Add a layer to the map by its type.
-export default function addLayer(type, opts) {
+export default function addLayer(type, opts = {}) {
   let layer;
   if (type.toLowerCase() === 'vector') {
     layer = addVectorLayer(opts);
