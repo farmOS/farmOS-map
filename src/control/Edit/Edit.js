@@ -14,7 +14,6 @@ import WKT from 'ol/format/WKT';
 import projection from '../../projection';
 import forEachLayer from '../../forEachLayer';
 
-import { initMeasure, startMeasure, stopMeasure } from './measure';
 import './Edit.css';
 
 
@@ -118,9 +117,6 @@ class Edit extends Control {
     // Get the drawing layer from the options.
     this.layer = options.layer;
 
-    // Get the system of measurement from the options.
-    this.units = options.units;
-
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of
     // objects, each with a callback and a format.
@@ -136,13 +132,6 @@ class Edit extends Control {
       delete: [],
       disable: [],
     };
-  }
-
-  /**
-   * Initialize line/area measurements.
-   */
-  measure() {
-    initMeasure(this.getMap(), this.layer, this.units);
   }
 
   /**
@@ -202,9 +191,6 @@ class Edit extends Control {
         this.snapInteraction.removeFeature(f);
       });
       this.selectInteraction.getFeatures().clear();
-
-      // Clear any measurements that no longer correspond to features.
-      stopMeasure();
 
       // Call event listeners.
       this.eventListeners.delete.forEach(({ cb, format }) => {
@@ -295,14 +281,6 @@ class Edit extends Control {
       }
     });
 
-    // When drawing a new shape, create a measurement tooltip.
-    this.drawInteraction.on('drawstart', (event) => {
-      startMeasure(event.feature);
-    });
-    this.drawInteraction.on('drawend', (event) => {
-      stopMeasure(event.feature);
-    });
-
     // Add an event listener that adds newly drawn features to the snap
     // interaction's feature collection (so that they can be snapped to).
     this.drawInteraction.on('drawend', (event) => {
@@ -367,16 +345,6 @@ class Edit extends Control {
           });
         }
       });
-
-      // When shapes are modified, update their length/area measurements.
-      this.modifyInteraction.on('modifystart', (event) => {
-        event.features.forEach((feature) => {
-          startMeasure(feature);
-        });
-      });
-      this.modifyInteraction.on('modifyend', () => {
-        stopMeasure();
-      });
     }
     this.getMap().addInteraction(this.modifyInteraction);
   }
@@ -401,16 +369,6 @@ class Edit extends Control {
             });
           });
         }
-      });
-
-      // When shapes are moved, update their length/area measurements.
-      this.translateInteraction.on('translatestart', (event) => {
-        event.features.forEach((feature) => {
-          startMeasure(feature);
-        });
-      });
-      this.translateInteraction.on('translateend', () => {
-        stopMeasure();
       });
     }
     this.getMap().addInteraction(this.translateInteraction);
@@ -473,7 +431,6 @@ class Edit extends Control {
           this[interaction].getFeatures().clear();
         }
         this.getMap().removeInteraction(this[interaction]);
-        stopMeasure();
       }
     });
     this.toggleActiveButton(false, false);

@@ -11,7 +11,7 @@ const measures = {};
 const measureListeners = [];
 
 // Remember the map, drawing layer, and system of measurement.
-// See initMeasure().
+// See attach().
 let map;
 let layer;
 let units;
@@ -130,25 +130,6 @@ function createMeasure(feature) {
 }
 
 /**
- * Initialize measure functionality.
- * @param {ol.Map} map The map that measurements will be added to.
- * @param {ol.Layer} layer The layer that contains drawing features.
- * @param {string} units The system of measurement to use (us or metric).
- */
-export function initMeasure(optMap, optLayer, optUnits) {
-
-  // Save the map, drawing layer, and system of measurement for later use.
-  map = optMap;
-  layer = optLayer;
-  units = optUnits;
-
-  // If the drawing layer contains any features, add measurements for each.
-  layer.getSource().getFeatures().forEach((feature) => {
-    createMeasure(feature);
-  });
-}
-
-/**
  * Start measuring.
  * @param {ol.Feature} feature The feature being measured.
  */
@@ -195,3 +176,51 @@ export function stopMeasure(feature = false) {
     delete measures[id];
   });
 }
+
+// Measure behavior.
+export default {
+  attach(instance, options = {}) {
+
+    // Save the map, drawing layer, and system of measurement for later use.
+    ({ map, units } = instance);
+    ({ layer } = options);
+
+    // If the drawing layer contains any features, add measurements for each.
+    layer.getSource().getFeatures().forEach((feature) => {
+      createMeasure(feature);
+    });
+
+    // If the instance has an Edit control, attach listeners to the map
+    // interactions so that we can apply measurements to the features.
+    if (instance.edit) {
+      instance.edit.addInteractionListener('drawstart', (geojson, event) => {
+        startMeasure(event.feature);
+      });
+      instance.edit.addInteractionListener('drawend', (geojson, event) => {
+        stopMeasure(event.feature);
+      });
+      instance.edit.addInteractionListener('modifystart', (geojson, event) => {
+        event.features.forEach((feature) => {
+          startMeasure(feature);
+        });
+      });
+      instance.edit.addInteractionListener('modifyend', () => {
+        stopMeasure();
+      });
+      instance.edit.addInteractionListener('translatestart', (geojson, event) => {
+        event.features.forEach((feature) => {
+          startMeasure(feature);
+        });
+      });
+      instance.edit.addInteractionListener('translateend', () => {
+        stopMeasure();
+      });
+      instance.edit.addInteractionListener('delete', () => {
+        stopMeasure();
+      });
+      instance.edit.addInteractionListener('disable', () => {
+        stopMeasure();
+      });
+    }
+  },
+};

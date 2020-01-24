@@ -1,5 +1,6 @@
 // Import pre-defined behaviors from src/behavior.
 import edit from '../../behavior/edit';
+import measure from '../../behavior/measure';
 import rememberLayer from '../../behavior/rememberLayer';
 
 
@@ -9,6 +10,7 @@ import rememberLayer from '../../behavior/rememberLayer';
 export function addBehavior(name, options = {}) {
   const behaviors = {
     edit,
+    measure,
     rememberLayer,
   };
   this.attachBehavior(behaviors[name], options);

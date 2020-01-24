@@ -31,10 +31,5 @@ export default {
     /* eslint-disable-next-line no-param-reassign */
     instance.edit = new Edit({ layer: drawingLayer, units });
     instance.map.addControl(instance.edit);
-
-    // Enable geometry measurements.
-    // This needs to happen after the control is added to the map because it needs
-    // access to the map object to add overlays.
-    instance.edit.measure();
   },
 };

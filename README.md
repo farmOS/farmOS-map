@@ -256,6 +256,27 @@ const drawingLayer = myMap.addLayer('vector');
 myMap.addBehavior('edit', { layer: drawingLayer });
 ```
 
+### Measurements
+
+Call the `addBehavior('measure', { layer })` method on the instance returned by
+`farmOS.map.create()` to enable length/area measurements of features in a given
+layer. This will add tooltips to all features in the layer.
+
+The map instance's configured system of measurement will be used. Lines will be
+measured in kilometers (meters for <0.25 km lengths) or miles (square feet for
+<0.25 mi lengths). Polygons will be measured in hectares (square meters for
+<0.25 ha areas) or acres (square feet for <0.25 ac areas).
+
+If the `edit` behavior is attached, then measurements will be created with new
+shapes as they are drawn, modified, and moved.
+
+```js
+const myMap = farmOS.map.create("map");
+const drawingLayer = myMap.addLayer('vector');
+myMap.addBehavior('edit', { layer: drawingLayer });
+myMap.addBehavior('measure', { layer: drawingLayer });
+```
+
 #### Exporting WKT / GeoJSON
 
 There are some methods on the Edit control for exporting
