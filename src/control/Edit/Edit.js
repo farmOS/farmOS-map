@@ -312,17 +312,6 @@ class Edit extends Control {
   }
 
   /**
-   * Disable draw interaction.
-   * @private
-   */
-  disableDraw() {
-    if (this.drawInteraction) {
-      this.getMap().removeInteraction(this.drawInteraction);
-      stopMeasure();
-    }
-  }
-
-  /**
    * Enable select interaction.
    */
   enableSelect() {
@@ -354,15 +343,6 @@ class Edit extends Control {
       });
     }
     this.getMap().addInteraction(this.selectInteraction);
-  }
-
-  /**
-   * Disable select interaction.
-   */
-  disableSelect() {
-    if (this.selectInteraction) {
-      this.getMap().removeInteraction(this.selectInteraction);
-    }
   }
 
   /**
@@ -401,17 +381,6 @@ class Edit extends Control {
   }
 
   /**
-   * Disable modify interaction.
-   * @private
-   */
-  disableModify() {
-    if (this.modifyInteraction) {
-      this.getMap().removeInteraction(this.modifyInteraction);
-      stopMeasure();
-    }
-  }
-
-  /**
    * Enable select and translate interactions.
    * @private
    */
@@ -447,17 +416,6 @@ class Edit extends Control {
   }
 
   /**
-   * Disable select and translate interactions.
-   * @private
-   */
-  disableMove() {
-    if (this.translateInteraction) {
-      this.getMap().removeInteraction(this.translateInteraction);
-      stopMeasure();
-    }
-  }
-
-  /**
    * Enable snap interaction.
    * @private
    */
@@ -487,16 +445,6 @@ class Edit extends Control {
   }
 
   /**
-   * Disable snap interaction.
-   * @private
-   */
-  disableSnap() {
-    if (this.snapInteraction) {
-      this.getMap().removeInteraction(this.snapInteraction);
-    }
-  }
-
-  /**
    * Enable escape key listener.
    * @private
    */
@@ -510,24 +458,23 @@ class Edit extends Control {
    * @private
    */
   disableAll() {
-    this.disableDraw();
-    this.disableSelect();
-    this.disableModify();
-    this.disableMove();
-    this.disableSnap();
-    this.deselectFeatures();
+    const interactions = [
+      'drawInteraction',
+      'modifyInteraction',
+      'selectInteraction',
+      'snapInteraction',
+      'translateInteraction',
+    ];
+    interactions.forEach((interaction) => {
+      if (this[interaction]) {
+        if (interaction === 'selectInteraction') {
+          this[interaction].getFeatures().clear();
+        }
+        this.getMap().removeInteraction(this[interaction]);
+        stopMeasure();
+      }
+    });
     this.toggleActiveButton(false, false);
-    this.toggleDeleteButton(false);
-  }
-
-  /**
-   * Deselect all features in the select interaction.
-   * @private
-   */
-  deselectFeatures() {
-    if (this.selectInteraction) {
-      this.selectInteraction.getFeatures().clear();
-    }
     this.toggleDeleteButton(false);
   }
 
