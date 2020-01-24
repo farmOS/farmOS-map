@@ -134,6 +134,7 @@ class Edit extends Control {
       translateend: [],
       select: [],
       delete: [],
+      disable: [],
     };
   }
 
@@ -454,7 +455,8 @@ class Edit extends Control {
   }
 
   /**
-   * Disable all edit interactions, deselect features, deactivate all buttons.
+   * Disable all edit interactions, deselect features, deactivate all buttons,
+   * and call 'disable' event listeners.
    * @private
    */
   disableAll() {
@@ -476,6 +478,9 @@ class Edit extends Control {
     });
     this.toggleActiveButton(false, false);
     this.toggleDeleteButton(false);
+    this.eventListeners.disable.forEach(({ cb, format }) => {
+      cb(format.writeFeatures(this.getFeatures(), projection));
+    });
   }
 
   /**
@@ -528,6 +533,7 @@ class Edit extends Control {
       'translateend',
       'select',
       'delete',
+      'disable',
     ];
     if (!validTypes.includes(type)) {
       throw new Error(`Invalid event type. Valid options include: ${validTypes.join(', ')}`);
