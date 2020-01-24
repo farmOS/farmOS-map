@@ -289,7 +289,7 @@ class Edit extends Control {
         listeners.forEach(({ cb, format }) => {
           this.drawInteraction.on(eventName, (e) => {
             const output = format.writeFeatures(this.getFeatures().concat(e.feature), projection);
-            cb(output);
+            cb(output, e);
           });
         });
       }
@@ -327,7 +327,7 @@ class Edit extends Control {
           listeners.forEach(({ cb, format }) => {
             this.selectInteraction.on(eventName, (e) => {
               const output = format.writeFeatures(e.selected, projection);
-              cb(output);
+              cb(output, e);
             });
           });
         }
@@ -360,9 +360,9 @@ class Edit extends Control {
       Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
         if (['modifystart', 'modifyend'].includes(eventName)) {
           listeners.forEach(({ cb, format }) => {
-            this.modifyInteraction.on(eventName, () => {
+            this.modifyInteraction.on(eventName, (e) => {
               const output = format.writeFeatures(this.getFeatures(), projection);
-              cb(output);
+              cb(output, e);
             });
           });
         }
@@ -395,9 +395,9 @@ class Edit extends Control {
       Object.entries(this.eventListeners).forEach(([eventName, listeners]) => {
         if (['translatestart', 'translating', 'translateend'].includes(eventName)) {
           listeners.forEach(({ cb, format }) => {
-            this.translateInteraction.on(eventName, () => {
+            this.translateInteraction.on(eventName, (e) => {
               const output = format.writeFeatures(this.getFeatures(), projection);
-              cb(output);
+              cb(output, e);
             });
           });
         }
