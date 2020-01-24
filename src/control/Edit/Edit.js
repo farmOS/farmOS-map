@@ -570,7 +570,7 @@ class Edit extends Control {
    * @param {ol.format} format The format for the output (eg, WKT, GeoJSON, etc).
    * @private
    */
-  addInteractionListener(type, cb, format) {
+  addInteractionListener(type, cb, format = new GeoJSON()) {
     const validTypes = [
       'drawstart',
       'drawend',
