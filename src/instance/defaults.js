@@ -58,15 +58,12 @@ const defaults = {
   // Controls.
   controls(options) {
 
-    // Determine the units to use for the ScaleLine control.
-    const units = (options.units === 'us') ? 'us' : 'metric';
-
     // Define default farmOS controls.
     const farmMapDefaults = [
       new LayerSwitcher(),
       new FullScreen(),
       new Rotate({ autoHide: false }),
-      new ScaleLine({ units }),
+      new ScaleLine({ units: options.units }),
       new Geolocate(),
       new Geocoder('nominatim', {
         provider: 'osm',

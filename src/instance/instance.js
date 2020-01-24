@@ -13,7 +13,20 @@ import { addBehavior, attachBehavior } from './methods/behavior';
 
 // Define an object that represents a single farmOS map instance.
 const createInstance = ({ target, options = {} }) => {
+
+  // Get the system of measurement from options, if provided, or set a default.
+  const units = (options.units === 'us') ? 'us' : 'metric';
+
+  // Validate the units that are stored in the options, which is passed into
+  // other functions below.
+  /* eslint-disable-next-line no-param-reassign */
+  options.units = units;
+
+  // Create the instance object.
   const instance = {
+
+    // Set the map's system of measurement.
+    units,
 
     // The target element ID for the map.
     target,
