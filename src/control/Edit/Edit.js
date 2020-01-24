@@ -350,7 +350,7 @@ class Edit extends Control {
   }
 
   /**
-   * Enable select and translate interactions.
+   * Enable translate interaction.
    * @private
    */
   enableMove() {
