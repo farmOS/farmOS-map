@@ -20,6 +20,7 @@
   </head>
   <body>
     <div id="map"></div>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=<KEY>"></script> -->
     <script src="./farmOS-map.js"></script>
     <script src="./mapbox.js"></script>
     <script>
@@ -27,6 +28,7 @@
         units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);
+      // myMap.addBehavior("google");
       myMap.addBehavior("edit");
       myMap.addBehavior("measure", { layer: myMap.edit.layer });
       myMap.edit.wktOn("featurechange", console.log);
