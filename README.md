@@ -325,8 +325,8 @@ The `delete` event fires when the "Delete selected features" button is clicked.
 ### Adding behaviors
 
 Behaviors allow you to make modifications to a map in a modular way, by defining
-JavaScript functions that will run automatically when a map during map creation,
-or any time afterwards.
+JavaScript functions that will run automatically during map creation, or any
+time afterwards.
 
 One way you can add your own behaviors is by creating a JavaScript file (eg:
 `myMapCustomizations.js`), and including it after `farmOS-map.js` in your page.
