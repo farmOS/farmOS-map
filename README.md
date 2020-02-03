@@ -370,6 +370,11 @@ a behavior JavaScript file in the `static` directory, include it after
 `farmOS-map.js` in `static/index.html`, and run `npm run dev` to see your
 behavior in the development server.
 
+Behaviors that are added to `farmOS.map.behaviors` can also have an optional
+`weight` property. This weight will be used to sort them before they are
+attached to the map instance. Lighter weighted behaviors will be attached before
+heavier ones.
+
 Behaviors can also be applied to a map after it has been loaded. To do this,
 simply run `instance.attachBehavior(myBehavior)` with a behavior object that has
 an `attach(instance)` method. For example (given a map `instance`):

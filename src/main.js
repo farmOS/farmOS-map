@@ -29,9 +29,19 @@ window.farmOS.map = {
     // Add the instance to the array.
     this.instances.push(instance);
 
-    // Attach behaviors to the instance.
-    Object.keys(this.behaviors).forEach((key) => {
-      instance.attachBehavior(this.behaviors[key]);
+    // Attach behaviors from farmOS.map.behaviors to the instance.
+    // Sort by an optional weight value on each behavior.
+    const behaviors = Object.keys(this.behaviors).map(i => this.behaviors[i]);
+    behaviors.sort((first, second) => {
+      const firstWeight = first.weight || 0;
+      const secondWeight = second.weight || 0;
+      if (firstWeight === secondWeight) {
+        return 0;
+      }
+      return (firstWeight < secondWeight) ? -1 : 1;
+    });
+    behaviors.forEach((behavior) => {
+      instance.attachBehavior(behavior);
     });
 
     // Return the instance.
