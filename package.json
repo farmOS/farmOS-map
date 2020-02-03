@@ -1,6 +1,6 @@
 {
   "name": "farmOS-map",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "OpenLayers map used in farmOS.",
   "license": "GPL-3.0-or-later",
   "repository": {
