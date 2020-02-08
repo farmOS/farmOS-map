@@ -26,7 +26,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "ol": "^6.1.0",
+    "ol": "^6.1.1",
     "olgm": "github:mstenta/ol3-google-maps#farmOS-map",
     "ol-geocoder": "^4.0.0",
     "ol-layerswitcher": "^3.5.0",
