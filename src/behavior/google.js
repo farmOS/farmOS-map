@@ -53,10 +53,13 @@ export default {
     // See: https://issuetracker.google.com/issues/35828923
     map.getView().setConstrainResolution(true);
 
-    // Do not let OLGoogleMaps manage vector layers. It does not support all
-    // geometry types, and it does not support clusters.
+    // Do not let OLGoogleMaps manage vector, tile, or image layers. It does not
+    // support all geometry types, it does not support clusters, and it renders
+    // on top of image and tile layers (eg: MapKnitter).
     const watch = {
       vector: false,
+      tile: false,
+      image: false,
     };
 
     // Activate Google Maps.
