@@ -1,3 +1,5 @@
+import LineString from 'ol/geom/LineString';
+import Polygon from 'ol/geom/Polygon';
 import { getArea, getLength } from 'ol/sphere';
 
 // Define conversion units and their coefficients.
@@ -56,4 +58,25 @@ export function formatArea(polygon, units = 'metric') {
     default:
       return '';
   }
+}
+
+/**
+ * Measure a geometry.
+ * @param {ol.SimpleGeometry} geom The geomtery to measure (Polygon or
+ * LineString).
+ * @param {string} units The system of measurement (metric or us).
+ * @return {string} Formatted area.
+ */
+export function measureGeometry(geom, units = 'metric') {
+  let measurement;
+  if (geom instanceof Polygon) {
+    measurement = formatArea(geom, units);
+  }
+  else if (geom instanceof LineString) {
+    measurement = formatLength(geom, units);
+  }
+  else {
+    measurement = '';
+  }
+  return measurement;
 }

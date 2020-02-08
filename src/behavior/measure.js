@@ -2,7 +2,7 @@ import Overlay from 'ol/Overlay';
 import LineString from 'ol/geom/LineString';
 import Polygon from 'ol/geom/Polygon';
 import { unByKey } from 'ol/Observable';
-import { formatArea, formatLength } from '../utils/measure';
+import { measureGeometry } from '../utils/measure';
 
 // Store measurement overlays keyed by the ID of the feature they measure.
 const measures = {};
@@ -40,14 +40,12 @@ function getFeatureId(feature) {
  * LineString).
  */
 function updateMeasure(measure, geom) {
-  let measurement;
+  const measurement = measureGeometry(geom, units);
   let coordinates;
   if (geom instanceof Polygon) {
-    measurement = formatArea(geom, units);
     coordinates = geom.getInteriorPoint().getCoordinates();
   }
   if (geom instanceof LineString) {
-    measurement = formatLength(geom, units);
     coordinates = geom.getLastCoordinate();
   }
   measure.setPosition(coordinates);
