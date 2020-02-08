@@ -22,7 +22,6 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.5",
-    "webpack-command": "^0.3.0",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
