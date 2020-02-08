@@ -12,18 +12,18 @@
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.0.3",
-    "css-loader": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react": "^7.18.3",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.5",
     "webpack-command": "^0.3.0",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "ol": "^6.1.1",
