@@ -5,7 +5,7 @@ import VectorSource from 'ol/source/Vector';
 import { createEmpty as extentCreateEmpty, extend as extendExtend } from 'ol/extent';
 
 // Import forEachLayer helper function.
-import forEachLayer from '../../forEachLayer';
+import forEachLayer from '../../utils/forEachLayer';
 
 // Zoom to all vector sources in the map, recursing into layer groups.
 export function zoomToVectors(optlayers = null) {

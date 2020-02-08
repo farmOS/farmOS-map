@@ -12,7 +12,7 @@ import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
 
 import projection from '../../projection';
-import forEachLayer from '../../forEachLayer';
+import forEachLayer from '../../utils/forEachLayer';
 
 import './Edit.css';
 

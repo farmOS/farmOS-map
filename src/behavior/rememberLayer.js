@@ -1,5 +1,5 @@
 // Import forEachLayer helper function.
-import forEachLayer from '../forEachLayer';
+import forEachLayer from '../utils/forEachLayer';
 
 // Load saved layer visibility state from localStorage.
 function loadLayerVisibility(layer) {
