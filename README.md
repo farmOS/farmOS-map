@@ -110,8 +110,7 @@ the type of layer being added.
 
 The order of layers in the map and layer switcher is determined by the order in
 which they are added to the map. Layers will be added to the top of the stack
-(appearing higher in the layer switcher), unless they are in the `Base layers`
-group, in which case they will be added to the bottom of the base layers list.
+(appearing higher in the layer switcher).
 
 ```js
 // Adding a Well Known Text layer

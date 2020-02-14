@@ -197,14 +197,8 @@ export default function addLayer(type, opts = {}) {
         this.map.addLayer(group);
       }
 
-      // Add the layer to the group. If this is a base layer, add it to the
-      // bottom. Otherwise add it to the top.
-      if (opts.group === 'Base layers') {
-        group.getLayers().insertAt(0, layer);
-      }
-      else {
-        group.getLayers().push(layer);
-      }
+      // Add the layer to the group.
+      group.getLayers().push(layer);
     }
 
     // Otherwise, add the layer directly to the map.
