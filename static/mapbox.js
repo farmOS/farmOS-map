@@ -22,7 +22,7 @@
         url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + key,
         group: 'Base layers',
         base: true,
-        visible: false,
+        visible: true,
       };
       instance.addLayer('xyz', opts);
 
