@@ -97,6 +97,9 @@ class Geolocate extends Control {
 
     // Create a geolocation object.
     this.geolocation = this.geolocation || new Geolocation({
+      trackingOptions: {
+        enableHighAccuracy: true,
+      },
       projection: map.getView().getProjection(),
     });
 
