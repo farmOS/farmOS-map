@@ -7,13 +7,13 @@
   margin-bottom: 4px;
 }
 
-.ol-edit.ol-control button {
-  padding-bottom: 3px;
-}
-
 .ol-edit.ol-control button.active {
   background-color: #ffcc33;
   background-color: rgba(255,204,51,0.7);
+}
+
+.ol-edit.ol-control button svg {
+  pointer-events: none;
 }
 
 .ol-tooltip {

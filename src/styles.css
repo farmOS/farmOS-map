@@ -2,6 +2,9 @@
 .ol-control {
   background-color: rgba(255, 255, 255, 0.25);
 }
+.ol-control svg {
+  fill: green;
+}
 .ol-control button {
   color: green;
   background-color: rgba(255, 255, 255, 0.8);
