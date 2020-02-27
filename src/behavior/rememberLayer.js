@@ -18,8 +18,8 @@ function loadLayerVisibility(layer) {
 function saveLayerVisibility(layer) {
   const title = layer.get('title');
   if (title) {
-    const visible = layer.get('visible');
     const itemName = `farmOS.map.layers.${title}.visible`;
+    const visible = JSON.stringify(layer.get('visible'));
     localStorage.setItem(itemName, visible);
   }
 }
