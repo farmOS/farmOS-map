@@ -6,8 +6,7 @@ function loadLayerVisibility(layer) {
   const title = layer.get('title');
   if (title) {
     const itemName = `farmOS.map.layers.${title}.visible`;
-    const savedValue = localStorage.getItem(itemName);
-    if (savedValue) {
+    if (localStorage.getItem(itemName) !== null) {
       const visible = (JSON.parse(localStorage.getItem(itemName)) === true);
       layer.setVisible(visible);
     }
