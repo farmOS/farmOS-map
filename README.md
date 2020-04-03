@@ -145,6 +145,15 @@ const wmsOpts = {
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
+// Adding a ArcGIS MapServer tile layer.
+const arcGISTileOpts = {
+  title: 'StateCityHighway_USA', // defaults to 'arcgis-tile'
+  url: 'https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer', // REQUIRED!
+  visible: true, // defaults to true
+  base: false // defaults to false
+};
+const arcGISTileLayer = myMap.addLayer('arcgis-tile', arcGISTileOpts);
+
 // Adding an XYZ layer.
 const xyzOpts = {
   title: 'mapbox', // defaults to 'xyz'

@@ -1,6 +1,7 @@
 // Import source types, layer types, and formats.
 import VectorSource from 'ol/source/Vector';
 import Cluster from 'ol/source/Cluster';
+import TileArcGISRest from 'ol/source/TileArcGISRest';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
 import LayerGroup from 'ol/layer/Group';
@@ -70,6 +71,21 @@ function addGeoJSONLayer({
   const format = new GeoJSON();
   const source = new VectorSource({ url, format });
   const layer = new VectorLayer({
+    title,
+    source,
+    style,
+    visible,
+  });
+  return layer;
+}
+
+// Add a Tile ArcGIS MapServer layer to the map.
+function addTileArcGISMapServerLayer({
+  title = 'arcgis-tile', url, color = 'orange', visible = true,
+}) {
+  const style = styles(color);
+  const source = new TileArcGISRest({ url });
+  const layer = new TileLayer({
     title,
     source,
     style,
@@ -165,6 +181,12 @@ export default function addLayer(type, opts = {}) {
       throw new Error('Missing a GeoJSON url.');
     }
     layer = addGeoJSONLayer(opts);
+  }
+  if (type.toLowerCase() === 'arcgis-tile') {
+    if (!opts.url) {
+      throw new Error('Missing a ArcGIS MapServer url.');
+    }
+    layer = addTileArcGISMapServerLayer(opts);
   }
   if (type.toLowerCase() === 'wkt') {
     if (!opts.wkt) {
