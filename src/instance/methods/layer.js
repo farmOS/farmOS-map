@@ -81,15 +81,17 @@ function addGeoJSONLayer({
 
 // Add a Tile ArcGIS MapServer layer to the map.
 function addTileArcGISMapServerLayer({
-  title = 'arcgis-tile', url, color = 'orange', visible = true,
+  title = 'arcgis-tile', url, params, visible = true, base = false,
 }) {
-  const style = styles(color);
-  const source = new TileArcGISRest({ url });
+  const source = new TileArcGISRest({
+    url,
+    params,
+  });
   const layer = new TileLayer({
     title,
     source,
-    style,
     visible,
+    type: base ? 'base' : 'normal',
   });
   return layer;
 }
