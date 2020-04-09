@@ -188,7 +188,9 @@ class Edit extends Control {
       // interaction's feature collection.
       this.selectInteraction.getFeatures().forEach((f) => {
         this.layer.getSource().removeFeature(f);
-        this.snapInteraction.removeFeature(f);
+        if (this.snapInteraction) {
+          this.snapInteraction.removeFeature(f);
+        }
       });
       this.selectInteraction.getFeatures().clear();
 
