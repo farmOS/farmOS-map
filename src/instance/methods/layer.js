@@ -3,12 +3,18 @@ import VectorSource from 'ol/source/Vector';
 import Cluster from 'ol/source/Cluster';
 import TileArcGISRest from 'ol/source/TileArcGISRest';
 import TileWMS from 'ol/source/TileWMS';
+import WMTS from 'ol/source/WMTS';
 import XYZ from 'ol/source/XYZ';
 import LayerGroup from 'ol/layer/Group';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
 import GeoJSON from 'ol/format/GeoJSON';
 import WKT from 'ol/format/WKT';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
+
+// Import extent helper functions.
+import {get as getProjection} from 'ol/proj';
+import {getWidth, getTopLeft} from 'ol/extent';
 
 // Import setWithCredentials function.
 import { setWithCredentials } from 'ol/featureloader';
@@ -135,6 +141,48 @@ function addWMSTileLayer({
   return layer;
 }
 
+// Add a WMTS tile layer to the map.
+function addWMTSTileLayer({
+  title = 'wmts', url, params, visible = true, base = false,
+}) {
+
+  // Save the projection and projectionExtent.
+  var sProjection = projection.featureProjection;
+  var projectionExtent = getProjection(sProjection).getExtent();
+
+  // Calculate values for WMTSTileGrid.
+  var size = getWidth(projectionExtent) / 256;
+  var resolutions = [],
+    matrixIds = [];
+
+  for (var z = 0; z < 15; ++z) { //Max 18?
+    // generate resolutions and matrixIds arrays for this WMTS
+    resolutions[z] = size / Math.pow(2, z);
+    matrixIds[z] = sProjection + ":" + z;
+  }
+
+  const source = new WMTS({
+    url,
+    matrixSet: sProjection,
+    layer: params.layer, 
+    version: params.version,
+    format: params.format,
+    tileGrid: new WMTSTileGrid({
+      origin: getTopLeft(projectionExtent),
+      resolutions,
+      matrixIds
+    }),
+  })
+
+  const layer = new TileLayer({
+    title,
+    source,
+    visible,
+    type: base ? 'base' : 'normal',
+  });
+  return layer;
+}
+
 // Add an XYZ tile layer to the map.
 function addXYZTileLayer({
   title = 'xyz', url, visible = true, base = false,
@@ -201,6 +249,12 @@ export default function addLayer(type, opts = {}) {
       throw new Error('Missing a WMS url.');
     }
     layer = addWMSTileLayer(opts);
+  }
+  if (type.toLowerCase() === 'wmts') {
+    if (!opts.url) {
+      throw new Error('Missing a WMTS url.');
+    }
+    layer = addWMTSTileLayer(opts);
   }
   if (type.toLowerCase() === 'xyz') {
     if (!opts.url) {
