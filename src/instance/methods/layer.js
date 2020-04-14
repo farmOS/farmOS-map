@@ -31,7 +31,8 @@ function addVectorLayer({
   title = 'vector', color = 'orange', visible = true,
 }) {
   const style = styles(color);
-  const source = new VectorSource();
+  const source = new VectorSource({
+  });
   const layer = new VectorLayer({
     title,
     source,
@@ -69,7 +70,10 @@ function addGeoJSONLayer({
 }) {
   const style = styles(color);
   const format = new GeoJSON();
-  const source = new VectorSource({ url, format });
+  const source = new VectorSource({
+    url,
+    format,
+  });
   const layer = new VectorLayer({
     title,
     source,
@@ -108,7 +112,9 @@ function addWKTLayer({
   const features = isMultipart
     ? new WKT({ splitCollection: true }).readFeatures(wkt, projection)
     : [new WKT().readFeature(wkt, projection)];
-  const source = new VectorSource({ features });
+  const source = new VectorSource({
+    features,
+  });
   const layer = new VectorLayer({
     title,
     source,
@@ -139,7 +145,9 @@ function addWMSTileLayer({
 function addXYZTileLayer({
   title = 'xyz', url, visible = true, base = false,
 }) {
-  const source = new XYZ({ url });
+  const source = new XYZ({
+    url,
+  });
   const layer = new TileLayer({
     title,
     source,
