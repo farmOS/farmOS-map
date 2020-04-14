@@ -28,10 +28,12 @@ setWithCredentials(true);
 
 // Add a Vector layer to the map.
 function addVectorLayer({
-  title = 'vector', color = 'orange', visible = true,
+  title = 'vector', color = 'orange', visible = true, attribution = '',
 }) {
   const style = styles(color);
+  const attributions = [attribution];
   const source = new VectorSource({
+    attributions,
   });
   const layer = new VectorLayer({
     title,
@@ -44,12 +46,14 @@ function addVectorLayer({
 
 // Add a cluster layer to the map.
 function addClusterLayer({
-  title = 'cluster', url, visible = true,
+  title = 'cluster', url, visible = true, attribution = '',
 }) {
   const format = new GeoJSON();
+  const attributions = [attribution];
   const centroidSource = new VectorSource({
     url,
     format,
+    attributions,
   });
   const clusterSource = new Cluster({
     distance: 50,
@@ -66,13 +70,15 @@ function addClusterLayer({
 
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
-  title = 'geojson', url, color = 'orange', visible = true,
+  title = 'geojson', url, color = 'orange', visible = true, attribution = '',
 }) {
   const style = styles(color);
   const format = new GeoJSON();
+  const attributions = [attribution];
   const source = new VectorSource({
     url,
     format,
+    attributions,
   });
   const layer = new VectorLayer({
     title,
@@ -85,11 +91,13 @@ function addGeoJSONLayer({
 
 // Add a Tile ArcGIS MapServer layer to the map.
 function addTileArcGISMapServerLayer({
-  title = 'arcgis-tile', url, params, visible = true, base = false,
+  title = 'arcgis-tile', url, params, visible = true, base = false, attribution = '',
 }) {
+  const attributions = [attribution];
   const source = new TileArcGISRest({
     url,
     params,
+    attributions,
   });
   const layer = new TileLayer({
     title,
@@ -102,7 +110,7 @@ function addTileArcGISMapServerLayer({
 
 // Add Well Known Text (WKT) geometry to the map.
 function addWKTLayer({
-  title = 'wkt', wkt, color = 'orange', visible = true,
+  title = 'wkt', wkt, color = 'orange', visible = true, attribution = '',
 }) {
   const style = styles(color);
   const isMultipart = wkt.includes('MULTIPOINT')
@@ -112,8 +120,10 @@ function addWKTLayer({
   const features = isMultipart
     ? new WKT({ splitCollection: true }).readFeatures(wkt, projection)
     : [new WKT().readFeature(wkt, projection)];
+  const attributions = [attribution];
   const source = new VectorSource({
     features,
+    attributions,
   });
   const layer = new VectorLayer({
     title,
@@ -126,11 +136,13 @@ function addWKTLayer({
 
 // Add a WMS tile layer to the map.
 function addWMSTileLayer({
-  title = 'wms', url, params, visible = true, base = false,
+  title = 'wms', url, params, visible = true, base = false, attribution = '',
 }) {
+  const attributions = [attribution];
   const source = new TileWMS({
     url,
     params,
+    attributions,
   });
   const layer = new TileLayer({
     title,
@@ -143,10 +155,12 @@ function addWMSTileLayer({
 
 // Add an XYZ tile layer to the map.
 function addXYZTileLayer({
-  title = 'xyz', url, visible = true, base = false,
+  title = 'xyz', url, visible = true, base = false, attribution = '',
 }) {
+  const attributions = [attribution];
   const source = new XYZ({
     url,
+    attributions,
   });
   const layer = new TileLayer({
     title,

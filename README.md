@@ -199,6 +199,22 @@ const opts = {
 const layer = myMap.addLayer('geojson', opts);
 ```
 
+#### Attribution
+
+Layer attribution can be added by passing an `attribution` option to the
+`addLayer()` method.
+
+```js
+// Adding an XYZ layer with attribution.
+const xyzOpts = {
+  title: 'Custom XYZ layer',
+  url: 'https://my.xyzlayers.com/custom/{z}/{x}/{y}.png',
+  attribution: '<a href="https://my.xyzlayers.com">© My.XYZLayers.com</a>',
+  base: true,
+};
+const xyzLayer = myMap.addLayer('xyz', xyzOpts);
+```
+
 ### Controlling the zoom level
 
 There are two methods for controlling the zoom level. The first, `zoomToVectors`,
