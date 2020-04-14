@@ -8,7 +8,8 @@
     "url": "https://github.com/farmOS/farmOS-map.git"
   },
   "scripts": {
-    "build": "eslint src && webpack --config webpack.config.js --mode production",
+    "lint": "eslint src",
+    "build": "npm run lint && webpack --config webpack.config.js --mode production",
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
