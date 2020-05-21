@@ -70,16 +70,25 @@ function addClusterLayer({
 
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
-  title = 'geojson', url, color = 'orange', visible = true, attribution = '',
+  title = 'geojson', url = '', geojson = {}, color = 'orange', visible = true, attribution = '',
 }) {
   const style = styles(color);
   const format = new GeoJSON();
   const attributions = [attribution];
-  const source = new VectorSource({
-    url,
-    format,
-    attributions,
-  });
+  let source;
+  if (url) {
+    source = new VectorSource({
+      url,
+      format,
+      attributions,
+    });
+  } else {
+    source = new VectorSource({
+      features: (new GeoJSON()).readFeatures(geojson),
+      format,
+      attributions,
+    });
+  }
   const layer = new VectorLayer({
     title,
     source,
@@ -201,8 +210,8 @@ export default function addLayer(type, opts = {}) {
     layer = addClusterLayer(opts);
   }
   if (type.toLowerCase() === 'geojson') {
-    if (!opts.url) {
-      throw new Error('Missing a GeoJSON url.');
+    if (!opts.url && !opts.geojson) {
+      throw new Error('Missing a GeoJSON url or string.');
     }
     layer = addGeoJSONLayer(opts);
   }

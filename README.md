@@ -123,14 +123,28 @@ const wktOpts = {
 };
 const wktLayer = myMap.addLayer('wkt', wktOpts);
 
-// Adding a GeoJSON layer
-const geoJsonOpts = {
+// Adding a GeoJSON layer from URL.
+const geoJsonUrlOpts = {
   title: 'geojson', // defaults to 'geojson'
-  url: '/farm/areas/geojson/all', // REQUIRED!
+  url: '/farm/areas/geojson/all', // REQUIRED! (either this or `geojson` string)
   color: 'grey', // defaults to 'orange'
   visible: true, // defaults to true
 }
-const geoJSONLayer = myMap.addLayer('geojson', geoJsonOpts);
+const geoJSONURLLayer = myMap.addLayer('geojson', geoJsonUrlOpts);
+
+// Adding a GeoJSON layer from string.
+const geoJsonStringOpts = {
+  title: 'geojson', // defaults to 'geojson'
+  geojson: {
+    "type": "Polygon",
+    "coordinates": [
+      [[30, 10], [40, 40], [20, 40], [10, 20], [30, 10]]
+    ]
+  }, // REQUIRED! (either this or `url`)
+  color: 'grey', // defaults to 'orange'
+  visible: true, // defaults to true
+}
+const geoJSONStringLayer = myMap.addLayer('geojson', geoJsonStringOpts);
 
 // Adding a WMS layer.
 const wmsOpts = {
