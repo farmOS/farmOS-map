@@ -14,6 +14,7 @@ import WKT from 'ol/format/WKT';
 import { setWithCredentials } from 'ol/featureloader';
 
 // Import styles.
+import * as Style from 'ol/style';
 import styles, { clusterStyle } from '../../styles';
 
 // Import the default projection configuration
@@ -70,9 +71,11 @@ function addClusterLayer({
 
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
-  title = 'geojson', url = '', geojson = {}, color = 'orange', visible = true, attribution = '',
+  title = 'geojson', url = '', geojson = {}, color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+  ? (feature, resolution) => styleFunction(feature, resolution, Style)
+  : styles(color);
   const format = new GeoJSON();
   const attributions = [attribution];
   let source;
