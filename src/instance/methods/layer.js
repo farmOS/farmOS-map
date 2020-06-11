@@ -49,8 +49,9 @@ function addVectorLayer({
 
 // Add a cluster layer to the map.
 function addClusterLayer({
-  title = 'cluster', url, visible = true, attribution = '',
+  title = 'cluster', url, styleFunction = clusterStyle, visible = true, attribution = '',
 }) {
+  const style = (feature, resolution) => styleFunction(feature, resolution, Style);
   const format = new GeoJSON();
   const attributions = [attribution];
   const centroidSource = new VectorSource({
@@ -65,7 +66,7 @@ function addClusterLayer({
   const clusterLayer = new VectorLayer({
     title,
     source: clusterSource,
-    style: clusterStyle,
+    style,
     visible,
   });
   return clusterLayer;
