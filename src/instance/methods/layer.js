@@ -29,9 +29,11 @@ setWithCredentials(true);
 
 // Add a Vector layer to the map.
 function addVectorLayer({
-  title = 'vector', color = 'orange', visible = true, attribution = '',
+  title = 'vector', color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : styles(color);
   const attributions = [attribution];
   const source = new VectorSource({
     attributions,
