@@ -213,6 +213,23 @@ const opts = {
 const layer = myMap.addLayer('geojson', opts);
 ```
 
+#### Layer styles
+
+By default all vector layers are styled with the stoke of a given `color`
+(see [available colors](src/styles/index.js)).
+
+For more complex styles, the `styleFunction` option allows styles to be
+defined based on a `feature` and `resolution`
+([StyleFunction docs.](https://openlayers.org/en/latest/apidoc/module-ol_style_Style.html#~StyleFunction)) 
+In addition to the `feature` and `resolution`, farmOS-map calls `styleFunction`
+with an additional `style` parameter. This parameters makes all of the 
+`ol.style` classes available to other JavaScript modules without requiring
+them to bundle `ol.style` themselves.
+
+This makes it possible to style farmOS areas based on properties included in
+`farm/areas/geojson` such as the area `id`. Clusters are dispalyed in farmOS
+using a [`clusterStyle`](src/styles/index.js) function.
+
 #### Attribution
 
 Layer attribution can be added by passing an `attribution` option to the
