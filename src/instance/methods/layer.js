@@ -124,9 +124,11 @@ function addTileArcGISMapServerLayer({
 
 // Add Well Known Text (WKT) geometry to the map.
 function addWKTLayer({
-  title = 'wkt', wkt, color = 'orange', visible = true, attribution = '',
+  title = 'wkt', wkt, color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : styles(color);
   const isMultipart = wkt.includes('MULTIPOINT')
     || wkt.includes('MULTILINESTRING')
     || wkt.includes('MULTIPOLYGON')
