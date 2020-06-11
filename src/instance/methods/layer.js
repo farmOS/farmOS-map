@@ -74,8 +74,8 @@ function addGeoJSONLayer({
   title = 'geojson', url = '', geojson = {}, color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
   const style = styleFunction
-  ? (feature, resolution) => styleFunction(feature, resolution, Style)
-  : styles(color);
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : styles(color);
   const format = new GeoJSON();
   const attributions = [attribution];
   let source;
