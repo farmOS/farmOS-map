@@ -238,9 +238,15 @@ with an additional `style` parameter. This parameters makes all of the
 `ol.style` classes available to other JavaScript modules without requiring
 them to bundle `ol.style` themselves.
 
-This makes it possible to style farmOS areas based on properties included in
-`farm/areas/geojson` such as the area `id`. Clusters are dispalyed in farmOS
-using a [`clusterStyle`](src/styles/index.js) function.
+This makes it possible to style farmOS areas based on properties included in 
+their GeoJSON. Cluster layers use a pre-defined style function, but it can be 
+overridden using the same `styleFunction` parameter.
+
+An [example `styleFunction`](https://gist.github.com/paul121/d8a7e7441df39b15a02042175c9805fe)
+that uses both the resolution and a feature's `id` property.
+
+**NOTE:** For performance it is important to implement a style cache when 
+using a custom `styleFunction` ([example](http://openlayersbook.github.io/ch06-styling-vector-layers/example-06.html))
 
 #### Attribution
 
