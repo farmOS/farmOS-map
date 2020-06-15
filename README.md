@@ -215,7 +215,7 @@ const layer = myMap.addLayer('geojson', opts);
 
 #### Layer styles
 
-By default all vector layers are styled with the stoke of a given `color`.
+By default all vector layers are styled with the stroke of a given `color`.
 Available colors:
 ```js
 const colors = {
@@ -234,7 +234,7 @@ For more complex styles, the `styleFunction` option allows styles to be
 defined based on a `feature` and `resolution`
 ([StyleFunction docs.](https://openlayers.org/en/latest/apidoc/module-ol_style_Style.html#~StyleFunction)) 
 In addition to the `feature` and `resolution`, farmOS-map calls `styleFunction`
-with an additional `style` parameter. This parameters makes all of the 
+with an additional `style` parameter. This parameter makes all of the 
 `ol.style` classes available to other JavaScript modules without requiring
 them to bundle `ol.style` themselves.
 
