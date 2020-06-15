@@ -15,7 +15,7 @@ import { setWithCredentials } from 'ol/featureloader';
 
 // Import styles.
 import * as Style from 'ol/style';
-import styles, { clusterStyle } from '../../styles';
+import colorStyles, { clusterStyle } from '../../styles';
 
 // Import the default projection configuration
 import projection from '../../projection';
@@ -33,7 +33,7 @@ function addVectorLayer({
 }) {
   const style = styleFunction
     ? (feature, resolution) => styleFunction(feature, resolution, Style)
-    : styles(color);
+    : colorStyles(color);
   const attributions = [attribution];
   const source = new VectorSource({
     attributions,
@@ -78,7 +78,7 @@ function addGeoJSONLayer({
 }) {
   const style = styleFunction
     ? (feature, resolution) => styleFunction(feature, resolution, Style)
-    : styles(color);
+    : colorStyles(color);
   const format = new GeoJSON();
   const attributions = [attribution];
   let source;
@@ -129,7 +129,7 @@ function addWKTLayer({
 }) {
   const style = styleFunction
     ? (feature, resolution) => styleFunction(feature, resolution, Style)
-    : styles(color);
+    : colorStyles(color);
   const isMultipart = wkt.includes('MULTIPOINT')
     || wkt.includes('MULTILINESTRING')
     || wkt.includes('MULTIPOLYGON')
