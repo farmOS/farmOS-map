@@ -17,7 +17,7 @@ const colors = {
 };
 
 // Returns an OpenLayers Style for a given color.
-const styles = (color) => {
+const colorStyles = (color) => {
   const rgba = colors[color] ? colors[color] : colors.yellow;
   const stroke = new Stroke({
     color: rgba,
@@ -37,7 +37,7 @@ const styles = (color) => {
     image,
   });
 };
-export default styles;
+export default colorStyles;
 
 // Provide a standard cluster style.
 const styleCache = {};
