@@ -215,8 +215,20 @@ const layer = myMap.addLayer('geojson', opts);
 
 #### Layer styles
 
-By default all vector layers are styled with the stoke of a given `color`
-(see [available colors](src/styles/index.js)).
+By default all vector layers are styled with the stoke of a given `color`.
+Available colors:
+```js
+const colors = {
+  blue: 'rgba(51,153,255,1)',
+  green: 'rgba(51,153,51,1)',
+  darkgreen: 'rgba(51,153,51,1)',
+  grey: 'rgba(204,204,204,0.7)',
+  orange: 'rgba(255,153,51,1)',
+  red: 'rgba(204,0,0,1)',
+  purple: 'rgba(204,51,102,1)',
+  yellow: 'rgba(255,255,51,1)',
+};
+```
 
 For more complex styles, the `styleFunction` option allows styles to be
 defined based on a `feature` and `resolution`
