@@ -117,6 +117,9 @@ class Edit extends Control {
     // Get the drawing layer from the options.
     this.layer = options.layer;
 
+    // Get the SnappingGrid feature from the options.
+    this.snappingGridFeature = options.snappingGridFeature;
+
     // Collections of interaction event listeners that have been added by the
     // user via addInteractionListener(). Each event type will be an array of
     // objects, each with a callback and a format.
@@ -401,6 +404,11 @@ class Edit extends Control {
           }
         }
       });
+
+      // Add the snapping grid - if any - to the snapping interaction
+      if (this.snappingGridFeature) {
+        this.snapInteraction.addFeature(this.snappingGridFeature);
+      }
     }
     this.getMap().addInteraction(this.snapInteraction);
   }
