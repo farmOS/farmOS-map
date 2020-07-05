@@ -240,11 +240,11 @@ class SnappingGrid extends Control {
 
       // Cleanup the old event listeners
       if (this.onMapAddInteraction) {
-        oldMap.getInteractions.unByKey(this.onMapAddInteraction);
+        oldMap.getInteractions().un('add', this.onMapAddInteraction.listener);
         this.onMapAddInteraction = null;
       }
       if (this.onMapRemoveInteraction) {
-        oldMap.getInteractions.unByKey(this.onMapRemoveInteraction);
+        oldMap.getInteractions().un('remove', this.onMapRemoveInteraction.listener);
         this.onMapRemoveInteraction = null;
       }
     }
