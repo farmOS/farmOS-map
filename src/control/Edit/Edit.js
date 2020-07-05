@@ -416,7 +416,7 @@ class Edit extends Control {
       this.gridSnapInteraction.addFeature(this.snappingGridFeature);
     }
     if (this.gridSnapInteraction) {
-     this.getMap().addInteraction(this.gridSnapInteraction);
+      this.getMap().addInteraction(this.gridSnapInteraction);
     }
   }
 
