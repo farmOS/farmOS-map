@@ -404,13 +404,20 @@ class Edit extends Control {
           }
         }
       });
-
-      // Add the snapping grid - if any - to the snapping interaction
-      if (this.snappingGridFeature) {
-        this.snapInteraction.addFeature(this.snappingGridFeature);
-      }
     }
     this.getMap().addInteraction(this.snapInteraction);
+
+    // Create and add a Snap interaction for the snapping grid feature - if any
+    if (this.snappingGridFeature && !this.gridSnapInteraction) {
+      this.gridSnapInteraction = new Snap({
+        features: new Collection(),
+        pixelTolerance: 15,
+      });
+      this.gridSnapInteraction.addFeature(this.snappingGridFeature);
+    }
+    if (this.gridSnapInteraction) {
+     this.getMap().addInteraction(this.gridSnapInteraction);
+    }
   }
 
   /**
@@ -433,6 +440,7 @@ class Edit extends Control {
       'modifyInteraction',
       'selectInteraction',
       'snapInteraction',
+      'gridSnapInteraction',
       'translateInteraction',
     ];
     interactions.forEach((interaction) => {
