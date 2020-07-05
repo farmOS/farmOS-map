@@ -1,5 +1,7 @@
+import Collection from 'ol/Collection';
 import Control from 'ol/control/Control';
 import Draw from 'ol/interaction/Draw';
+import Snap from 'ol/interaction/Snap';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
 import {
@@ -11,9 +13,13 @@ import {
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
-// Use the Common JS version of ol-grid artifacts for size
-// and build efficiency reasons.
+/*
+ * Use the Common JS version of ol-grid artifacts for size
+ * and build efficiency reasons.
+ */
 import Grid from 'ol-grid/dist/ol-grid.cjs';
+
+import forEachLayer from '../../utils/forEachLayer';
 
 import './SnappingGrid.css';
 
@@ -323,6 +329,44 @@ class SnappingGrid extends Control {
     });
 
     this.getMap().addInteraction(this.drawSnappingOriginsInteraction);
+    this.enableSnap();
+  }
+
+  /**
+   * Enable snap interaction for drawing the control points.
+   * @private
+   */
+  enableSnap() {
+    this.clearSnap();
+
+    this.snapInteraction = new Snap({
+      features: new Collection(),
+    });
+
+    // Load all vector layer features in the map and add them to the snap
+    // interaction's feature collection (so they can be snapped to).
+    forEachLayer(this.getMap().getLayerGroup(), (layer) => {
+      if (typeof layer.getSource === 'function') {
+        const source = layer.getSource();
+        if (source && typeof source.getFeatures === 'function') {
+          const features = source.getFeatures();
+          if (source.getState() === 'ready' && features.length > 0) {
+            features.forEach((feature) => {
+              this.snapInteraction.addFeature(feature);
+            });
+          }
+        }
+      }
+    });
+
+    this.getMap().addInteraction(this.snapInteraction);
+  }
+
+  clearSnap() {
+    if (this.snapInteraction) {
+      this.getMap().removeInteraction(this.snapInteraction);
+      this.snapInteraction = null;
+    }
   }
 
   /**
@@ -383,6 +427,7 @@ class SnappingGrid extends Control {
       this.getMap().removeInteraction(this.drawSnappingOriginsInteraction);
       this.drawSnappingOriginsInteraction = null;
     }
+    this.clearSnap();
 
     this.gridControlPointsVectorLayer.getSource().clear();
   }
