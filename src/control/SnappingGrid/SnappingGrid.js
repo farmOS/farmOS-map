@@ -223,6 +223,7 @@ class SnappingGrid extends Control {
     if (map === oldMap) {
       return;
     }
+    let wasActive = false;
     if (oldMap) {
       oldMap.removeLayer(this.gridControlPointsVectorLayer);
 
@@ -232,9 +233,11 @@ class SnappingGrid extends Control {
         this.resetDrawInteraction();
       }
 
+      wasActive = this.grid.getActive();
+
       // If the grid is active remove it from the current map and (later)
       // add it to the new one.
-      if (this.grid.getActive()) {
+      if (wasActive) {
         oldMap.removeInteraction(this.grid);
       }
 
@@ -252,10 +255,6 @@ class SnappingGrid extends Control {
 
     if (map) {
       map.addLayer(this.gridControlPointsVectorLayer);
-
-      if (this.grid.getActive()) {
-        map.addInteraction(this.grid);
-      }
 
       // When interactions are added or removed update our internal state
       // to ensure the grid state remains consistent even if the Open Layers
@@ -293,6 +292,10 @@ class SnappingGrid extends Control {
 
       this.onMapAddInteraction = map.getInteractions().on('add', updateState);
       this.onMapRemoveInteraction = map.getInteractions().on('remove', updateState);
+
+      if (wasActive) {
+        map.addInteraction(this.grid);
+      }
 
     }
   }
