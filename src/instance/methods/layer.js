@@ -211,7 +211,7 @@ export default function addLayer(type, opts = {}) {
   }
   if (type.toLowerCase() === 'geojson') {
     if (!opts.url && !opts.geojson) {
-      throw new Error('Missing a GeoJSON url or string.');
+      throw new Error('Missing a GeoJSON url or object.');
     }
     layer = addGeoJSONLayer(opts);
   }
