@@ -84,7 +84,7 @@ function addGeoJSONLayer({
     });
   } else {
     source = new VectorSource({
-      features: (new GeoJSON(projection)).readFeatures(geojson),
+      features: (new GeoJSON()).readFeatures(geojson, projection),
       format,
       attributions,
     });
