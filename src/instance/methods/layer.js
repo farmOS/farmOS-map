@@ -172,11 +172,12 @@ function addWMSTileLayer({
 
 // Add an XYZ tile layer to the map.
 function addXYZTileLayer({
-  title = 'xyz', url, visible = true, base = false, attribution = '',
+  title = 'xyz', url, tileSize = 256, visible = true, base = false, attribution = '',
 }) {
   const attributions = [attribution];
   const source = new XYZ({
     url,
+    tileSize,
     attributions,
   });
   const layer = new TileLayer({

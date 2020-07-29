@@ -16,7 +16,8 @@
       // Add MapBox base layer: Outdoors.
       var opts = {
         title: 'MapBox Outdoors',
-        url: 'https://api.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=' + key,
+        url: 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/512/{z}/{x}/{y}?access_token=' + key,
+        tileSize: 512,
         attribution: attribution,
         group: 'Base layers',
         base: true,
@@ -27,7 +28,8 @@
       // Add MapBox base layer: Satellite.
       var opts = {
         title: 'MapBox Satellite',
-        url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + key,
+        url: 'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/512/{z}/{x}/{y}?access_token=' + key,
+        tileSize: 512,
         attribution: attribution,
         group: 'Base layers',
         base: true,
