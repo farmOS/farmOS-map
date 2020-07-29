@@ -14,19 +14,19 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^3.5.2",
+    "css-loader": "^3.6.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.5",
     "style-loader": "^0.23.1",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "ol": "^6.3.1",
+    "ol": "^6.4.0",
     "ol-geocoder": "^4.0.0",
     "ol-layerswitcher": "^3.6.0",
     "ol-popup": "^4.0.0",
