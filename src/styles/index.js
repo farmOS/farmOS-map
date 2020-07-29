@@ -5,6 +5,7 @@ import Circle from 'ol/style/Circle';
 import Text from 'ol/style/Text';
 
 // Define the available colors and their associated RGBA values.
+// Colors are listed in README.md documentation, keep these in sync.
 const colors = {
   blue: 'rgba(51,153,255,1)',
   green: 'rgba(51,153,51,1)',
@@ -17,7 +18,7 @@ const colors = {
 };
 
 // Returns an OpenLayers Style for a given color.
-const styles = (color) => {
+const colorStyles = (color) => {
   const rgba = colors[color] ? colors[color] : colors.yellow;
   const stroke = new Stroke({
     color: rgba,
@@ -37,7 +38,7 @@ const styles = (color) => {
     image,
   });
 };
-export default styles;
+export default colorStyles;
 
 // Provide a standard cluster style.
 const styleCache = {};

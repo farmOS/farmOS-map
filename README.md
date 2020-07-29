@@ -213,6 +213,42 @@ const opts = {
 const layer = myMap.addLayer('geojson', opts);
 ```
 
+#### Layer styles
+
+By default all vector layers are styled with the stroke of a given `color`.
+Available colors:
+
+```js
+const colors = {
+  blue: 'rgba(51,153,255,1)',
+  green: 'rgba(51,153,51,1)',
+  darkgreen: 'rgba(51,153,51,1)',
+  grey: 'rgba(204,204,204,0.7)',
+  orange: 'rgba(255,153,51,1)',
+  red: 'rgba(204,0,0,1)',
+  purple: 'rgba(204,51,102,1)',
+  yellow: 'rgba(255,255,51,1)',
+};
+```
+
+For more complex styles, the `styleFunction` option allows styles to be
+defined based on a `feature` and `resolution`
+([StyleFunction docs.](https://openlayers.org/en/latest/apidoc/module-ol_style_Style.html#~StyleFunction)) 
+In addition to the `feature` and `resolution`, farmOS-map calls `styleFunction`
+with an additional `style` parameter. This parameter makes all of the 
+`ol.style` classes available to other JavaScript modules without requiring
+them to bundle `ol.style` themselves.
+
+This makes it possible to style farmOS areas based on properties included in 
+their GeoJSON. Cluster layers use a pre-defined style function, but it can be 
+overridden using the same `styleFunction` parameter.
+
+An [example `styleFunction`](https://gist.github.com/paul121/d8a7e7441df39b15a02042175c9805fe)
+that uses both the resolution and a feature's `id` property.
+
+**NOTE:** For performance it is important to implement a style cache when 
+using a custom `styleFunction` ([example](http://openlayersbook.github.io/ch06-styling-vector-layers/example-06.html))
+
 #### Attribution
 
 Layer attribution can be added by passing an `attribution` option to the

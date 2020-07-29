@@ -14,7 +14,8 @@ import WKT from 'ol/format/WKT';
 import { setWithCredentials } from 'ol/featureloader';
 
 // Import styles.
-import styles, { clusterStyle } from '../../styles';
+import * as Style from 'ol/style';
+import colorStyles, { clusterStyle } from '../../styles';
 
 // Import the default projection configuration
 import projection from '../../projection';
@@ -28,9 +29,11 @@ setWithCredentials(true);
 
 // Add a Vector layer to the map.
 function addVectorLayer({
-  title = 'vector', color = 'orange', visible = true, attribution = '',
+  title = 'vector', color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : colorStyles(color);
   const attributions = [attribution];
   const source = new VectorSource({
     attributions,
@@ -46,8 +49,9 @@ function addVectorLayer({
 
 // Add a cluster layer to the map.
 function addClusterLayer({
-  title = 'cluster', url, visible = true, attribution = '',
+  title = 'cluster', url, styleFunction = clusterStyle, visible = true, attribution = '',
 }) {
+  const style = (feature, resolution) => styleFunction(feature, resolution, Style);
   const format = new GeoJSON();
   const attributions = [attribution];
   const centroidSource = new VectorSource({
@@ -62,7 +66,7 @@ function addClusterLayer({
   const clusterLayer = new VectorLayer({
     title,
     source: clusterSource,
-    style: clusterStyle,
+    style,
     visible,
   });
   return clusterLayer;
@@ -70,9 +74,11 @@ function addClusterLayer({
 
 // Add a GeoJSON feature layer to the map.
 function addGeoJSONLayer({
-  title = 'geojson', url = '', geojson = {}, color = 'orange', visible = true, attribution = '',
+  title = 'geojson', url = '', geojson = {}, color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : colorStyles(color);
   const format = new GeoJSON();
   const attributions = [attribution];
   let source;
@@ -119,9 +125,11 @@ function addTileArcGISMapServerLayer({
 
 // Add Well Known Text (WKT) geometry to the map.
 function addWKTLayer({
-  title = 'wkt', wkt, color = 'orange', visible = true, attribution = '',
+  title = 'wkt', wkt, color = 'orange', styleFunction = null, visible = true, attribution = '',
 }) {
-  const style = styles(color);
+  const style = styleFunction
+    ? (feature, resolution) => styleFunction(feature, resolution, Style)
+    : colorStyles(color);
   const isMultipart = wkt.includes('MULTIPOINT')
     || wkt.includes('MULTILINESTRING')
     || wkt.includes('MULTIPOLYGON')
