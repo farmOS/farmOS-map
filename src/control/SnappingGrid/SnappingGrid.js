@@ -153,6 +153,13 @@ class SnappingGrid extends Control {
       style: this.gridPointStyle,
     });
 
+    // Create and add a Snap interaction for the snapping grid feature
+    this.gridSnapInteraction = new Snap({
+      features: new Collection(),
+      pixelTolerance: 15,
+    });
+    this.gridSnapInteraction.addFeature(this.grid.getGridFeature());
+
     // The grid is inactive until control points have been drawn
     this.grid.setActive(false);
 
@@ -165,14 +172,6 @@ class SnappingGrid extends Control {
     this.innerControlElements.xInput.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
     this.innerControlElements.yInput.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
     this.innerControlElements.unitSelector.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
-  }
-
-  /**
-   * Get a feature containing the points of the grid.
-   * @api
-   */
-  getGridFeature() {
-    return this.grid.getGridFeature();
   }
 
   /**
@@ -233,6 +232,9 @@ class SnappingGrid extends Control {
         this.resetDrawInteraction();
       }
 
+      // Remove our grid snap interaction
+      this.getMap().removeInteraction(this.gridSnapInteraction);
+
       wasActive = this.grid.getActive();
 
       // If the grid is active remove it from the current map and (later)
@@ -288,6 +290,8 @@ class SnappingGrid extends Control {
           && !mapHasOurGridInteraction;
 
         this.grid.setActive(mapHasOurGridInteraction);
+
+        this.updateGridSnapInteraction();
       };
 
       this.onMapAddInteraction = map.getInteractions().on('add', updateState);
@@ -295,8 +299,60 @@ class SnappingGrid extends Control {
 
       if (wasActive) {
         map.addInteraction(this.grid);
+
+        this.updateGridSnapInteraction();
       }
 
+    }
+  }
+
+  /**
+   * Responsible for updating the presence/position of the grid snap interaction within the map's
+   * interactions.
+   * @private
+   */
+  updateGridSnapInteraction() {
+    const isActive = this.grid.getActive();
+
+    if (!isActive) {
+      this.getMap().removeInteraction(this.gridSnapInteraction);
+      return;
+    }
+
+    const mapInteractions = this.getMap().getInteractions();
+
+    const mapInteractionsArr = mapInteractions.getArray();
+
+    function findLastIndex(arr, predicate) {
+      for (let i = arr.length - 1; i >= 0; i += -1) {
+        if (predicate(arr[i])) {
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    const otherDrawInteractionLastIdx = findLastIndex(mapInteractionsArr,
+      interaction => typeof interaction.finishDrawing === 'function'
+        && interaction !== this.drawSnappingOriginsInteraction);
+
+    const otherSnapInteractionLastIdx = findLastIndex(mapInteractionsArr,
+      interaction => typeof interaction.snapTo === 'function'
+        && interaction !== this.gridSnapInteraction);
+
+    const ourSnapInteractionLastIdx = findLastIndex(mapInteractionsArr,
+      interaction => interaction === this.gridSnapInteraction);
+
+    if (Math.max(otherDrawInteractionLastIdx, otherSnapInteractionLastIdx)
+        > ourSnapInteractionLastIdx) {
+      // Make sure our snap interaction is always on top of other draw/snap interactions
+      this.getMap().addInteraction(this.gridSnapInteraction);
+      if (ourSnapInteractionLastIdx !== -1) {
+        mapInteractions.removeAt(ourSnapInteractionLastIdx);
+      }
+    } else if (otherDrawInteractionLastIdx === -1 && otherSnapInteractionLastIdx === -1) {
+      // Remove our snap interaction if there are no other draw/snap interactions
+      this.getMap().removeInteraction(this.gridSnapInteraction);
     }
   }
 

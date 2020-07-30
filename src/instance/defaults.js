@@ -31,6 +31,9 @@ import {
 // Import Geolocate control.
 import Geolocate from '../control/Geolocate/Geolocate';
 
+// Import SnappingGrid control.
+import SnappingGrid from '../control/SnappingGrid/SnappingGrid';
+
 // Import farmOS-map behaviors.
 import rememberLayer from '../behavior/rememberLayer';
 
@@ -71,6 +74,7 @@ const defaults = {
         limit: 5,
         autoComplete: true,
       }),
+      new SnappingGrid({ units: options.units }),
     ];
 
     // If controls were set to 'false', don't attach any controls.

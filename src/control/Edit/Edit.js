@@ -406,18 +406,6 @@ class Edit extends Control {
       });
     }
     this.getMap().addInteraction(this.snapInteraction);
-
-    // Create and add a Snap interaction for the snapping grid feature - if any
-    if (this.snappingGridFeature && !this.gridSnapInteraction) {
-      this.gridSnapInteraction = new Snap({
-        features: new Collection(),
-        pixelTolerance: 15,
-      });
-      this.gridSnapInteraction.addFeature(this.snappingGridFeature);
-    }
-    if (this.gridSnapInteraction) {
-      this.getMap().addInteraction(this.gridSnapInteraction);
-    }
   }
 
   /**
@@ -440,7 +428,6 @@ class Edit extends Control {
       'modifyInteraction',
       'selectInteraction',
       'snapInteraction',
-      'gridSnapInteraction',
       'translateInteraction',
     ];
     interactions.forEach((interaction) => {
