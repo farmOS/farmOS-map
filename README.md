@@ -351,6 +351,14 @@ myMap.addBehavior('edit', { layer: drawingLayer });
 myMap.addBehavior('measure', { layer: drawingLayer });
 ```
 
+### Snapping Grid Controls
+
+Call `addBehavior('snappingGrid')` on the instance returned by
+`farmOS.map.create()` to enable a dynamic snapping grid which can be used to draw
+regular geometries given an origin, rotation, and grid cell dimensions.
+
+![snapping_grid_demo](https://user-images.githubusercontent.com/30754460/88995756-5cb22300-d2a0-11ea-88a1-50edac1c0168.gif)
+
 #### Exporting WKT / GeoJSON
 
 There are some methods on the Edit control for exporting
