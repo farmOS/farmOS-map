@@ -509,3 +509,6 @@ This project has been sponsored by:
 
  * [Farmier](https://farmier.com)
  * [Globetrotter Foundation](http://globetrotterfoundation.org)
+ * [OpenTEAM](https://openteam.community)
+ * [Foundation for Food and Agriculture Research](https://foundationfar.org)
+ * [Wolfe's Neck Center for Agriculture and the Environment](https://www.wolfesneck.org)
