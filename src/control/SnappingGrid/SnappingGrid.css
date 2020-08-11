@@ -1,0 +1,79 @@
+.ol-snapgrid.ol-control {
+  bottom: 2.5em;
+  left: 0.5em;
+}
+
+.ol-snapgrid.ol-control.collapsed .collabsible {
+  display: none;
+}
+
+.ol-snapgrid.ol-control.expanded .reverse-collabsible {
+  display: none;
+}
+
+.ol-snapgrid.ol-control .expandButton {
+  display: none;
+}
+
+.ol-snapgrid.ol-control.grid-active .expandButton {
+  display: inline-block;
+}
+
+.ol-snapgrid.ol-control.grid-active.expanded .expandButton {
+  display: none;
+}
+
+.ol-snapgrid.ol-control .clearButton {
+  display: none;
+}
+
+.ol-snapgrid.ol-control.grid-active .clearButton {
+  display: inline-block;
+}
+
+.ol-snapgrid.ol-control button {
+  display: inline-block;
+}
+
+.ol-snapgrid.ol-control input {
+  display: inline-block;
+  width: 4em;
+  padding: 0;
+  margin: 0;
+}
+
+.ol-snapgrid.ol-control span.timesSymbol {
+  display: inline-block;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0;
+}
+
+.ol-snapgrid.ol-control input:focus {
+  outline: 0;
+}
+
+.ol-snapgrid.ol-control button.enable {
+  text-decoration: none;
+  background-color: #4c6079;
+  background-color: rgba(0,60,136,0.7);
+}
+
+.ol-snapgrid.ol-control.active button.activateButton {
+  background-color: #ffcc33;
+  background-color: rgba(255,204,51,0.7);
+}
+
+.ol-snapgrid.ol-control button:disabled {
+  background-color: #929292;
+  background-color: rgba(146, 146, 146,0.7);
+}
+
+.ol-snapgrid.ol-control button svg {
+  pointer-events: none;
+}
+
+.ol-snapgrid.ol-control select {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
