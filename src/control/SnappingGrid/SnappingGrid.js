@@ -19,7 +19,7 @@ import VectorSource from 'ol/source/Vector';
  */
 import Grid from 'ol-grid/dist/ol-grid.cjs';
 
-import mexp from 'math-expression-evaluator';
+import evaluate from '@emmetio/math-expression';
 
 import forEachLayer from '../../utils/forEachLayer';
 
@@ -173,8 +173,8 @@ class SnappingGrid extends Control {
 
     function multibindEventListeners(elements, eventHandlers) {
       elements.forEach((elem) => {
-        Object.entries(eventHandlers).forEach((eventType, eventHandler) => {
-          elem.addEventListener(eventType, eventHandler.bind(self), false);
+        Object.keys(eventHandlers).forEach((eventType) => {
+          elem.addEventListener(eventType, eventHandlers[eventType].bind(self), false);
         });
       });
     }
@@ -198,7 +198,7 @@ class SnappingGrid extends Control {
     ], {
       blur: self.handleDimInputBlur,
       focus: self.handleDimInputFocus,
-      keydown: self.handleDimInputEnterKey,
+      keydown: SnappingGrid.handleDimInputEnterKey,
     });
 
   }
@@ -270,7 +270,7 @@ class SnappingGrid extends Control {
 
     if (rawValue[0] === '=') {
       try {
-        dimInputEl.value = mexp.eval(rawValue.substring(1)).toFixed(4);
+        dimInputEl.value = evaluate(rawValue.substring(1)).toFixed(4);
       } catch (err) {
         // Swallow errors here since they are handled in getDimFromInputElem for display to the user
       }
@@ -600,7 +600,7 @@ class SnappingGrid extends Control {
 
       let value;
       if (rawValue[0] === '=') {
-        value = mexp.eval(rawValue.substring(1));
+        value = evaluate(rawValue.substring(1));
       } else {
         value = parseFloat(rawValue);
       }
