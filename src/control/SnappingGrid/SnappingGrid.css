@@ -38,18 +38,23 @@
 .ol-snapgrid.ol-control input {
   display: inline-block;
   width: 4em;
-  padding: 0;
   margin: 0;
+  border: 1px solid;
+  padding: 3px;
+}
+
+.ol-snapgrid.ol-control input:focus {
+  outline: 0;
+}
+
+.ol-snapgrid.ol-control input.dim-input-err {
+  border-color: red;
 }
 
 .ol-snapgrid.ol-control span.timesSymbol {
   display: inline-block;
   padding: 0 0.5em 0 0.5em;
   margin: 0;
-}
-
-.ol-snapgrid.ol-control input:focus {
-  outline: 0;
 }
 
 .ol-snapgrid.ol-control button.enable {

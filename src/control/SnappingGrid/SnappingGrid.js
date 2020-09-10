@@ -19,6 +19,8 @@ import VectorSource from 'ol/source/Vector';
  */
 import Grid from 'ol-grid/dist/ol-grid.cjs';
 
+import mexp from 'math-expression-evaluator';
+
 import forEachLayer from '../../utils/forEachLayer';
 
 import './SnappingGrid.css';
@@ -65,6 +67,7 @@ class SnappingGrid extends Control {
 
     function createControlElement(elementTag, name, builderFn) {
       const controlElem = document.createElement(elementTag);
+      controlElem.id = `ol-snapgrid.${name}`;
       controlElem.className = `${className} ${name}`;
       builderFn.call(self, controlElem);
       self.innerControlElements[name] = controlElem;
@@ -84,9 +87,11 @@ class SnappingGrid extends Control {
       button.addEventListener(EventType.CLICK, this.handleActivateButtonClick.bind(this), false);
     });
 
+    this.dimInputRawValues = {};
+
     createControlElement('input', 'xInput', (input) => {
       input.value = 5;
-      input.type = 'number';
+      input.type = 'text';
       input.step = 'any';
       input.classList.add('collabsible');
 
@@ -100,7 +105,7 @@ class SnappingGrid extends Control {
 
     createControlElement('input', 'yInput', (input) => {
       input.value = 5;
-      input.type = 'number';
+      input.type = 'text';
       input.step = 'any';
       input.classList.add('collabsible');
 
@@ -166,12 +171,36 @@ class SnappingGrid extends Control {
     // Maintain the expand/collapse state for the control
     this.mouseIsOver = false;
 
-    element.addEventListener('mouseenter', self.handleMouseEnter.bind(this), false);
-    element.addEventListener('mouseleave', self.handleMouseLeave.bind(this), false);
+    function multibindEventListeners(elements, eventHandlers) {
+      elements.forEach((elem) => {
+        Object.entries(eventHandlers).forEach((eventType, eventHandler) => {
+          elem.addEventListener(eventType, eventHandler.bind(self), false);
+        });
+      });
+    }
 
-    this.innerControlElements.xInput.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
-    this.innerControlElements.yInput.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
-    this.innerControlElements.unitSelector.addEventListener('blur', this.handleControlElementBlur.bind(this), false);
+    multibindEventListeners([element], {
+      mouseenter: self.handleMouseEnter,
+      mouseleave: self.handleMouseLeave,
+    });
+
+    multibindEventListeners([
+      this.innerControlElements.xInput,
+      this.innerControlElements.yInput,
+      this.innerControlElements.unitSelector,
+    ], {
+      blur: self.handleControlElementBlur,
+    });
+
+    multibindEventListeners([
+      this.innerControlElements.xInput,
+      this.innerControlElements.yInput,
+    ], {
+      blur: self.handleDimInputBlur,
+      focus: self.handleDimInputFocus,
+      keydown: self.handleDimInputEnterKey,
+    });
+
   }
 
   /**
@@ -211,6 +240,52 @@ class SnappingGrid extends Control {
     }
 
     this.element.classList.add('collapsed');
+  }
+
+  /**
+   * Handle focus events on dimension inputs - used to replace the formula, if any, for that
+   * dimension input with the result.
+   * @private
+   */
+  handleDimInputFocus(event) {
+    const dimInputEl = event.target;
+    const dimInputId = dimInputEl.id;
+
+    const rawValue = this.dimInputRawValues[dimInputId] || dimInputEl.value;
+
+    dimInputEl.value = rawValue;
+  }
+
+  /**
+   * Handle blur events on dimension inputs - used to show the formula, if any, for that dimension
+   * input.
+   * @private
+   */
+  handleDimInputBlur(event) {
+    const dimInputEl = event.target;
+    const dimInputId = dimInputEl.id;
+
+    const rawValue = this.dimInputRawValues[dimInputId] !== undefined
+      ? this.dimInputRawValues[dimInputId] : dimInputEl.value;
+
+    if (rawValue[0] === '=') {
+      try {
+        dimInputEl.value = mexp.eval(rawValue.substring(1)).toFixed(4);
+      } catch (err) {
+        // Swallow errors here since they are handled in getDimFromInputElem for display to the user
+      }
+    }
+  }
+
+  /**
+   * Blur focus on the dimension inputs when the "enter" key is pressed to match the intuitive
+   * behavior of submitting an updated dimension value/formula.
+   * @private
+   */
+  static handleDimInputEnterKey(event) {
+    if (event.key === 'Enter') {
+      event.target.blur();
+    }
   }
 
   /**
@@ -445,7 +520,8 @@ class SnappingGrid extends Control {
    * Callback for when the value of the x grid size input changes. Updates the grid size.
    * @private
    */
-  handleXInputChanged() {
+  handleXInputChanged(event) {
+    this.dimInputRawValues[event.target.id] = event.target.value;
     this.grid.setXGridSize(this.getXDim());
   }
 
@@ -453,7 +529,8 @@ class SnappingGrid extends Control {
    * Callback for when the value of the y grid size input changes. Updates the grid size.
    * @private
    */
-  handleYInputChanged() {
+  handleYInputChanged(event) {
+    this.dimInputRawValues[event.target.id] = event.target.value;
     this.grid.setYGridSize(this.getYDim());
   }
 
@@ -496,8 +573,7 @@ class SnappingGrid extends Control {
    * @private
    */
   getXDim() {
-    return parseFloat(this.innerControlElements.xInput.value)
-      * this.getSelectedUnitConversionFactor();
+    return this.getDimFromInputElem(this.innerControlElements.xInput);
   }
 
   /**
@@ -505,8 +581,43 @@ class SnappingGrid extends Control {
    * @private
    */
   getYDim() {
-    return parseFloat(this.innerControlElements.yInput.value)
-      * this.getSelectedUnitConversionFactor();
+    return this.getDimFromInputElem(this.innerControlElements.yInput);
+  }
+
+  /**
+   * Get the current grid dimension from the given input element in map units.
+   * @private
+   */
+  getDimFromInputElem(dimInputEl) {
+    const dimInputId = dimInputEl.id;
+
+    const rawValue = this.dimInputRawValues[dimInputId] || dimInputEl.value;
+
+    try {
+      if (!rawValue) {
+        throw new Error('Please enter a grid size');
+      }
+
+      let value;
+      if (rawValue[0] === '=') {
+        value = mexp.eval(rawValue.substring(1));
+      } else {
+        value = parseFloat(rawValue);
+      }
+
+      if (!value || value <= 0) {
+        throw new RangeError('Please enter a number greater than zero');
+      }
+
+      dimInputEl.setAttribute('title', '');
+      dimInputEl.classList.remove('dim-input-err');
+
+      return value * this.getSelectedUnitConversionFactor();
+    } catch (err) {
+      dimInputEl.setAttribute('title', err.message);
+      dimInputEl.classList.add('dim-input-err');
+      return 0;
+    }
   }
 
   /**
