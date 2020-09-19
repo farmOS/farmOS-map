@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "elm-pep": "^1.0.6",
     "ol": "^6.4.0",
     "ol-geocoder": "^4.0.0",
     "ol-grid": "^1.1.4",
