@@ -1,3 +1,7 @@
+// Include pointer events polyfill for old browsers.
+// See https://caniuse.com/#feat=pointer
+import 'elm-pep';
+
 // Import farmOS map instance factory function.
 import createInstance from './instance/instance';
 
