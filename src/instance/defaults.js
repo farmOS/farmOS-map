@@ -1,3 +1,7 @@
+// Include pointer events polyfill for old browsers.
+// See https://caniuse.com/#feat=pointer
+import 'elm-pep';
+
 // Import OL layer types.
 import LayerGroup from 'ol/layer/Group';
 import TileLayer from 'ol/layer/Tile';
