@@ -60,7 +60,7 @@ const defaults = {
 
     // Define default farmOS controls.
     const farmMapDefaults = [
-      new LayerSwitcher(),
+      new LayerSwitcher(options.layerSwitcher),
       new FullScreen(),
       new Rotate({ autoHide: false }),
       new ScaleLine({ units: options.units }),
