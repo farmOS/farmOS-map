@@ -209,6 +209,12 @@ export function getLayerByName(name, optlayers = null) {
 // Add a layer to the map by its type.
 export default function addLayer(type, opts = {}) {
   let layer;
+  if (type.toLowerCase() === 'group') {
+    if (!opts.title) {
+      throw new Error('Missing a Layer Group title.');
+    }
+    layer = new LayerGroup(opts);
+  }
   if (type.toLowerCase() === 'vector') {
     layer = addVectorLayer(opts);
   }
