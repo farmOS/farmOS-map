@@ -28,6 +28,8 @@ Available properties include:
 
 - `units` - The system of measurement to use. Should be either `metric` or `us`.
   Defaults to `metric`.
+- `layerSwitcher` - An object with options for the `LayerSwitcher` control.
+  See the `ol-layerswitcher` [documentation](https://github.com/walkermatt/ol-layerswitcher#layerswitcher).
 - `controls` - See below.
 - `interactions` - See below.
 
