@@ -215,6 +215,35 @@ const opts = {
 const layer = myMap.addLayer('geojson', opts);
 ```
 
+Layer groups that are created automatically will be created with default
+settings. If you need more control over layer groups, they can be added to
+the map by using the `addLayer` method with the `group` layer type. Layer
+groups can be nested in other layer groups by providing the `group` option.
+To ensure other layers are included in your layer group make sure to add it
+to the map before other layers that should be included.
+
+The `ol-layerswitcher` [examples](https://github.com/walkermatt/ol-layerswitcher#examples)
+that demonstrate all of the available layer group options.
+
+```js
+// Adding a Layer Group
+const groupOpts = {
+  title: 'Child group', // required
+  fold: false, // defaults to false
+  combine: false, // defaults to false
+  group: 'Parent', // include in the "Parent" layer group
+}
+const layerGroup = myMap.addLayer('group', groupOpts);
+
+// Adding a vector layer to the 'Child group'
+const vectorOpts = {
+  title: 'Drawing',
+  color: 'orange',
+  group: 'Child group'
+};
+const vectorLayer = myMap.addLayer('vector', vectorOpts);
+```
+
 #### Layer styles
 
 By default all vector layers are styled with the stroke of a given `color`.
