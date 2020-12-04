@@ -507,7 +507,7 @@ instance.attachBehavior(myBehavior);
 To add Google Maps layers to a map, perform the following steps:
 
 1. Obtain a Google Maps JavaScript API key. For instructions, see:
-   https://farmos.org/hosting/googlemaps
+   https://farmos.org/hosting/apikeys/
 2. Add the following script tag to the page *before* any calls to
    `farmOS.map.create()`, and replace `<KEY>` with your API key:
 
