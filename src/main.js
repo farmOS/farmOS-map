@@ -1,6 +1,9 @@
 // Import farmOS map instance factory function.
 import createInstance from './instance/instance';
 
+// Import colors.
+import { colors } from './styles';
+
 // Import farmOS-map CSS.
 import './styles.css';
 
@@ -61,4 +64,6 @@ window.farmOS.map = {
   targetIndex(target) {
     return this.instances.findIndex(instance => instance.target === target);
   },
+
+  colors,
 };

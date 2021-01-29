@@ -26,6 +26,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "d3-scale": "^3.2.3",
+    "d3-scale-chromatic": "^2.0.0",
     "ol": "^6.4.0",
     "ol-geocoder": "^4.0.0",
     "ol-grid": "^1.1.4",

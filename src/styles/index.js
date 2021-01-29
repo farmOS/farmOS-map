@@ -4,9 +4,18 @@ import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/style/Circle';
 import Text from 'ol/style/Text';
 
+// Import d3 color scale functions.
+import { scaleSequential, scaleOrdinal } from 'd3-scale';
+import {
+  schemeTableau10,
+  interpolateRdYlGn,
+  schemeRdYlGn,
+  interpolateViridis,
+} from 'd3-scale-chromatic';
+
 // Define the available colors and their associated RGBA values.
 // Colors are listed in README.md documentation, keep these in sync.
-const colors = {
+const defaultColors = {
   blue: 'rgba(51,153,255,1)',
   green: 'rgba(51,153,51,1)',
   darkgreen: 'rgba(51,153,51,1)',
@@ -19,7 +28,7 @@ const colors = {
 
 // Returns an OpenLayers Style for a given color.
 const colorStyles = (color) => {
-  const rgba = colors[color] ? colors[color] : colors.yellow;
+  const rgba = defaultColors[color] ? defaultColors[color] : defaultColors.yellow;
   const stroke = new Stroke({
     color: rgba,
     width: 2,
@@ -67,3 +76,12 @@ export function clusterStyle(feature) {
   }
   return style;
 }
+
+export const colors = {
+  scaleOrdinal,
+  scaleSequential,
+  schemeTableau10,
+  interpolateRdYlGn,
+  schemeRdYlGn,
+  interpolateViridis,
+};
