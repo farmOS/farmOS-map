@@ -6,6 +6,7 @@ import Text from 'ol/style/Text';
 
 // Import d3 color scale functions.
 import { scaleSequential, scaleOrdinal } from 'd3-scale';
+import schemeGenerator from 'd3-scale-chromatic/src/colors';
 import {
   schemeTableau10,
   interpolateRdYlGn,
@@ -80,6 +81,7 @@ export function clusterStyle(feature) {
 export const colors = {
   scaleOrdinal,
   scaleSequential,
+  schemeGenerator,
   schemeTableau10,
   interpolateRdYlGn,
   schemeRdYlGn,
