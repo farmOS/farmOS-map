@@ -17,14 +17,17 @@ import {
 // Define the available colors and their associated RGBA values.
 // Colors are listed in README.md documentation, keep these in sync.
 const defaultColors = {
-  blue: 'rgba(51,153,255,1)',
-  green: 'rgba(51,153,51,1)',
+  blue: schemeTableau10[0],
+  orange: schemeTableau10[1],
+  red: schemeTableau10[2],
+  lightblue: schemeTableau10[3],
+  green: schemeTableau10[4],
   darkgreen: 'rgba(51,153,51,1)',
-  grey: 'rgba(204,204,204,0.7)',
-  orange: 'rgba(255,153,51,1)',
-  red: 'rgba(204,0,0,1)',
-  purple: 'rgba(204,51,102,1)',
-  yellow: 'rgba(255,255,51,1)',
+  yellow: schemeTableau10[5],
+  purple: schemeTableau10[6],
+  pink: schemeTableau10[7],
+  brown: schemeTableau10[8],
+  grey: schemeTableau10[9],
 };
 
 // Returns an OpenLayers Style for a given color.

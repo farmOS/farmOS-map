@@ -247,18 +247,21 @@ const vectorLayer = myMap.addLayer('vector', vectorOpts);
 #### Layer styles
 
 By default all vector layers are styled with the stroke of a given `color`.
-Available colors:
+Available colors are derived from the [Tableau 10 scheme](https://github.com/d3/d3-scale-chromatic#schemeTableau10):
 
 ```js
-const colors = {
-  blue: 'rgba(51,153,255,1)',
-  green: 'rgba(51,153,51,1)',
+const defaultColors = {
+  blue: schemeTableau10[0],
+  orange: schemeTableau10[1],
+  red: schemeTableau10[2],
+  lightblue: schemeTableau10[3],
+  green: schemeTableau10[4],
   darkgreen: 'rgba(51,153,51,1)',
-  grey: 'rgba(204,204,204,0.7)',
-  orange: 'rgba(255,153,51,1)',
-  red: 'rgba(204,0,0,1)',
-  purple: 'rgba(204,51,102,1)',
-  yellow: 'rgba(255,255,51,1)',
+  yellow: schemeTableau10[5],
+  purple: schemeTableau10[6],
+  pink: schemeTableau10[7],
+  brown: schemeTableau10[8],
+  grey: schemeTableau10[9],
 };
 ```
 
