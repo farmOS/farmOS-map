@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.4.0] - 2020-02-08
+
 ### Added
 
 - Add support for customizing layer groups #91
@@ -218,7 +220,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v1.4.0...HEAD
+[v1.4.0]: https://github.com/farmOS/farmOS-map/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/farmOS/farmOS-map/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/farmOS/farmOS-map/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/farmOS/farmOS-map/compare/v1.0.1...v1.1.0
