@@ -24,7 +24,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.BannerPlugin(`farmOS-map v${info.version}`),
+    new webpack.BannerPlugin(`farmOS-map ${info.version}`),
     new CopyWebpackPlugin([
       { from: 'static' },
     ]),
