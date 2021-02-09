@@ -63,3 +63,6 @@
 .layer-switcher {
   top: 3.5em;
 }
+.layer-switcher.shown {
+  max-height: 300px;
+}
