@@ -38,10 +38,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
-            This release includes the following changes:
-
-            - ...
-          draft: true
+            See [CHANGELOG.md](https://github.com/farmOS/farmOS-map/blob/${{ github.ref }}/CHANGELOG.md) for release notes.
+          draft: false
           prerelease: false
       - name: Upload Release Asset
         id: upload-release-asset 
