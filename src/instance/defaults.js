@@ -6,7 +6,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 
 // Import ol-layerswitcher.
-import 'ol-layerswitcher/src/ol-layerswitcher.css';
+import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 import LayerSwitcher from 'ol-layerswitcher';
 
 // Import ol-geocoder.
