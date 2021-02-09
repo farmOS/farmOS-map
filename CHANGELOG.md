@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update LICENSE from GPLv2 to MIT #96
 - Update all dependencies.
 - Build into `dist` directory instead of `build`.
+- Use `@farmos.org/farmos-olgm` fork of `ol3-google-maps`. See #99
 
 ## [v1.3.0] - 2020-08-11
 

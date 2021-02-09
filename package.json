@@ -31,6 +31,6 @@
     "ol-grid": "^1.1.4",
     "ol-layerswitcher": "^3.7.0",
     "ol-popup": "^4.0.0",
-    "olgm": "github:mstenta/ol3-google-maps#farmOS-map"
+    "@farmos.org/farmos-olgm": "^1.7.0"
   }
 }

@@ -1,7 +1,7 @@
 // Import Google Maps.
-import 'olgm/src/olgm/olgm.css';
-import OLGoogleMaps from 'olgm/src/olgm/OLGoogleMaps';
-import GoogleLayer from 'olgm/src/olgm/layer/Google';
+import '@farmos.org/farmos-olgm/olgm.css';
+import OLGoogleMaps from '@farmos.org/farmos-olgm/OLGoogleMaps';
+import GoogleLayer from '@farmos.org/farmos-olgm/layer/Google';
 
 // Add CSS override to fix font family/size issue described here:
 // https://github.com/farmOS/farmOS-map/issues/8#issuecomment-568076505
