@@ -530,7 +530,7 @@ Maps layers will not work.
 which will live-update as code is changed during development.
 
 `npm run build` - Generate the final `farmOS-map.js` file for distribution,
-along with an `index.html` file that loads it, inside the `build` directory.
+along with an `index.html` file that loads it, inside the `dist` directory.
 
 ## Maintainers
 

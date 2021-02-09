@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update link to google maps api key documentation. #92
 - Update LICENSE from GPLv2 to MIT #96
 - Update all dependencies.
+- Build into `dist` directory instead of `build`.
 
 ## [v1.3.0] - 2020-08-11
 
