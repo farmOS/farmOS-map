@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Switch to NPM release of ol-grid #86
 - Update link to google maps api key documentation. #92
 - Update LICENSE from GPLv2 to MIT #96
+- Update all dependencies.
 
 ## [v1.3.0] - 2020-08-11
 
