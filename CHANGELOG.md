@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `.npmignore`. Do not ignore `/dist/`.
+
 ## [v1.4.0] - 2020-02-08
 
 ### Added
