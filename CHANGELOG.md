@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.4.2] - 2020-04-02
+
 ### Changed
 
 - Import ol-layerswitcher css from dist.
@@ -242,7 +244,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v1.4.2...HEAD
+[v1.4.2]: https://github.com/farmOS/farmOS-map/compare/v1.4.1...v1.4.2
 [v1.4.1]: https://github.com/farmOS/farmOS-map/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/farmOS/farmOS-map/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/farmOS/farmOS-map/compare/v1.2.0...v1.3.0
