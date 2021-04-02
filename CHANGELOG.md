@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Import ol-layerswitcher css from dist.
+- SVG cleanup #105
+- Make geocoder size and positioning more consistent. #107
+- Update all dependencies.
+
+### Fixed
+
+- Fix CHANGELOG links in releases #106
+- Set a max-height to scroll the layer switcher when needed. #100
+
 ## [v1.4.1] - 2020-02-09
 
 ### Added
