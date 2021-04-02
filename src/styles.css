@@ -37,9 +37,13 @@
 .ol-geocoder .gcd-gl-control {
   width: 2.4em;
   height: 2.4em;
+  font-size: 1.14em;
 }
 .ol-geocoder .gcd-gl-expanded {
   width: 16em;
+  height: 2.4em;
+}
+.ol-geocoder .gcd-gl-input {
   height: 2.4em;
 }
 
@@ -49,9 +53,10 @@
 }
 .ol-geocoder.gcd-gl-container {
   top: 0.5em;
-  left: 6.5em;
+  left: 7em;
 }
 .ol-geocoder .gcd-gl-input {
+  top: 0.125em;
   left: 3em;
 }
 .ol-edit.ol-control {
