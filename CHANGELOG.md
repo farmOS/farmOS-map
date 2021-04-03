@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.4.2] - 2020-04-02
+## [v1.4.2] - 2021-04-02
 
 ### Changed
 
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix CHANGELOG links in releases #106
 - Set a max-height to scroll the layer switcher when needed. #100
 
-## [v1.4.1] - 2020-02-09
+## [v1.4.1] - 2021-02-09
 
 ### Added
 
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Publish GitHub release with a link to `CHANGELOG.md`.
 
-## [v1.4.0] - 2020-02-08
+## [v1.4.0] - 2021-02-08
 
 ### Added
 
