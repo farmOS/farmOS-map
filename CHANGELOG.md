@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Check in diff of `package.json`/`package-lock.json` from moving to NPM v7
+
 ## [v1.4.2] - 2021-04-02
 
 ### Changed
