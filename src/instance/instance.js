@@ -1,5 +1,4 @@
-// Import OpenLayers CSS and base Map and View definitions.
-import 'ol/ol.css';
+// Import OpenLayers base Map and View definitions.
 import { Map, View } from 'ol';
 
 // Import defaults.

@@ -1,6 +1,5 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
-import EventType from 'ol/events/EventType';
 import Feature from 'ol/Feature';
 import Geolocation from 'ol/Geolocation';
 import Point from 'ol/geom/Point';
@@ -55,7 +54,7 @@ class Geolocate extends Control {
     button.type = 'button';
 
     // Register a click event on the button.
-    button.addEventListener(EventType.CLICK, this.handleClick.bind(this), false);
+    button.addEventListener('click', this.handleClick.bind(this), false);
 
     // Add the button and CSS classes to the control element.
     const { element } = this;

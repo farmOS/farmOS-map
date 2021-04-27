@@ -29,4 +29,18 @@ module.exports = {
       { from: 'static' },
     ]),
   ],
+  externals: function (context, request, callback) {
+    // Externalize all OpenLayers `ol` imports
+    if (/^ol(\/.*)?$/.test(request)) {
+      const modifiedRequest = request
+        // Remove '.js' suffix - if present
+        .replace(/\.js$/, "")
+        // Replace filesystem separators '/' with module separators '.'
+        .replace(/\//g, ".");
+      return callback(null, modifiedRequest);
+    }
+
+    // Continue without externalizing the import
+    callback();
+  },
 };

@@ -3,7 +3,6 @@ import Control from 'ol/control/Control';
 import Draw from 'ol/interaction/Draw';
 import Snap from 'ol/interaction/Snap';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
-import EventType from 'ol/events/EventType';
 import {
   Circle as CircleStyle,
   Fill,
@@ -81,7 +80,7 @@ class SnappingGrid extends Control {
       button.title = 'Enable the Snapping Grid';
       button.type = 'button';
 
-      button.addEventListener(EventType.CLICK, this.handleActivateButtonClick.bind(this), false);
+      button.addEventListener('click', this.handleActivateButtonClick.bind(this), false);
     });
 
     createControlElement('input', 'xInput', (input) => {
@@ -145,7 +144,7 @@ class SnappingGrid extends Control {
     });
 
     this.gridControlPointsVectorLayer.getSource().on('addfeature', this.handleAddGridControlFeature.bind(this));
-    document.addEventListener(EventType.KEYDOWN, this.handleEscape.bind(this), false);
+    document.addEventListener('keydown', this.handleEscape.bind(this), false);
 
     this.grid = new Grid({
       xGridSize: this.getXDim(),

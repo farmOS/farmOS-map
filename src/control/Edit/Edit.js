@@ -1,6 +1,5 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
-import EventType from 'ol/events/EventType';
 import Draw, { createRegularPolygon } from 'ol/interaction/Draw';
 import Select from 'ol/interaction/Select';
 import Modify from 'ol/interaction/Modify';
@@ -155,7 +154,7 @@ class Edit extends Control {
     if (options.draw) {
       button.draw = options.draw;
     }
-    button.addEventListener(EventType.CLICK, this.handleClick.bind(this), false);
+    button.addEventListener('click', this.handleClick.bind(this), false);
     element.appendChild(button);
     return button;
   }
@@ -246,7 +245,7 @@ class Edit extends Control {
   handleEscape(event) {
     if (event.key === 'Escape') {
       this.disableAll();
-      document.removeEventListener(EventType.KEYDOWN, this.handleEscape, false);
+      document.removeEventListener('keydown', this.handleEscape, false);
     }
   }
 
@@ -411,7 +410,7 @@ class Edit extends Control {
    */
   enableEscape() {
     this.handleEscape = this.handleEscape.bind(this);
-    document.addEventListener(EventType.KEYDOWN, this.handleEscape, false);
+    document.addEventListener('keydown', this.handleEscape, false);
   }
 
   /**
