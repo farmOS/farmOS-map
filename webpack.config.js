@@ -25,11 +25,13 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin(`farmOS-map ${info.version}`),
-    new CopyWebpackPlugin([
-      { from: 'static' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'static' },
+      ],
+    }),
   ],
-  externals: function (context, request, callback) {
+  externals: function ({context, request}, callback) {
     // Externalize all OpenLayers `ol` imports
     if (/^ol(\/.*)?$/.test(request)) {
       const modifiedRequest = request

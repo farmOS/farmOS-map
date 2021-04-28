@@ -10,10 +10,10 @@
   "scripts": {
     "lint": "eslint src",
     "build": "npm run lint && webpack --config webpack.config.js --mode production",
-    "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config webpack.config.js --mode development"
+    "dev": "webpack-dev-server --host 0.0.0.0 --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.1.2",
+    "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^3.6.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
@@ -21,9 +21,9 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack": "^5.36.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^4.0.0-beta.2"
   },
   "dependencies": {
     "@farmos.org/farmos-olgm": "^1.7.0",
