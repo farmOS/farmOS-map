@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove redundant `defaults.behaviors` in favor of existing `farmOS.map.behaviors` mechanism for specifying the default behaviors
 - Make instance behavior methods `async`
 - Lazily load behaviors as separate Webpack chunks
+- Avoid referencing named behaviors via window.farmOS.map since this breaks when farmOS-map is bundled e.g. in FieldKit
 
 ## [v1.4.2] - 2021-04-02
 

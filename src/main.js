@@ -1,6 +1,8 @@
 // Import farmOS map instance factory function.
 import createInstance from './instance/instance';
 
+import namedBehaviors from './behavior';
+
 // Import farmOS-map CSS.
 import './styles.css';
 
@@ -14,18 +16,12 @@ export default {
   // These are objects with an attach() method that will be called when a map is
   // created. They receive the instance object so that they can perform
   // modifications to the map using instance methods.
-  namedBehaviors: {
-    rememberLayer: lazyLoadedBehavior('rememberLayer'),
-    edit: lazyLoadedBehavior('edit'),
-    google: lazyLoadedBehavior('google'),
-    measure: lazyLoadedBehavior('measure'),
-    snappingGrid: lazyLoadedBehavior('snappingGrid'),
-  },
+  namedBehaviors,
 
   // Map behaviors which will be automatically attached to all created map
   // instances.
   behaviors: {
-    rememberLayer: lazyLoadedBehavior('rememberLayer'),
+    rememberLayer: namedBehaviors.rememberLayer,
   },
 
   // Create a new farmOS map attached to a target element ID and add it to the
@@ -69,14 +65,3 @@ export default {
     return this.instances.findIndex(instance => instance.target === target);
   },
 };
-
-function lazyLoadedBehavior(name) {
-  return {
-    async attach(instance, options) {
-      return import(/* webpackChunkName: "farmOS-map-[request]" */ `./behavior/${name}`).then((module) => {
-        const behavior = module.default;
-        behavior.attach(instance, options);
-      });
-    },
-  };
-}

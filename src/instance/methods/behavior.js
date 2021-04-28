@@ -1,8 +1,10 @@
+import namedBehaviors from '../../behavior';
+
 /**
  * Add a behavior by name.
  */
 export async function addBehavior(name, options = {}) {
-  return this.attachBehavior(window.farmOS.map.namedBehaviors[name], options);
+  return this.attachBehavior(namedBehaviors[name], options);
 }
 
 /**
