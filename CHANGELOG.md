@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update ssri dependency.
 - Externalize OpenLayers dependency
 - Update key Webpack build dependencies to take advantage of new features
+- Update eslint to allow import() within code
 
 ## [v1.4.2] - 2021-04-02
 

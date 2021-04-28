@@ -6,5 +6,8 @@
   "rules": {
     "brace-style": off,
     "padded-blocks": off
-  }
+  },
+  "parserOptions": {
+    "ecmaVersion": 11,
+  },
 }
