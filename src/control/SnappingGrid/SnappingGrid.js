@@ -345,12 +345,14 @@ class SnappingGrid extends Control {
 
     if (Math.max(otherDrawInteractionLastIdx, otherSnapInteractionLastIdx)
         > ourSnapInteractionLastIdx) {
+
       // Make sure our snap interaction is always on top of other draw/snap interactions
       if (ourSnapInteractionLastIdx !== -1) {
         mapInteractions.removeAt(ourSnapInteractionLastIdx);
       }
       this.getMap().addInteraction(this.gridSnapInteraction);
     } else if (otherDrawInteractionLastIdx === -1 && otherSnapInteractionLastIdx === -1) {
+
       // Remove our snap interaction if there are no other draw/snap interactions
       this.getMap().removeInteraction(this.gridSnapInteraction);
     }

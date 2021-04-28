@@ -1,14 +1,18 @@
-// Import pre-defined behaviors from src/behavior.
-import edit from './edit';
-import google from './google';
-import measure from './measure';
-import rememberLayer from './rememberLayer';
-import snappingGrid from './snappingGrid';
+function lazyLoadedBehavior(name) {
+  return {
+    async attach(instance, options) {
+      return import(/* webpackChunkName: "farmOS-map-behavior-[request]" */ `./${name}`).then((module) => {
+        const behavior = module.default;
+        behavior.attach(instance, options);
+      });
+    },
+  };
+}
 
 export default {
-  edit,
-  google,
-  measure,
-  rememberLayer,
-  snappingGrid,
+  edit: lazyLoadedBehavior('edit'),
+  google: lazyLoadedBehavior('google'),
+  measure: lazyLoadedBehavior('measure'),
+  rememberLayer: lazyLoadedBehavior('rememberLayer'),
+  snappingGrid: lazyLoadedBehavior('snappingGrid'),
 };

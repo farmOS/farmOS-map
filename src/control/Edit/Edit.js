@@ -32,6 +32,7 @@ import './Edit.css';
  * @api
  */
 class Edit extends Control {
+
   /**
    * @param {Options=} opts Edit options.
    */

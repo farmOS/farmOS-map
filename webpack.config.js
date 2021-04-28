@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const info = require('./package.json');
 
@@ -8,6 +9,7 @@ module.exports = {
   output: {
     path: `${__dirname}/dist`,
     filename: 'farmOS-map.js',
+    chunkFilename: 'farmOS-map-chunk-[contenthash].js',
   },
   performance: {
     hints: false,
@@ -24,6 +26,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.BannerPlugin(`farmOS-map ${info.version}`),
     new CopyWebpackPlugin([
       { from: './examples/simple-html-consumer/static' },

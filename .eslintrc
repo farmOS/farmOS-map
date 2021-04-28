@@ -5,7 +5,8 @@
   },
   "rules": {
     "brace-style": off,
-    "padded-blocks": off
+    "padded-blocks": off,
+    "lines-around-comment": ["error", { "beforeLineComment": true, "beforeBlockComment": true, "allowBlockStart": false }]
   },
   "parserOptions": {
     "ecmaVersion": 11,

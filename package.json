@@ -13,6 +13,7 @@
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^5.1.2",
     "css-loader": "^3.6.0",
     "eslint": "^7.25.0",

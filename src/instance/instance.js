@@ -9,7 +9,7 @@ import defaults from './defaults';
 import addLayer, { getLayerByName } from './methods/layer';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
-import { addBehavior, attachBehavior } from './methods/behavior';
+import { addBehavior, attachBehavior, attachBehaviorsByWeight } from './methods/behavior';
 import { measureGeometry } from '../utils/measure';
 
 // Define an object that represents a single farmOS map instance.
@@ -55,13 +55,9 @@ const createInstance = ({ target, options = {} }) => {
     zoomToLayer,
     addBehavior,
     attachBehavior,
+    attachBehaviorsByWeight,
     measureGeometry,
   };
-
-  // Attach default behaviors.
-  defaults.behaviors().forEach((behavior) => {
-    instance.attachBehavior(behavior);
-  });
 
   return instance;
 };

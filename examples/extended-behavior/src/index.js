@@ -2,9 +2,10 @@ import KML from 'ol/format/KML';
 import VectorSource from 'ol/source/Vector';
 import HeatmapLayer from 'ol/layer/Heatmap';
 
+
 (function () {
   farmOS.map.behaviors.exampleHeatmapBehavior = {
-    attach: function(instance) {
+    attach: async function(instance) {
 
       const vector = new HeatmapLayer({
         source: new VectorSource({
