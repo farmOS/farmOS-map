@@ -31,9 +31,6 @@ import {
 // Import Geolocate control.
 import Geolocate from '../control/Geolocate/Geolocate';
 
-// Import farmOS-map behaviors.
-import rememberLayer from '../behavior/rememberLayer';
-
 // Define an object that contains the default layers, controls, interactions,
 // and behaviors that will be added to all farmOS maps.
 const defaults = {
@@ -134,13 +131,5 @@ const defaults = {
     return defaultInteractions().extend(farmMapDefaults);
   },
 
-  // Behaviors.
-  // These are custom sets of map behavior logic provided by farmOS-map in the
-  // src/behavior directory.
-  behaviors() {
-    return [
-      rememberLayer,
-    ];
-  },
 };
 export default defaults;

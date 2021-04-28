@@ -57,11 +57,6 @@ const createInstance = ({ target, options = {} }) => {
     measureGeometry,
   };
 
-  // Attach default behaviors.
-  defaults.behaviors().forEach((behavior) => {
-    instance.attachBehavior(behavior);
-  });
-
   return instance;
 };
 export default createInstance;

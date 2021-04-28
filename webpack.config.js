@@ -4,10 +4,26 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const info = require('./package.json');
 
 module.exports = {
-  entry: `${__dirname}/src/main.js`,
+  entry: {
+    'farmOS-map': {
+      'import': `${__dirname}/src/main.js`,
+      library: {
+        name: ['farmOS', 'map'],
+        type: 'global',
+        'export': 'default',
+      },
+    },
+  },
   output: {
     path: `${__dirname}/dist`,
-    filename: 'farmOS-map.js',
+    filename: '[name].js',
+  },
+  optimization: {
+    splitChunks: {
+      // Setting this to 1MB rather than the default of 50KB to avoid
+      // Random vendor chunks being generated
+      enforceSizeThreshold: 1024 * 1024,
+    },
   },
   performance: {
     hints: false,

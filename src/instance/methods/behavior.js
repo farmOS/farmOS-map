@@ -1,16 +1,13 @@
-// Import pre-defined behaviors from src/behavior.
-import behaviors from '../../behavior';
-
 /**
  * Add a behavior by name.
  */
-export function addBehavior(name, options = {}) {
-  this.attachBehavior(behaviors[name], options);
+export async function addBehavior(name, options = {}) {
+  return this.attachBehavior(window.farmOS.map.namedBehaviors[name], options);
 }
 
 /**
  * Attach a behavior to the farmOS-map instance.
  */
-export function attachBehavior(behavior, options = {}) {
-  behavior.attach(this, options);
+export async function attachBehavior(behavior, options = {}) {
+  return behavior.attach(this, options);
 }

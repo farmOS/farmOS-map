@@ -502,6 +502,41 @@ const myBehavior = {
 instance.attachBehavior(myBehavior);
 ```
 
+#### Async Behaviors
+
+Behaviors can attach themselves asynchronously leveraging [Javascript's Promise system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+In fact, all the behaviors which come with farmOS-map load only when needed.
+
+```js
+const myBehavior = {
+  attach(instance) {
+    console.log("Starting slow behavior attachement...");
+    return new Promise(resolve => {
+      setTimeout(function() {
+        instance.myTardyProperty = "world!";
+        resolve();
+      }, 2000);
+    });
+  },
+};
+
+instance.attachBehavior(myBehavior).then(() => {
+  console.log("Hello " + instance.myTardyProperty);
+});
+```
+
+
+The most common way this might be important is with the edit behavior. Since the `edit` property
+of the map instance isn't populated until the edit behavior has loaded, it is necessary to access
+it within a `.then()` statement;
+
+```js
+instance.addBehavior("edit").then(() => {
+  myMap.edit.wktOn("featurechange", console.log);
+});
+```
+
+
 ### Google Maps
 
 To add Google Maps layers to a map, perform the following steps:

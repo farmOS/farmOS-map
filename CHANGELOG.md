@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Externalize OpenLayers dependency
 - Update key Webpack build dependencies to take advantage of new features
 - Update eslint to allow import() within code
+- Remove redundant `defaults.behaviors` in favor of existing `farmOS.map.behaviors` mechanism for specifying the default behaviors
+- Make instance behavior methods `async`
+- Lazily load behaviors as separate Webpack chunks
 
 ## [v1.4.2] - 2021-04-02
 
