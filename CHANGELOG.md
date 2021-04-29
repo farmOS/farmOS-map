@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make instance behavior methods `async`
 - Lazily load behaviors as separate Webpack chunks
 - Avoid referencing named behaviors via window.farmOS.map since this breaks when farmOS-map is bundled e.g. in FieldKit
+- Honor weights in async behavior attaching and expose `instance.defaultBehaviorsAttached`
 
 ## [v1.4.2] - 2021-04-02
 

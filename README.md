@@ -502,6 +502,9 @@ const myBehavior = {
 instance.attachBehavior(myBehavior);
 ```
 
+Behaviors added in this way will be attached after behaviors that are added to
+`farmOS.map.behaviors`.
+
 #### Async Behaviors
 
 Behaviors can attach themselves asynchronously leveraging [Javascript's Promise system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
@@ -536,6 +539,10 @@ instance.addBehavior("edit").then(() => {
 });
 ```
 
+Behaviors which are added to `farmOS.map.behaviors` are also attached to the map aynchronously. This
+means that a map instance may not be fully initialized when it is returned by `farmOS.map.create`.
+Instead the property `instance.defaultBehaviorsAttached` is a promise that can be used to detect when
+all the behaviors from `farmOS.map.behaviors` have finished being attached to the map.
 
 ### Google Maps
 
