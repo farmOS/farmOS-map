@@ -39,24 +39,23 @@ export default {
     const behaviorsByWeight = behaviors.reduce((groups, behavior) => {
       const weight = behavior.weight || 0;
 
-      if (!groups.hasOwnProperty(weight)) {
-        groups[weight] = [];
-      }
+      /* eslint-disable-next-line no-param-reassign */
+      groups[weight] = groups[weight] || [];
 
       groups[weight].push(behavior);
 
       return groups;
     }, {});
 
-    const sortedWeights = Object.keys(behaviorsByWeight).sort((a, b) => (a < b) ? -1 : 1);
+    const sortedWeights = Object.keys(behaviorsByWeight).sort((a, b) => ((a < b) ? -1 : 1));
 
-    instance.defaultBehaviorsAttached = sortedWeights.reduce((previousPromise, weight) => {
-      return previousPromise.then(() => {
+    instance.defaultBehaviorsAttached = sortedWeights.reduce(
+      (previousPromise, weight) => previousPromise.then(() => {
         const behaviorsWithWeight = behaviorsByWeight[weight];
 
         return Promise.all(behaviorsWithWeight.map(behavior => behavior.attach(instance)));
-      });
-    }, Promise.resolve());
+      }), Promise.resolve(),
+    );
 
     // Return the instance.
     return instance;
