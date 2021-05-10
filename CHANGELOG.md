@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Check in diff of `package.json`/`package-lock.json` from moving to NPM v7
-- Update ssri dependency.
+- Update all dependencies.
 
 ### Fixed
 
