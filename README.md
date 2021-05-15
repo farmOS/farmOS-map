@@ -528,7 +528,6 @@ instance.attachBehavior(myBehavior).then(() => {
 });
 ```
 
-
 The most common way this might be important is with the edit behavior. Since the `edit` property
 of the map instance isn't populated until the edit behavior has loaded, it is necessary to access
 it within a `.then()` statement;

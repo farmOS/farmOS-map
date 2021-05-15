@@ -32,29 +32,9 @@ export default {
     // Add the instance to the array.
     this.instances.push(instance);
 
-    // Attach behaviors from farmOS.map.behaviors to the instance.
-    // Sort by an optional weight value on each behavior.
-    const behaviors = Object.keys(this.behaviors).map(i => this.behaviors[i]);
-
-    const behaviorsByWeight = behaviors.reduce((groups, behavior) => {
-      const weight = behavior.weight || 0;
-
-      /* eslint-disable-next-line no-param-reassign */
-      groups[weight] = groups[weight] || [];
-
-      groups[weight].push(behavior);
-
-      return groups;
-    }, {});
-
-    const sortedWeights = Object.keys(behaviorsByWeight).sort((a, b) => ((a < b) ? -1 : 1));
-
-    instance.defaultBehaviorsAttached = sortedWeights.reduce(
-      (previousPromise, weight) => previousPromise.then(() => {
-        const behaviorsWithWeight = behaviorsByWeight[weight];
-
-        return Promise.all(behaviorsWithWeight.map(behavior => behavior.attach(instance)));
-      }), Promise.resolve(),
+    // Attach behaviors from farmOS.map.behaviors to the instance in order of weight - if any.
+    instance.defaultBehaviorsAttached = instance.attachBehaviorsByWeight(
+      Object.values(this.behaviors),
     );
 
     // Return the instance.

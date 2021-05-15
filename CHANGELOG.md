@@ -8,16 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Check in diff of `package.json`/`package-lock.json` from moving to NPM v7
+- Check in diff of `package.json`/`package-lock.json` from moving to NPM v7.
 - Update ssri dependency.
-- Externalize OpenLayers dependency
-- Update key Webpack build dependencies to take advantage of new features
-- Update eslint to allow import() within code
-- Remove redundant `defaults.behaviors` in favor of existing `farmOS.map.behaviors` mechanism for specifying the default behaviors
-- Make instance behavior methods `async`
-- Lazily load behaviors as separate Webpack chunks
-- Avoid referencing named behaviors via window.farmOS.map since this breaks when farmOS-map is bundled e.g. in FieldKit
-- Honor weights in async behavior attaching and expose `instance.defaultBehaviorsAttached`
+- Externalize OpenLayers dependency.
+- Update key Webpack build dependencies to take advantage of new features.
+- Update eslint to allow import() within code.
+- Remove redundant `defaults.behaviors` in favor of existing `farmOS.map.behaviors` mechanism for specifying the default behaviors.
+- Make instance behavior methods `async`.
+- Lazily load behaviors as separate Webpack chunks.
+- Avoid referencing named behaviors via window.farmOS.map since this breaks when farmOS-map is bundled e.g. in FieldKit.
+- Honor weights in async behavior attaching and expose `instance.defaultBehaviorsAttached`.
 
 ### Fixed
 
