@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add a number of example consumers and a performance test harness around them.
+
 ### Changed
 
 - Check in diff of `package.json`/`package-lock.json` from moving to NPM v7
