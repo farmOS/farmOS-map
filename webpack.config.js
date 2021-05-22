@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const SaveRemoteFilePlugin = require('save-remote-file-webpack-plugin');
 
 const info = require('./package.json');
 
@@ -41,9 +42,21 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin(`farmOS-map ${info.version}`),
+    new SaveRemoteFilePlugin([
+      {
+          url: 'https://raw.githubusercontent.com/openlayers/openlayers.github.io/master/en/v6.5.0/build/ol.js',
+          filepath: 'ol.js',
+          hash: false,
+      },
+      {
+        url: 'https://raw.githubusercontent.com/openlayers/openlayers.github.io/master/en/v6.5.0/css/ol.css',
+        filepath: 'ol.css',
+        hash: false,
+      },
+    ]),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'static' },
+        { from: './examples/simple-html-consumer/static' },
       ],
     }),
   ],
