@@ -1,10 +1,8 @@
-import namedBehaviors from '../../behavior';
-
 /**
  * Add a behavior by name.
  */
 export async function addBehavior(name, options = {}) {
-  return this.attachBehavior(namedBehaviors[name], options);
+  return this.attachBehavior(this.instanceManager.namedBehaviors[name], options);
 }
 
 /**
