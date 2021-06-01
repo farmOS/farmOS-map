@@ -29,7 +29,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@farmos.org/farmos-olgm": "^1.7.0",
     "ol": "^6.5.0",
     "ol-geocoder": "^4.1.2",
     "ol-grid": "^1.1.4",

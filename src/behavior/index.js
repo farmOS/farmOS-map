@@ -11,7 +11,6 @@ function lazyLoadedBehavior(name) {
 
 export default {
   edit: lazyLoadedBehavior('edit'),
-  google: lazyLoadedBehavior('google'),
   measure: lazyLoadedBehavior('measure'),
   rememberLayer: lazyLoadedBehavior('rememberLayer'),
   snappingGrid: lazyLoadedBehavior('snappingGrid'),
