@@ -12,9 +12,14 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 ## Usage
 
-1. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
-2. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
-3. (optional) Add behaviors - see below.
+1. Include `farmOS-map.js` and `farmOS-map.css` in the page:
+  ```html
+<link rel="stylesheet" href="./farmOS-map.css" type="text/css">
+<script src="./farmOS-map.js"></script>
+```
+2. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
+3. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
+4. (optional) Add behaviors - see below.
 
 ### Creating a Map
 

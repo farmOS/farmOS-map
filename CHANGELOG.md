@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make instance behavior methods `async`.
 - Lazily load behaviors as separate Webpack chunks.
 - Decouple map instance creation/management from `window.farmOS.map`.
+- Distribute CSS as separate files/chunks instead of bundled with the JS.
 
 ### Fixed
 

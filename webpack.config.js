@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const info = require('./package.json');
 
@@ -19,7 +20,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader' },
+          MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
         ],
       },
@@ -28,6 +29,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new webpack.BannerPlugin(`farmOS-map ${info.version}`),
+    new MiniCssExtractPlugin({
+      filename: 'farmOS-map.css',
+      chunkFilename: 'farmOS-map-chunk-[contenthash].css',
+    }),
     new CopyWebpackPlugin([
       { from: './examples/simple-html-consumer/static' },
     ]),
