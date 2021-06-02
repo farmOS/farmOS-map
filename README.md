@@ -406,8 +406,10 @@ geometries in Well Known Text (WKT) and GeoJSON format:
   interactions. See example below:
 
 ```js
-const myMap = farmOS.map.create("map", { drawing: true });
-myMap.edit.wktOn("featurechange", (wkt) => console.log(wkt));
+const myMap = farmOS.map.create("map");
+myMap.addBehavior("edit").then(() => {
+  myMap.edit.wktOn("featurechange", (wkt) => console.log(wkt));
+});
 ```
 
 The first parameter needs to be one of the supported event types, which
@@ -484,9 +486,9 @@ being used in the UI. This can be accomplished simply by adding behavior
 JavaScript files to pages via hooks in farmOS/Drupal modules.
 
 It can also be used for quick testing of the farmOS-map library. Simply create
-a behavior JavaScript file in the `static` directory, include it after
-`farmOS-map.js` in `static/index.html`, and run `npm run dev` to see your
-behavior in the development server.
+a behavior JavaScript file in the `examples/simple-html-consumer/static` directory,
+include it after `farmOS-map.js` in `static/index.html`, and run `npm run dev` to
+see your behavior in the development server.
 
 Behaviors that are added to `farmOS.map.behaviors` can also have an optional
 `weight` property. This weight will be used to sort them before they are
@@ -536,7 +538,106 @@ it within a `.then()` statement;
 
 ```js
 instance.addBehavior("edit").then(() => {
+  instance.edit.wktOn("featurechange", console.log);
+});
+```
+
+Behaviors which are added to `farmOS.map.behaviors` are also attached to the map aynchronously. This
+means that a map instance may not be fully initialized when it is returned by `farmOS.map.create`.
+Instead the property `instance.defaultBehaviorsAttached` is a promise that can be used to detect when
+all the behaviors from `farmOS.map.behaviors` have finished being attached to the map.
+
+## Upgrading from farmOS-map 1.x to 2.x
+
+### For Authors of Custom Behaviors
+
+Read and understand the documentation on [Async Behaviors](#async-behaviors) above.
+
+**Required Change:** Ensure code which depends on side-effects of another behavior's `attach` method is updated to wait until
+that has asynchronously completed.
+
+**Before:**
+
+```js
+myMap.addBehavior("edit");
+myMap.edit.wktOn("featurechange", console.log);
+```
+
+**After:**
+
+```js
+myMap.addBehavior("edit").then(() => {
   myMap.edit.wktOn("featurechange", console.log);
+});
+```
+
+### For Custom Front-end Integrations
+
+In addition to the change described in the previous section, upgrading to farmOS-map 2.x may also require
+changes when integrated into custom Front-end applications.
+
+**Required Change:** When packaging farmOS-map in a custom front-end, it is now important that all the files from the
+`dist/` directory are served along with `farmOS-map.js`. farmOS-map 1.x was a single JS file named `farmOS-map.js` which
+included all behavior implementations and even the OpenLayers/farmOS-map CSS. Now with 2.x, farmOS-map is distributed
+as a collection of JS/CSS files which must be available in the same relative http directory.
+
+**Before:**
+
+```sh
+cp some-path-to/farmOS-map/dist/farmOS-map.js my-app/resources/
+```
+
+**After:**
+
+```sh
+cp some-path-to/farmOS-map/dist/farmOS-map* my-app/resources/
+```
+
+**Required Change:** When including farmOS-map in a custom front-end, it is now necessary to include both `farmOS-map.js`
+and `farmOS-map.css` in the path, not just `farmOS-map.js`.
+
+```html
+<script src="./farmOS-map.js"></script>
+```
+
+**After:**
+
+```html
+<link rel="stylesheet" href="./farmOS-map.css" type="text/css">
+<script src="./farmOS-map.js"></script>
+```
+
+**Required Change:** Ensure code which calls `farmOS.map.create` does not assume behaviors from `farmOS.map.behaviors`
+will be attached synchronously by the time `farmOS.map.create` returns. Any such code must be changed to wait
+until the promise `instance.defaultBehaviorsAttached` is fulfilled.
+
+**Before:**
+
+```js
+farmOS.map.behaviors.myBehavior = {
+  attach(instance) {
+    instance.myExampleProperty = "world!";
+  },
+};
+
+const myMap = farmOS.map.create("map");
+
+console.log("Hello " + myMap.myExampleProperty);
+```
+
+**After:**
+
+```js
+farmOS.map.behaviors.myBehavior = {
+  attach(instance) {
+    instance.myExampleProperty = "world!";
+  },
+};
+
+const myMap = farmOS.map.create("map");
+
+myMap.defaultBehaviorsAttached.then(() => {
+  console.log("Hello " + myMap.myExampleProperty);
 });
 ```
 
