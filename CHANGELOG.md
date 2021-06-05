@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Decouple map instance creation/management from `window.farmOS.map`.
 - Distribute CSS as separate files/chunks instead of bundled with the JS.
 - **BREAKING CHANGES:** Note: As one might expect from a new major version, there are breaking changes involved in moving from 1.x to 2.x of farmOS-map. See the [README for upgrade instructions](./README.md#upgrading-from-farmos-map-1x-to-2x).
+- Update to Webpack 5 to take advantage of [Automatic Public Path](https://webpack.js.org/guides/public-path/#automatic-publicpath) support for chunk loading.
 
 ### Fixed
 
