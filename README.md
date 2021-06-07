@@ -12,14 +12,15 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 ## Usage
 
-1. Include `farmOS-map.js` and `farmOS-map.css` in the page:
+1. Host the `.js` and `.css` files from the `dist/` directory of this package somehow.
+2. Include `farmOS-map.js` and `farmOS-map.css` in the page. e.g.:
   ```html
 <link rel="stylesheet" href="./farmOS-map.css" type="text/css">
 <script src="./farmOS-map.js"></script>
 ```
-2. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
-3. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
-4. (optional) Add behaviors - see below.
+3. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
+4. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
+5. (optional) Add behaviors - see below.
 
 ### Creating a Map
 
@@ -546,6 +547,43 @@ Behaviors which are added to `farmOS.map.behaviors` are also attached to the map
 means that a map instance may not be fully initialized when it is returned by `farmOS.map.create`.
 Instead the property `instance.defaultBehaviorsAttached` is a promise that can be used to detect when
 all the behaviors from `farmOS.map.behaviors` have finished being attached to the map.
+
+## Advanced Integration
+
+### Working with farmOS-map in an NPM/Webpack Project
+
+Some integration scenarios require farmOS-map to be modeled as a dependency - i.e. so static analysis can
+validate/document class/method references.
+
+farmOS-map can be added via NPM or similar package managers. e.g.
+
+```sh
+npm install @farmos.org/farmos-map@2
+```
+
+Then farmOS-map can be accessed using an `import` statement.
+
+```js
+import { MapInstanceManager, projection } from '@farmos.org/farmos-map';
+```
+
+Finally, it is recommended to externalize farmOS-map such that it is not actually bundled by Webpack.
+
+**webpack.config.js:**
+
+```js
+module.exports = {
+  ...
+  externals: {
+    '@farmos.org/farmos-map': 'farmOS.map',
+  },
+};
+```
+
+With this configuration, build-time tools have access to the full farmOS-map package but at runtime
+farmOS-map will be accessed at `window.farmOS.map`. Naturally, this requires that the `farmOS-map.js`
+and `farmOS-map.css` files are already included in the page as described in the [Usage instructions](#usage)
+above.
 
 ## Upgrading from farmOS-map 1.x to 2.x
 

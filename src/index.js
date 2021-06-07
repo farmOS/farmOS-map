@@ -1,2 +1,2 @@
-/* eslint-disable-next-line import/prefer-default-export */
 export { default as MapInstanceManager } from './MapInstanceManager';
+export { default as projection } from './projection';
