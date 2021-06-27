@@ -1,0 +1,7 @@
+.ol-side-panel-pane .layer-switcher {
+  left: 0;
+}
+
+.ol-side-panel-pane .layer-switcher > ul {
+  margin-top: 0;
+}

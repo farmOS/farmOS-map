@@ -388,6 +388,68 @@ myMap.addBehavior('edit', { layer: drawingLayer });
 myMap.addBehavior('measure', { layer: drawingLayer });
 ```
 
+### Side Panel Control
+
+Call `addBehavior('sidePanel')` on the instance returned by
+`farmOS.map.create()` to enable a tabbed side panel.
+
+This will add the SidePanel control to the map instance as `instance.sidePanel`.
+Other behaviors can then define panes and add widgets to those panes using the
+[ol-side-panel API](https://symbioquine.github.io/ol-side-panel/latest/docs/index.html).
+
+```js
+myMap.addBehavior("sidePanel").then(() => {
+  const settingsPane = myMap.sidePanel.definePane({
+    paneId: 'settings',
+    name: 'Settings',
+    icon: '⚙',
+    weight: 101,
+  });
+
+  const scaleLineSettingDiv = el('div', {}, scaleLineSettingDiv => {
+    el('input', {type: "checkbox", id: "showScaleLine", name: "showScaleLine", checked: true}, scaleLineCheckbox => {
+
+      scaleLineCheckbox.addEventListener('change', () => {
+        document.querySelectorAll(".ol-scale-line").forEach(elem => {
+          if (scaleLineCheckbox.checked) {
+            elem.style.display = '';
+          } else {
+            elem.style.display = 'none';
+          }
+        })
+      });
+
+      scaleLineSettingDiv.appendChild(scaleLineCheckbox);
+    });
+    el('label', {'for': 'showScaleLine'}, scaleLineCheckboxLabel => {
+      scaleLineCheckboxLabel.innerHTML = 'Show Scale Line';
+      scaleLineSettingDiv.appendChild(scaleLineCheckboxLabel);
+    });
+  });
+
+  settingsPane.addWidgetElement(scaleLineSettingDiv);
+
+});
+
+// Helper to make defining elements easier
+const el = (tagName, attrs, fn) => {
+  const e = document.createElement(tagName);
+  Object.entries(attrs || {}).forEach(([key, value]) => e.setAttribute(key, value));
+  if (fn) fn(e);
+  return e;
+};
+```
+
+![image](https://user-images.githubusercontent.com/30754460/123672842-a3800400-d7f4-11eb-9697-5e19929b6d2d.png)
+
+### Layer Switcher in the Side Panel
+
+Call `addBehavior('layerSwitcherInSidePanel')` on the instance returned by
+`farmOS.map.create()` to move the layer switcher control into a tab of the side
+panel. This behavior has no effect if the side panel behavior is not enabled.
+
+![image](https://user-images.githubusercontent.com/30754460/123668575-1470ed00-d7f0-11eb-983a-27941772d54b.png)
+
 ### Snapping Grid Controls
 
 Call `addBehavior('snappingGrid')` on the instance returned by

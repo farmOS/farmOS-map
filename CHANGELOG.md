@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update all dependencies.
 
+### Added
+
+- Add a SidePanel control and support for displaying the layer switcher in a pane thereof.
+
 ## [v2.0.0-alpha.0] - 2021-06-18
 
 ### Added

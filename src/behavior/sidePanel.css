@@ -1,0 +1,27 @@
+.ol-side-panel-tabs button svg {
+  margin: 5px;
+  width: 28px;
+}
+
+.ol-side-panel .ol-side-panel-tabs button.active {
+  background-color: #fc3;
+  background-color: rgba(255, 204, 51, 0.7);
+}
+
+.map-with-ol-side-panel .ol-geocoder {
+  margin-left: 100%;
+}
+
+.map-with-ol-side-panel.ol-side-panel-collapsed .ol-geocoder {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .map-with-ol-side-panel .ol-geocoder {
+    margin-left: 0;
+  }
+
+  .map-with-ol-side-panel.ol-side-panel-collapsed .ol-geocoder {
+    margin-left: 0;
+  }
+}
