@@ -11,7 +11,9 @@ function lazyLoadedBehavior(name) {
 
 export default {
   edit: lazyLoadedBehavior('edit'),
+  layerSwitcherInSidePanel: lazyLoadedBehavior('layerSwitcherInSidePanel'),
   measure: lazyLoadedBehavior('measure'),
   rememberLayer: lazyLoadedBehavior('rememberLayer'),
+  sidePanel: lazyLoadedBehavior('sidePanel'),
   snappingGrid: lazyLoadedBehavior('snappingGrid'),
 };
