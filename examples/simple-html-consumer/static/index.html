@@ -33,6 +33,8 @@
         myMap.edit.wktOn("featurechange", console.log);
         myMap.edit.geoJSONOn("featurechange", console.log);
       });
+      myMap.addBehavior("sidePanel");
+      myMap.addBehavior("layerSwitcherInSidePanel");
       myMap.addBehavior("snappingGrid");
     </script>
   </body>
