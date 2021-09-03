@@ -55,17 +55,17 @@
 .ol-snapgrid.ol-control button.enable {
   text-decoration: none;
   background-color: #4c6079;
-  background-color: rgba(0,60,136,0.7);
+  background-color: rgba(0, 60, 136, 0.7);
 }
 
 .ol-snapgrid.ol-control.active button.activateButton {
-  background-color: #ffcc33;
-  background-color: rgba(255,204,51,0.7);
+  background-color: #fc3;
+  background-color: rgba(255, 204, 51, 0.7);
 }
 
 .ol-snapgrid.ol-control button:disabled {
   background-color: #929292;
-  background-color: rgba(146, 146, 146,0.7);
+  background-color: rgba(146, 146, 146, 0.7);
 }
 
 .ol-snapgrid.ol-control button svg {

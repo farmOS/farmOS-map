@@ -8,8 +8,8 @@
 }
 
 .ol-edit.ol-control button.active {
-  background-color: #ffcc33;
-  background-color: rgba(255,204,51,0.7);
+  background-color: #fc3;
+  background-color: rgba(255, 204, 51, 0.7);
 }
 
 .ol-edit.ol-control button svg {
@@ -26,11 +26,13 @@
   white-space: nowrap;
   font-size: 12px;
 }
+
 .ol-tooltip-measure {
   opacity: 1;
   font-weight: bold;
 }
-.ol-tooltip-measure:before {
+
+.ol-tooltip-measure::before {
   border-top: 6px solid rgba(0, 0, 0, 0.5);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
