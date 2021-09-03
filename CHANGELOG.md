@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add a SidePanel control and support for displaying the layer switcher in a pane thereof.
 - Add stylelint to ensure css stays more consistent.
+- Run build on pushes to 2.x branches and related PRs.
 
 ## [v2.0.0-alpha.0] - 2021-06-18
 
