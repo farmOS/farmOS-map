@@ -4,6 +4,8 @@ import Polygon from 'ol/geom/Polygon';
 import { unByKey } from 'ol/Observable';
 import { measureGeometry } from '../utils/measure';
 
+import './measure.css';
+
 // Store measurement overlays keyed by the ID of the feature they measure.
 const measures = {};
 
