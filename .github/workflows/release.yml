@@ -28,7 +28,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create artifact
         run: |
-          mkdir ${{ env.RELEASE_VERSION }}-dist && cp dist/farmOS-map.js ${{ env.RELEASE_VERSION }}-dist && zip -r ${{ env.RELEASE_VERSION }}-dist.zip ${{ env.RELEASE_VERSION }}-dist
+          mkdir ${{ env.RELEASE_VERSION }}-dist && cp dist/farmOS-map.* ${{ env.RELEASE_VERSION }}-dist && zip -r ${{ env.RELEASE_VERSION }}-dist.zip ${{ env.RELEASE_VERSION }}-dist
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
