@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed release workflow to include all built JS/CSS/etc with the "farmOS-map" prefix.
+
 ## [v2.0.0] - 2021-09-08
 
 ### Changed
