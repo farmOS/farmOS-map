@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.1] - 2021-09-08
+
 ### Fixed
 
 - Fixed release workflow to include all built JS/CSS/etc with the "farmOS-map" prefix.
@@ -284,7 +286,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.0.1...HEAD
+[v2.0.1]: https://github.com/farmOS/farmOS-map/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/farmOS/farmOS-map/compare/v2.0.0-alpha.0...v2.0.0
 [v2.0.0-alpha.0]: https://github.com/farmOS/farmOS-map/compare/v1.4.2...v2.0.0-alpha.0
 [v1.4.2]: https://github.com/farmOS/farmOS-map/compare/v1.4.1...v1.4.2
