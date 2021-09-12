@@ -8,7 +8,7 @@ import './layerSwitcherInSidePanel.css';
 export default {
   attach(instance) {
 
-    instance.map.getControls().on('add', () => {
+    const tryMovingLayerSwitcherIntoSidePanel = () => {
 
       const existingLayerSwitcherControl = instance.map.getControls().getArray()
         .find(control => typeof control.renderPanel === 'function');
@@ -52,8 +52,12 @@ export default {
         instance.map.removeControl(existingLayerSwitcherControl);
       }
 
-    });
+    };
 
+    // Try moving the layer switcher into the side panel either right away or once
+    // the side panel control is added to the map.
+    tryMovingLayerSwitcherIntoSidePanel();
+    instance.map.getControls().on('add', tryMovingLayerSwitcherIntoSidePanel);
   },
 
 };
