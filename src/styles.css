@@ -83,3 +83,7 @@
 .layer-switcher.shown {
   max-height: 300px;
 }
+
+.layer-switcher li.group + li.group {
+  margin-left: 1.2em;
+}
