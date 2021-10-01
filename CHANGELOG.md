@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Avoid creating empty license files in the Webpack output by only adding the farmOS-map version banner to the entry-point js files.
 
+### Added
+
+- Enforce that every pull request includes updates to the CHANGELOG.md (this) file.
+
 ## [v2.0.2] - 2021-09-13
 
 ### Fixed
