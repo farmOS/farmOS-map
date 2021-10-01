@@ -31,7 +31,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.BannerPlugin(`farmOS-map ${info.version}`),
+    new webpack.BannerPlugin({
+      banner: `farmOS-map ${info.version}`,
+      entryOnly: true,
+    }),
     new MiniCssExtractPlugin({
       filename: 'farmOS-map.css',
       chunkFilename: 'farmOS-map-chunk-[contenthash].css',
