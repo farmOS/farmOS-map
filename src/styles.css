@@ -83,3 +83,8 @@
 .layer-switcher.shown {
   max-height: 300px;
 }
+
+/* Popup styles. */
+.ol-popup {
+  padding: 0.75em;
+}
