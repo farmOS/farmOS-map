@@ -13,10 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Enforce that every pull request includes updates to the CHANGELOG.md (this) file.
+- Add simple example of using the `instance.addPopup` method.
 
 ### Changed
 
 - Change the Github release workflow to use softprops/action-gh-release v0.1.13.
+- Decrease the popup padding.
 
 ## [v2.0.2] - 2021-09-13
 
