@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Improve edit control icons to make them clearer and more intuitive #179 (ref: #146 #152)
+
 ## [v2.0.5] - 2022-08-29
 
 ### Changed
