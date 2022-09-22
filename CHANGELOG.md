@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.7] - 2022-09-22
+
+### Fixed
+
+- Fix GitHub/NPM releases being out of sync due to a release procedure error by Symbioquine.
+
 ## [v2.0.6] - 2022-09-22
 
 ### Changed
@@ -337,7 +343,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.0.6...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.0.7...HEAD
+[v2.0.7]: https://github.com/farmOS/farmOS-map/compare/v2.0.6...v2.0.7
 [v2.0.6]: https://github.com/farmOS/farmOS-map/compare/v2.0.5...v2.0.6
 [v2.0.5]: https://github.com/farmOS/farmOS-map/compare/v2.0.4...v2.0.5
 [v2.0.4]: https://github.com/farmOS/farmOS-map/compare/v2.0.3...v2.0.4
