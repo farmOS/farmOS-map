@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improve edit control icons to make them clearer and more intuitive #179 (ref: #146 #152)
 
+### Fixed
+
+- Fix remaining edit control icons to allow them to better follow the page color scheme #179
+
 ## [v2.0.5] - 2022-08-29
 
 ### Changed
