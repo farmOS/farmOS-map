@@ -647,6 +647,23 @@ farmOS-map will be accessed at `window.farmOS.map`. Naturally, this requires tha
 and `farmOS-map.css` files are already included in the page as described in the [Usage instructions](#usage)
 above.
 
+### Webpack chunk loading
+
+farmOS-map is bundled using Webpack's [Automatic Public Path](https://webpack.js.org/guides/public-path/#automatic-publicpath)
+configuration to automatically determine the public path used for chunk loading.
+This configuration works most of the time but advanced integrations may need to
+specify a public path for consistent chunk loading [on the fly](https://webpack.js.org/guides/public-path/#on-the-fly).
+
+The public path can be specified by setting `window.farmosMapPublicPath` before
+the `farmOS-map.js` entrypoint is loaded in the DOM. For example:
+
+```html
+<script type="text/javascript">
+  window.farmosMapPublicPath = '/libraries/farmOS-map';
+</script>
+<script src="./farmOS-map.js"></script>
+```
+
 ## Upgrading from farmOS-map 1.x to 2.x
 
 ### For Authors of Custom Behaviors

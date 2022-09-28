@@ -1,3 +1,5 @@
+// Assign the public path before other imports.
+import './publicPath';
 import MapInstanceManager from './MapInstanceManager';
 
 // Import the default projection configuration
