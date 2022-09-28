@@ -526,8 +526,7 @@ class Edit extends Control {
    * @api
    */
   getGeoJSON() {
-    const features = this.layer.getSource().getFeatures();
-    return new GeoJSON().writeFeatures(features, projection);
+    return new GeoJSON().writeFeatures(this.getFeatures(), projection);
   }
 
   /**
