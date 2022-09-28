@@ -40,14 +40,19 @@ Available properties include:
 - `interactions` - See below.
 
 The `controls` and `interactions` properties provide options for customizing
-which OpenLayers controls and interactions are enabled by default in the map. If
-a property is set to `false`, none of its corresponding default controls or
-interactions will be applied to the map. If the property is assigned to an array
+which OpenLayers controls and interactions are enabled by default in the map.
+These properties can be set in four different ways:
+1. If a property is set to `false`, none of its corresponding default controls or
+interactions will be applied to the map.
+2. If the property is assigned to an array
 of OpenLayers controls or interactions, the defaults will be discarded and those
-controls or interactions will be used in their place. If the property is an
-object, it is assumed that it is `options` that will be passed into the
-`defaultControls()` or `defaultInteractions()` functions that return OpenLayers
-defaults. If the property is assigned to a callback function, that function will
+controls or interactions will be used in their place.
+3. If the property is an object, it is assumed that it is `options` that will be
+passed into the `defaultControls()` or `defaultInteractions()` functions that
+return OpenLayers defaults. Refence OpenLayers documentation for default options:
+    - [Default controls](https://openlayers.org/en/latest/apidoc/module-ol_control_defaults.html)
+    - [Default interactions](https://openlayers.org/en/latest/apidoc/module-ol_interaction_defaults.html)
+4. If the property is assigned to a callback function, that function will
 be called and passed the default controls or interactions. It must return a an
 array of OL controls/interactions, which will be attached to the map in the
 place of the defaults.
@@ -77,7 +82,6 @@ const opts2 = {
 farmOS.map.create(id, opts2);
 
 // An options object with a options for default interactions.
-// See: https://openlayers.org/en/latest/apidoc/module-ol_interaction.html
 const opts3 = {
   interactions: {
     // Require focus for mouseScrollZoom and dragPan interactions.
