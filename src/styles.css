@@ -1,14 +1,18 @@
 /* Control color. */
+:root {
+  --farmos-map-accent-color: green;
+}
+
 .ol-control {
   background-color: rgba(255, 255, 255, 0.25);
 }
 
 .ol-control svg {
-  fill: green;
+  fill: var(--farmos-map-accent-color);
 }
 
 .ol-control button {
-  color: green;
+  color: var(--farmos-map-accent-color);
   background-color: rgba(255, 255, 255, 0.8);
 }
 

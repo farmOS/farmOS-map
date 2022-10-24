@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `--farmos-map-accent-color` CSS property. #186
+
+### Fixed
+
+- Fix color scheme compliance of remaining icons. #181
+
 ### Changed
 
 - Improve interaction and control docs. #185
