@@ -23,6 +23,7 @@ class MapInstanceManager {
     // Map behaviors which will be automatically attached to all created map
     // instances.
     this.behaviors = {
+      loading: namedBehaviors.loading,
       rememberLayer: namedBehaviors.rememberLayer,
     };
 
