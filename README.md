@@ -616,6 +616,16 @@ all the behaviors from `farmOS.map.behaviors` have finished being attached to th
 
 ## Advanced Integration
 
+### Accent color
+
+The farmOS-map accent color can be changed with the `--farmos-map-accent-color` custom CSS property.
+
+```css
+#farm-map {
+  --farmos-map-accent-color: #336633;
+}
+```
+
 ### Working with farmOS-map in an NPM/Webpack Project
 
 Some integration scenarios require farmOS-map to be modeled as a dependency - i.e. so static analysis can
