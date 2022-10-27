@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add loading indicator as default behavior.
+- Add loading indicator as default behavior. #187
 - Add `--farmos-map-accent-color` CSS property. #186
 
 ### Fixed
