@@ -10,12 +10,9 @@ farmOS Map is an [OpenLayers](https://openlayers.org/) map for farmOS.
 
 For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
-## Usage
+## Installation
 
-For NPM/Webpack usage, see
-[Working with farmOS-map in an NPM/Webpack Project](#working-with-farmos-map-in-an-npmwebpack-project).
-
-For generic HTML/JavaScript usage:
+### Via HTML `<script>` Tag
 
 1. Host the `.js` and `.css` files from the `dist/` directory of this package somehow.
 2. Include `farmOS-map.js` and `farmOS-map.css` in the page. e.g.:
@@ -26,6 +23,18 @@ For generic HTML/JavaScript usage:
 3. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
 4. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
 5. (optional) Add behaviors - see below.
+
+### Via Package Managers
+
+farmOS-map can be installed via `npm-cli`, `yarn` or other package managers from the npm registry:
+
+```sh
+npm install @farmos.org/farmos-map@2
+```
+
+For additional configuration, see [Working with farmOS-map in an NPM/Webpack Project](#working-with-farmos-map-in-an-npmwebpack-project).
+
+## Usage
 
 ### Creating a Map
 
@@ -634,13 +643,8 @@ The farmOS-map accent color can be changed with the `--farmos-map-accent-color` 
 ### Working with farmOS-map in an NPM/Webpack Project
 
 Some integration scenarios require farmOS-map to be modeled as a dependency - i.e. so static analysis can
-validate/document class/method references.
-
-farmOS-map can be added via NPM or similar package managers. e.g.
-
-```sh
-npm install @farmos.org/farmos-map@2
-```
+validate/document class/method references. In these cases, installation is usually performed
+[via a package manager](#via-package-managers) like `npm-cli` or `yarn`.
 
 Then farmOS-map can be accessed using an `import` statement.
 
