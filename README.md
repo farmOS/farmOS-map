@@ -12,6 +12,11 @@ For more information on farmOS, visit [farmOS.org](https://farmOS.org).
 
 ## Usage
 
+For NPM/Webpack usage, see
+[Working with farmOS-map in an NPM/Webpack Project](#working-with-farmos-map-in-an-npmwebpack-project).
+
+For generic HTML/JavaScript usage:
+
 1. Host the `.js` and `.css` files from the `dist/` directory of this package somehow.
 2. Include `farmOS-map.js` and `farmOS-map.css` in the page. e.g.:
   ```html
