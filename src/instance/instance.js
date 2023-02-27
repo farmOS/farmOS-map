@@ -8,6 +8,7 @@ import defaults from './defaults';
 // Import instance methods.
 import addLayer, { getLayerByName } from './methods/layer';
 import addPopup from './methods/popup';
+import { getCurrentViewExtentCoordinates, transform, transformExtent } from './methods/projection';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 import { addBehavior, attachBehavior, attachBehaviorsByWeight } from './methods/behavior';
 import { measureGeometry } from '../utils/measure';
@@ -57,6 +58,9 @@ const createInstance = ({ target, options = {} }) => {
     attachBehavior,
     attachBehaviorsByWeight,
     measureGeometry,
+    getCurrentViewExtentCoordinates,
+    transform,
+    transformExtent,
   };
 
   return instance;
