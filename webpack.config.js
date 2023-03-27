@@ -8,8 +8,8 @@ module.exports = {
   entry: `${__dirname}/src/main.js`,
   output: {
     path: `${__dirname}/dist`,
-    filename: 'farmOS-map.js',
-    chunkFilename: 'farmOS-map-chunk-[contenthash].js',
+    filename: 'nfa-map.js',
+    chunkFilename: 'nfa-map-chunk-[contenthash].js',
     clean: true,
   },
   performance: {
@@ -32,12 +32,12 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin({
-      banner: `farmOS-map ${info.version}`,
+      banner: `nfa-map ${info.version}`,
       entryOnly: true,
     }),
     new MiniCssExtractPlugin({
-      filename: 'farmOS-map.css',
-      chunkFilename: 'farmOS-map-chunk-[contenthash].css',
+      filename: 'nfa-map.css',
+      chunkFilename: 'nfa-map-chunk-[contenthash].css',
     }),
     new CopyWebpackPlugin({
       patterns: [

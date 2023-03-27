@@ -14,7 +14,7 @@ export default function addPopup(callback) {
     const content = callback(event);
     if (content) {
       popup.show(event.coordinate, content);
-      popup.dispatchEvent('farmOS-map.popup');
+      popup.dispatchEvent('nfa-map.popup');
     }
   });
   return popup;

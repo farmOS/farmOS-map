@@ -1,11 +1,11 @@
 {
-  "name": "@farmos.org/farmos-map",
+  "name": "nfa-map",
   "version": "2.1.0",
-  "description": "OpenLayers map used in farmOS.",
+  "description": "OpenLayers map used in NFA.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/farmOS/farmOS-map.git"
+    "url": "https://github.com/National-Forestry-Authority/nfa-map.git"
   },
   "main": "src/index.js",
   "scripts": {

@@ -12,7 +12,7 @@ import { zoomToVectors, zoomToLayer } from './methods/zoom';
 import { addBehavior, attachBehavior, attachBehaviorsByWeight } from './methods/behavior';
 import { measureGeometry } from '../utils/measure';
 
-// Define an object that represents a single farmOS map instance.
+// Define an object that represents a single nfa map instance.
 const createInstance = ({ target, options = {} }) => {
 
   // Get the system of measurement from options, if provided, or set a default.

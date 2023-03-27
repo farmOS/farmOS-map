@@ -6,7 +6,7 @@ export async function addBehavior(name, options = {}) {
 }
 
 /**
- * Attach a behavior to the farmOS-map instance.
+ * Attach a behavior to the nfa-map instance.
  */
 export async function attachBehavior(behavior, options = {}) {
 
@@ -18,7 +18,7 @@ export async function attachBehavior(behavior, options = {}) {
 }
 
 /**
- * Attach an array of behaviors to the farmOS-map instance.
+ * Attach an array of behaviors to the nfa-map instance.
  * Ensures that behaviors with higher weights are attached
  * after behaviors with lower weights. Behaviors with the
  * same weight may be attached concurrently.
