@@ -32,7 +32,7 @@ import {
 import Geolocate from '../control/Geolocate/Geolocate';
 
 // Define an object that contains the default OpenLayers configuration of layers,
-// controls, and interactions that will be added to all farmOS maps.
+// controls, and interactions that will be added to all nfa maps.
 const defaults = {
 
   // Layers.
@@ -55,7 +55,7 @@ const defaults = {
   // Controls.
   controls(options) {
 
-    // Define default farmOS controls.
+    // Define default nfa controls.
     const farmMapDefaults = [
       new LayerSwitcher(options.layerSwitcher),
       new FullScreen(),
@@ -99,7 +99,7 @@ const defaults = {
   // Interactions.
   interactions(options) {
 
-    // Define default farmOS interactions.
+    // Define default nfa interactions.
     const farmMapDefaults = [
       new DragRotateAndZoom(),
       new PinchRotate(),

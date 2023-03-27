@@ -1,7 +1,7 @@
 function lazyLoadedBehavior(name) {
   return {
     async attach(instance, options) {
-      return import(/* webpackChunkName: "farmOS-map-behavior-[request]" */ `./${name}`).then((module) => {
+      return import(/* webpackChunkName: "nfa-map-behavior-[request]" */ `./${name}`).then((module) => {
         const behavior = module.default;
         behavior.attach(instance, options);
       });

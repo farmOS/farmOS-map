@@ -1,7 +1,7 @@
-// Import farmOS map instance factory function.
+// Import nfa map instance factory function.
 import createInstance from './instance/instance';
 
-// Import farmOS-map CSS.
+// Import nfa-map CSS.
 import './styles.css';
 
 import namedBehaviors from './behavior';
@@ -11,7 +11,7 @@ class MapInstanceManager {
 
   constructor() {
 
-    // Initialize an array of farmOS map instances.
+    // Initialize an array of nfa map instances.
     this.instances = [];
 
     // Behaviors which can be added on-demand by name via `instance.addBehavior`
@@ -29,7 +29,7 @@ class MapInstanceManager {
 
   }
 
-  // Create a new farmOS map attached to a target element ID and add it to the
+  // Create a new nfa map attached to a target element ID and add it to the
   // global instances array.
   create(target, options) {
     const instance = createInstance({ target, options });
@@ -39,7 +39,7 @@ class MapInstanceManager {
     // Add the instance to the array.
     this.instances.push(instance);
 
-    // Attach behaviors from farmOS.map.behaviors to the instance in order of weight - if any.
+    // Attach behaviors from nfa.map.behaviors to the instance in order of weight - if any.
     instance.defaultBehaviorsAttached = instance.attachBehaviorsByWeight(
       Object.values(this.behaviors),
     );
@@ -48,7 +48,7 @@ class MapInstanceManager {
     return instance;
   }
 
-  // Destroy a farmOS map instance and remove it from the instances array.
+  // Destroy a nfa map instance and remove it from the instances array.
   destroy(target) {
     const i = this.targetIndex(target);
     if (i > -1) {

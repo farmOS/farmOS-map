@@ -1,45 +1,39 @@
-# farmOS Map
+# NFA Map
 
-[![Licence](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://opensource.org/licenses/MIT/)
-[![Release](https://img.shields.io/github/release/farmOS/farmOS-map.svg?style=flat)](https://github.com/farmOS/farmOS-map/releases)
-[![Last commit](https://img.shields.io/github/last-commit/farmOS/farmOS-map.svg?style=flat)](https://github.com/farmOS/farmOS-map/commits)
-[![Twitter](https://img.shields.io/twitter/follow/farmOSorg.svg?label=%40farmOSorg&style=flat)](https://twitter.com/farmOSorg)
-[![Chat](https://img.shields.io/matrix/farmOS:matrix.org.svg)](https://riot.im/app/#/room/#farmOS:matrix.org)
+nfa Map is an [OpenLayers](https://openlayers.org/) map for nfa.
 
-farmOS Map is an [OpenLayers](https://openlayers.org/) map for farmOS.
-
-For more information on farmOS, visit [farmOS.org](https://farmOS.org).
+For more information on nfa, visit [nfa.org](https://nfa.org).
 
 ## Installation
 
 ### Via HTML `<script>` Tag
 
 1. Host the `.js` and `.css` files from the `dist/` directory of this package somehow.
-2. Include `farmOS-map.js` and `farmOS-map.css` in the page. e.g.:
+2. Include `nfa-map.js` and `nfa-map.css` in the page. e.g.:
   ```html
-<link rel="stylesheet" href="./farmOS-map.css" type="text/css">
-<script src="./farmOS-map.js"></script>
+<link rel="stylesheet" href="./nfa-map.css" type="text/css">
+<script src="./nfa-map.js"></script>
 ```
 3. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
-4. Call the map creation method with the element ID: `farmOS.map.create('farm-map');`
+4. Call the map creation method with the element ID: `nfa.map.create('farm-map');`
 5. (optional) Add behaviors - see below.
 
 ### Via Package Managers
 
-farmOS-map can be installed via `npm-cli`, `yarn` or other package managers from the npm registry:
+nfa-map can be installed via `npm-cli`, `yarn` or other package managers from the npm registry:
 
 ```sh
-npm install @farmos.org/farmos-map@2
+npm install @nfa.org/nfa-map@2
 ```
 
-For additional configuration, see [Working with farmOS-map in an NPM/Webpack Project](#working-with-farmos-map-in-an-npmwebpack-project).
+For additional configuration, see [Working with nfa-map in an NPM/Webpack Project](#working-with-nfa-map-in-an-npmwebpack-project).
 
 ## Usage
 
 ### Creating a Map
 
 The simplest way to create a map is to call the `create` method with an HTML
-element's ID. This will render a map with all the OpenLayers and farmOS defaults.
+element's ID. This will render a map with all the OpenLayers and nfa defaults.
 
 You can also call it with an options object, as its second parameter, with
 properties to configure map defaults.
@@ -74,18 +68,18 @@ place of the defaults.
 For example:
 
 ```js
-// Calling .create() with just an id renders a map with the farmOS defaults.
+// Calling .create() with just an id renders a map with the nfa defaults.
 const id = 'myMap';
-farmOS.map.create(id);
+nfa.map.create(id);
 
 // Passing an options object with units set to "us".
 const opts = { units: 'us' };
-farmOS.map.create(id, opts);
+nfa.map.create(id, opts);
 
 // An options object with interactions set to false will cancel the interaction
 // defaults.
 const opts1 = { interactions: false };
-farmOS.map.create(id, opts1);
+nfa.map.create(id, opts1);
 
 // An options object with an array of controls to replace the defaults.
 const opts2 = {
@@ -93,7 +87,7 @@ const opts2 = {
     new MyControl(),
   ],
 };
-farmOS.map.create(id, opts2);
+nfa.map.create(id, opts2);
 
 // An options object with a options for default interactions.
 const opts3 = {
@@ -103,7 +97,7 @@ const opts3 = {
     onFocusOnly: true,
   },
 };
-farmOS.map.create(id, opts3);
+nfa.map.create(id, opts3);
 
 // An options object with a function which alters the control defaults.
 const opts4 = {
@@ -114,7 +108,7 @@ const opts4 = {
       new MyControl2(),
     ]),
 };
-farmOS.map.create(id, opts4);
+nfa.map.create(id, opts4);
 ```
 
 ### Tearing down a map
@@ -124,7 +118,7 @@ that it can be garbage collected. To do so, you need to provide the instance's
 target id, and pass it to the `destroy` method:
 
 ```js
-farmOS.map.destroy('my-map');
+nfa.map.destroy('my-map');
 ```
 
 ### Adding layers
@@ -289,12 +283,12 @@ const colors = {
 For more complex styles, the `styleFunction` option allows styles to be
 defined based on a `feature` and `resolution`
 ([StyleFunction docs.](https://openlayers.org/en/latest/apidoc/module-ol_style_Style.html#~StyleFunction)) 
-In addition to the `feature` and `resolution`, farmOS-map calls `styleFunction`
+In addition to the `feature` and `resolution`, nfa-map calls `styleFunction`
 with an additional `style` parameter. This parameter makes all of the 
 `ol.style` classes available to other JavaScript modules without requiring
 them to bundle `ol.style` themselves.
 
-This makes it possible to style farmOS areas based on properties included in 
+This makes it possible to style nfa areas based on properties included in 
 their GeoJSON. Cluster layers use a pre-defined style function, but it can be 
 overridden using the same `styleFunction` parameter.
 
@@ -354,26 +348,26 @@ var popup = instance.addPopup(function (event) {
 });
 ```
 
-A `farmOS-map.popup` observable event is dispatched when the popup is displayed.
+A `nfa-map.popup` observable event is dispatched when the popup is displayed.
 You can use this to perform additional actions. For example:
 
 ```js
-popup.on('farmOS-map.popup', function (event) {
-  console.log('Event: farmOS-map.popup');
+popup.on('nfa-map.popup', function (event) {
+  console.log('Event: nfa-map.popup');
 });
 ```
 
 ### Drawing controls
 
 Call the `addBehavior('edit')` method on the instance returned by
-`farmOS.map.create()` to enable drawing controls. This will add buttons for
+`nfa.map.create()` to enable drawing controls. This will add buttons for
 drawing polygons, lines, and points. Features can be selected, modified, moved,
 and deleted.
 
 This will add the Edit control to the map instance as `instance.edit`.
 
 ```js
-const myMap = farmOS.map.create("map");
+const myMap = nfa.map.create("map");
 myMap.addBehavior('edit');
 ```
 
@@ -388,7 +382,7 @@ myMap.addBehavior('edit', { layer: drawingLayer });
 ### Measurements
 
 Call the `addBehavior('measure', { layer })` method on the instance returned by
-`farmOS.map.create()` to enable length/area measurements of features in a given
+`nfa.map.create()` to enable length/area measurements of features in a given
 layer. This will add tooltips to all features in the layer.
 
 The map instance's configured system of measurement will be used. Lines will be
@@ -400,7 +394,7 @@ If the `edit` behavior is attached, then measurements will be created with new
 shapes as they are drawn, modified, and moved.
 
 ```js
-const myMap = farmOS.map.create("map");
+const myMap = nfa.map.create("map");
 const drawingLayer = myMap.addLayer('vector');
 myMap.addBehavior('edit', { layer: drawingLayer });
 myMap.addBehavior('measure', { layer: drawingLayer });
@@ -409,7 +403,7 @@ myMap.addBehavior('measure', { layer: drawingLayer });
 ### Side Panel Control
 
 Call `addBehavior('sidePanel')` on the instance returned by
-`farmOS.map.create()` to enable a tabbed side panel.
+`nfa.map.create()` to enable a tabbed side panel.
 
 This will add the SidePanel control to the map instance as `instance.sidePanel`.
 Other behaviors can then define panes and add widgets to those panes using the
@@ -463,7 +457,7 @@ const el = (tagName, attrs, fn) => {
 ### Layer Switcher in the Side Panel
 
 Call `addBehavior('layerSwitcherInSidePanel')` on the instance returned by
-`farmOS.map.create()` to move the layer switcher control into a tab of the side
+`nfa.map.create()` to move the layer switcher control into a tab of the side
 panel. This behavior has no effect if the side panel behavior is not enabled.
 
 ![image](https://user-images.githubusercontent.com/30754460/123668575-1470ed00-d7f0-11eb-983a-27941772d54b.png)
@@ -471,7 +465,7 @@ panel. This behavior has no effect if the side panel behavior is not enabled.
 ### Snapping Grid Controls
 
 Call `addBehavior('snappingGrid')` on the instance returned by
-`farmOS.map.create()` to enable a dynamic snapping grid which can be used to draw
+`nfa.map.create()` to enable a dynamic snapping grid which can be used to draw
 regular geometries given an origin, rotation, and grid cell dimensions.
 
 ![snapping_grid_demo](https://user-images.githubusercontent.com/30754460/88995756-5cb22300-d2a0-11ea-88a1-50edac1c0168.gif)
@@ -487,7 +481,7 @@ geometries in Well Known Text (WKT) and GeoJSON format:
   interactions. See example below:
 
 ```js
-const myMap = farmOS.map.create("map");
+const myMap = nfa.map.create("map");
 myMap.addBehavior("edit").then(() => {
   myMap.edit.wktOn("featurechange", (wkt) => console.log(wkt));
 });
@@ -513,7 +507,7 @@ GeoJSON passed in as its argument.
 | `translateend` | after translation stops | all features in the drawing layer |[Translate](https://openlayers.org/en/latest/apidoc/module-ol_interaction_Translate.html) |
 
 &ast; Note that `featurechange` and `delete` are custom event types provided by
-farmOS-map (not by OpenLayers).
+nfa-map (not by OpenLayers).
 
 The `featurechange` event is a shortcut that automatically assigns the callback
 to all events that fire when features are changed in the drawing layer,
@@ -530,16 +524,16 @@ JavaScript functions that will run automatically during map creation, or any
 time afterwards.
 
 One way you can add your own behaviors is by creating a JavaScript file (eg:
-`myMapCustomizations.js`), and including it after `farmOS-map.js` in your page.
+`myMapCustomizations.js`), and including it after `nfa-map.js` in your page.
 
-Your JavaScript file should extend the global `farmOS.map.behaviors` variable
+Your JavaScript file should extend the global `nfa.map.behaviors` variable
 with a uniquely named object containing an `attach()` method.
 
 For example:
 
 ```js
 (function () {
-  farmOS.map.behaviors.myMapCustomizations = {
+  nfa.map.behaviors.myMapCustomizations = {
     attach: function (instance) {
 
       // Get the element ID.
@@ -561,17 +555,17 @@ For example:
 
 One of the benefits of allowing behaviors to be added to a map when it is
 created is that it allows other applications to modify maps in a modular way.
-In farmOS/Drupal, for example, maps can be built in a contextually-aware way,
+In nfa/Drupal, for example, maps can be built in a contextually-aware way,
 enabling/disabling features (eg: drawing controls) depending on where the map is
 being used in the UI. This can be accomplished simply by adding behavior
-JavaScript files to pages via hooks in farmOS/Drupal modules.
+JavaScript files to pages via hooks in nfa/Drupal modules.
 
-It can also be used for quick testing of the farmOS-map library. Simply create
+It can also be used for quick testing of the nfa-map library. Simply create
 a behavior JavaScript file in the `examples/simple-html-consumer/static` directory,
-include it after `farmOS-map.js` in `static/index.html`, and run `npm run dev` to
+include it after `nfa-map.js` in `static/index.html`, and run `npm run dev` to
 see your behavior in the development server.
 
-Behaviors that are added to `farmOS.map.behaviors` can also have an optional
+Behaviors that are added to `nfa.map.behaviors` can also have an optional
 `weight` property. This weight will be used to sort them before they are
 attached to the map instance. Lighter weighted behaviors will be attached before
 heavier ones.
@@ -593,7 +587,7 @@ instance.attachBehavior(myBehavior);
 #### Async Behaviors
 
 Behaviors can attach themselves asynchronously leveraging [Javascript's Promise system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
-In fact, all the behaviors which come with farmOS-map load only when needed.
+In fact, all the behaviors which come with nfa-map load only when needed.
 
 ```js
 const myBehavior = {
@@ -623,36 +617,36 @@ instance.addBehavior("edit").then(() => {
 });
 ```
 
-Behaviors which are added to `farmOS.map.behaviors` are also attached to the map aynchronously. This
-means that a map instance may not be fully initialized when it is returned by `farmOS.map.create`.
+Behaviors which are added to `nfa.map.behaviors` are also attached to the map aynchronously. This
+means that a map instance may not be fully initialized when it is returned by `nfa.map.create`.
 Instead the property `instance.defaultBehaviorsAttached` is a promise that can be used to detect when
-all the behaviors from `farmOS.map.behaviors` have finished being attached to the map.
+all the behaviors from `nfa.map.behaviors` have finished being attached to the map.
 
 ## Advanced Integration
 
 ### Accent color
 
-The farmOS-map accent color can be changed with the `--farmos-map-accent-color` custom CSS property.
+The nfa-map accent color can be changed with the `--nfa-map-accent-color` custom CSS property.
 
 ```css
 #farm-map {
-  --farmos-map-accent-color: #336633;
+  --nfa-map-accent-color: #336633;
 }
 ```
 
-### Working with farmOS-map in an NPM/Webpack Project
+### Working with nfa-map in an NPM/Webpack Project
 
-Some integration scenarios require farmOS-map to be modeled as a dependency - i.e. so static analysis can
+Some integration scenarios require nfa-map to be modeled as a dependency - i.e. so static analysis can
 validate/document class/method references. In these cases, installation is usually performed
 [via a package manager](#via-package-managers) like `npm-cli` or `yarn`.
 
-Then farmOS-map can be accessed using an `import` statement.
+Then nfa-map can be accessed using an `import` statement.
 
 ```js
-import { MapInstanceManager, projection } from '@farmos.org/farmos-map';
+import { MapInstanceManager, projection } from '@nfa.org/nfa-map';
 ```
 
-Finally, it is recommended to externalize farmOS-map such that it is not actually bundled by Webpack.
+Finally, it is recommended to externalize nfa-map such that it is not actually bundled by Webpack.
 
 **webpack.config.js:**
 
@@ -660,34 +654,34 @@ Finally, it is recommended to externalize farmOS-map such that it is not actuall
 module.exports = {
   ...
   externals: {
-    '@farmos.org/farmos-map': 'farmOS.map',
+    '@nfa.org/nfa-map': 'nfa.map',
   },
 };
 ```
 
-With this configuration, build-time tools have access to the full farmOS-map package but at runtime
-farmOS-map will be accessed at `window.farmOS.map`. Naturally, this requires that the `farmOS-map.js`
-and `farmOS-map.css` files are already included in the page as described in the [Usage instructions](#usage)
+With this configuration, build-time tools have access to the full nfa-map package but at runtime
+nfa-map will be accessed at `window.nfa.map`. Naturally, this requires that the `nfa-map.js`
+and `nfa-map.css` files are already included in the page as described in the [Usage instructions](#usage)
 above.
 
 ### Webpack chunk loading
 
-farmOS-map is bundled using Webpack's [Automatic Public Path](https://webpack.js.org/guides/public-path/#automatic-publicpath)
+nfa-map is bundled using Webpack's [Automatic Public Path](https://webpack.js.org/guides/public-path/#automatic-publicpath)
 configuration to automatically determine the public path used for chunk loading.
 This configuration works most of the time but advanced integrations may need to
 specify a public path for consistent chunk loading [on the fly](https://webpack.js.org/guides/public-path/#on-the-fly).
 
-The public path can be specified by setting `window.farmosMapPublicPath` before
-the `farmOS-map.js` entrypoint is loaded in the DOM. For example:
+The public path can be specified by setting `window.nfaMapPublicPath` before
+the `nfa-map.js` entrypoint is loaded in the DOM. For example:
 
 ```html
 <script type="text/javascript">
-  window.farmosMapPublicPath = '/libraries/farmOS-map';
+  window.nfaMapPublicPath = '/libraries/nfa-map';
 </script>
-<script src="./farmOS-map.js"></script>
+<script src="./nfa-map.js"></script>
 ```
 
-## Upgrading from farmOS-map 1.x to 2.x
+## Upgrading from nfa-map 1.x to 2.x
 
 ### For Authors of Custom Behaviors
 
@@ -713,54 +707,54 @@ myMap.addBehavior("edit").then(() => {
 
 ### For Custom Front-end Integrations
 
-In addition to the change described in the previous section, upgrading to farmOS-map 2.x may also require
+In addition to the change described in the previous section, upgrading to nfa-map 2.x may also require
 changes when integrated into custom Front-end applications.
 
-**Required Change:** When packaging farmOS-map in a custom front-end, it is now important that all the files from the
-`dist/` directory are served along with `farmOS-map.js`. farmOS-map 1.x was a single JS file named `farmOS-map.js` which
-included all behavior implementations and even the OpenLayers/farmOS-map CSS. Now with 2.x, farmOS-map is distributed
+**Required Change:** When packaging nfa-map in a custom front-end, it is now important that all the files from the
+`dist/` directory are served along with `nfa-map.js`. nfa-map 1.x was a single JS file named `nfa-map.js` which
+included all behavior implementations and even the OpenLayers/nfa-map CSS. Now with 2.x, nfa-map is distributed
 as a collection of JS/CSS files which must be available in the same relative http directory.
 
 **Before:**
 
 ```sh
-cp some-path-to/farmOS-map/dist/farmOS-map.js my-app/resources/
+cp some-path-to/nfa-map/dist/nfa-map.js my-app/resources/
 ```
 
 **After:**
 
 ```sh
-cp some-path-to/farmOS-map/dist/farmOS-map* my-app/resources/
+cp some-path-to/nfa-map/dist/nfa-map* my-app/resources/
 ```
 
-**Required Change:** When including farmOS-map in a custom front-end, it is now necessary to include both `farmOS-map.js`
-and `farmOS-map.css` in the path, not just `farmOS-map.js`.
+**Required Change:** When including nfa-map in a custom front-end, it is now necessary to include both `nfa-map.js`
+and `nfa-map.css` in the path, not just `nfa-map.js`.
 
 ```html
-<script src="./farmOS-map.js"></script>
+<script src="./nfa-map.js"></script>
 ```
 
 **After:**
 
 ```html
-<link rel="stylesheet" href="./farmOS-map.css" type="text/css">
-<script src="./farmOS-map.js"></script>
+<link rel="stylesheet" href="./nfa-map.css" type="text/css">
+<script src="./nfa-map.js"></script>
 ```
 
-**Required Change:** Ensure code which calls `farmOS.map.create` does not assume behaviors from `farmOS.map.behaviors`
-will be attached synchronously by the time `farmOS.map.create` returns. Any such code must be changed to wait
+**Required Change:** Ensure code which calls `nfa.map.create` does not assume behaviors from `nfa.map.behaviors`
+will be attached synchronously by the time `nfa.map.create` returns. Any such code must be changed to wait
 until the promise `instance.defaultBehaviorsAttached` is fulfilled.
 
 **Before:**
 
 ```js
-farmOS.map.behaviors.myBehavior = {
+nfa.map.behaviors.myBehavior = {
   attach(instance) {
     instance.myExampleProperty = "world!";
   },
 };
 
-const myMap = farmOS.map.create("map");
+const myMap = nfa.map.create("map");
 
 console.log("Hello " + myMap.myExampleProperty);
 ```
@@ -768,13 +762,13 @@ console.log("Hello " + myMap.myExampleProperty);
 **After:**
 
 ```js
-farmOS.map.behaviors.myBehavior = {
+nfa.map.behaviors.myBehavior = {
   attach(instance) {
     instance.myExampleProperty = "world!";
   },
 };
 
-const myMap = farmOS.map.create("map");
+const myMap = nfa.map.create("map");
 
 myMap.defaultBehaviorsAttached.then(() => {
   console.log("Hello " + myMap.myExampleProperty);
@@ -790,7 +784,7 @@ myMap.defaultBehaviorsAttached.then(() => {
 `npm run dev` - Start a Webpack development server at https://localhost:8080
 which will live-update as code is changed during development.
 
-`npm run build` - Generate the final `farmOS-map.js` file for distribution,
+`npm run build` - Generate the final `nfa-map.js` file for distribution,
 along with an `index.html` file that loads it, inside the `dist` directory.
 
 ## Maintainers
