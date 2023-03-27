@@ -1,0 +1,27 @@
+{
+  "name": "nfa-map-examples-root",
+  "version": "0.0.0",
+  "description": "Examples",
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "minimal-html-consumer",
+      "simple-html-consumer",
+      "extended-behavior"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "5.3.0",
+    "cross-spawn": "7.0.3",
+    "get-port": "^5.1.1",
+    "glob": "^7.1.7",
+    "lerna": "3.22.1"
+  },
+  "scripts": {
+    "install-all": "lerna exec --parallel -- npm install",
+    "build": "lerna run --parallel build",
+    "test": "rm -rf **/perfData/* && jest test/index.spec.js --maxWorkers=1"
+  }
+}
