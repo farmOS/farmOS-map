@@ -14,8 +14,8 @@ For more information on nfa, visit [nfa.org](https://nfa.org).
 <link rel="stylesheet" href="./nfa-map.css" type="text/css">
 <script src="./nfa-map.js"></script>
 ```
-3. Create an HTML element with an ID, eg: `<div id="farm-map"></div>`
-4. Call the map creation method with the element ID: `nfa.map.create('farm-map');`
+3. Create an HTML element with an ID, eg: `<div id="nfa-map"></div>`
+4. Call the map creation method with the element ID: `nfa.map.create('nfa-map');`
 5. (optional) Add behaviors - see below.
 
 ### Via Package Managers
@@ -146,7 +146,7 @@ const wktLayer = myMap.addLayer('wkt', wktOpts);
 // Adding a GeoJSON layer from URL.
 const geoJsonUrlOpts = {
   title: 'geojson', // defaults to 'geojson'
-  url: '/farm/areas/geojson/all', // REQUIRED! (either this or `geojson` object)
+  url: '/nfa/areas/geojson/all', // REQUIRED! (either this or `geojson` object)
   color: 'grey', // defaults to 'orange'
   visible: true, // defaults to true
 }
@@ -208,7 +208,7 @@ const vectorLayer = myMap.addLayer('vector', vectorOpts);
 // This expects a GeoJSON URL containing centroid points for clustering.
 const clusterOpts = {
   title: 'Animal Cluster', // defaults to 'cluster'
-  url: '/farm/assets/geojson/cluster/animal', // REQUIRED!
+  url: '/nfa/assets/geojson/cluster/animal', // REQUIRED!
   visible: true, // defaults to true
 };
 const clusterLayer = myMap.addLayer('cluster', clusterOpts);
@@ -226,7 +226,7 @@ group does not exist, it will be created automatically.
 // Add a GeoJSON layer inside a layer group called "Assets"
 const opts = {
   title: 'Animals',
-  url: '/farm/assets/geojson/animal/full',
+  url: '/nfa/assets/geojson/animal/full',
   color: 'red',
   group: 'Assets',
 };
@@ -330,7 +330,7 @@ myMap.zoomToVectors();
 // Create a layer then zoom to that layer.
 const opts = {
   title: 'Animals',
-  url: '/farm/assets/geojson/animal/full',
+  url: '/nfa/assets/geojson/animal/full',
   color: 'red',
 };
 const layer = myMap.addLayer('geojson', opts);
@@ -629,7 +629,7 @@ all the behaviors from `nfa.map.behaviors` have finished being attached to the m
 The nfa-map accent color can be changed with the `--nfa-map-accent-color` custom CSS property.
 
 ```css
-#farm-map {
+#nfa-map {
   --nfa-map-accent-color: #336633;
 }
 ```
@@ -787,14 +787,3 @@ which will live-update as code is changed during development.
 `npm run build` - Generate the final `nfa-map.js` file for distribution,
 along with an `index.html` file that loads it, inside the `dist` directory.
 
-## Maintainers
-
- * Michael Stenta (m.stenta) - https://github.com/mstenta
-
-This project has been sponsored by:
-
- * [Farmier](https://farmier.com)
- * [Globetrotter Foundation](http://globetrotterfoundation.org)
- * [OpenTEAM](https://openteam.community)
- * [Foundation for Food and Agriculture Research](https://foundationfar.org)
- * [Wolfe's Neck Center for Agriculture and the Environment](https://www.wolfesneck.org)
