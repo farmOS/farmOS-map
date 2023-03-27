@@ -9,10 +9,6 @@ import replaceToEPSG4326 from '../projection/replaceToEPSG4326';
 export default {
   attach(instance, { layer } = {}) {
 
-    /**
-     * Replace the OpenLayers core toEPSG4326() function.
-     * @see https://github.com/farmOS/farmOS-map/issues/49
-     */
     replaceToEPSG4326();
 
     // Create a drawing layer.

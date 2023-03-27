@@ -4,7 +4,7 @@ import HeatmapLayer from 'ol/layer/Heatmap';
 
 
 (function () {
-  farmOS.map.behaviors.exampleHeatmapBehavior = {
+  nfa.map.behaviors.exampleHeatmapBehavior = {
     attach: async function(instance) {
 
       const vector = new HeatmapLayer({

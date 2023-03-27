@@ -28,12 +28,24 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create artifact
         run: |
-          mkdir ${{ env.RELEASE_VERSION }}-dist && cp dist/farmOS-map* ${{ env.RELEASE_VERSION }}-dist && zip -r ${{ env.RELEASE_VERSION }}-dist.zip ${{ env.RELEASE_VERSION }}-dist
+          mkdir ${{ env.RELEASE_VERSION }}-dist && cp dist/nfa-map.js ${{ env.RELEASE_VERSION }}-dist && zip -r ${{ env.RELEASE_VERSION }}-dist.zip ${{ env.RELEASE_VERSION }}-dist
       - name: Create Release
-        uses: softprops/action-gh-release@6034af24fba4e5a8e975aaa6056554efe4c794d0 #0.1.13
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          body: |
-            See [CHANGELOG.md](https://github.com/farmOS/farmOS-map/blob/${{ env.RELEASE_VERSION }}/CHANGELOG.md) for release notes.
-          files: ${{ env.RELEASE_VERSION }}-dist.zip
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
           draft: false
           prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./${{ env.RELEASE_VERSION }}-dist.zip
+          asset_name: ${{ env.RELEASE_VERSION }}-dist.zip
+          asset_content_type: application/zip

@@ -5,21 +5,21 @@ import MapInstanceManager from './MapInstanceManager';
 // Import the default projection configuration
 import projection from './projection';
 
-// Define window.farmOS if it isn't already.
-if (typeof window.farmOS === 'undefined') {
-  window.farmOS = {};
+// Define window.nfa if it isn't already.
+if (typeof window.nfa === 'undefined') {
+  window.nfa = {};
 }
 
 const INSTANCE = new MapInstanceManager();
 
-// Add a farmOS.map object that is available globaly.
-window.farmOS.map = INSTANCE;
+// Add a nfa.map object that is available globaly.
+window.nfa.map = INSTANCE;
 
 // Expose MapInstanceManager
-window.farmOS.map.MapInstanceManager = MapInstanceManager;
+window.nfa.map.MapInstanceManager = MapInstanceManager;
 
 // Expose the default projection configuration
-window.farmOS.map.projection = projection;
+window.nfa.map.projection = projection;
 
-// Export the default farmOS-map object
+// Export the default nfa-map object
 export default INSTANCE;

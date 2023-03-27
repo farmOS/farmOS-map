@@ -32,7 +32,7 @@ import {
 import Geolocate from '../control/Geolocate/Geolocate';
 
 // Define an object that contains the default OpenLayers configuration of layers,
-// controls, and interactions that will be added to all farmOS maps.
+// controls, and interactions that will be added to all nfa maps.
 const defaults = {
 
   // Layers.
@@ -55,8 +55,8 @@ const defaults = {
   // Controls.
   controls(options) {
 
-    // Define default farmOS controls.
-    const farmMapDefaults = [
+    // Define default nfa controls.
+    const nfaMapDefaults = [
       new LayerSwitcher(options.layerSwitcher),
       new FullScreen(),
       new Rotate({ autoHide: false }),
@@ -83,24 +83,24 @@ const defaults = {
     // If an object was passed, assume that it is options that will be passed to
     // defaultControls().
     if (typeof options.controls === 'object') {
-      return defaultControls(options.controls).extend(farmMapDefaults);
+      return defaultControls(options.controls).extend(nfaMapDefaults);
     }
 
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.controls === 'function') {
-      return options.controls(defaultControls().extend(farmMapDefaults).getArray());
+      return options.controls(defaultControls().extend(nfaMapDefaults).getArray());
     }
 
     // Otherwise just return the defaults.
-    return defaultControls().extend(farmMapDefaults);
+    return defaultControls().extend(nfaMapDefaults);
   },
 
   // Interactions.
   interactions(options) {
 
-    // Define default farmOS interactions.
-    const farmMapDefaults = [
+    // Define default nfa interactions.
+    const nfaMapDefaults = [
       new DragRotateAndZoom(),
       new PinchRotate(),
     ];
@@ -118,17 +118,17 @@ const defaults = {
     // If an object was passed, assume that it is options that will be passed to
     // defaultInteractions().
     if (typeof options.interactions === 'object') {
-      return defaultInteractions(options.interactions).extend(farmMapDefaults);
+      return defaultInteractions(options.interactions).extend(nfaMapDefaults);
     }
 
     // If a callback function is provided, pass it the defaults
     // and return what it evaluates to.
     if (typeof options.interactions === 'function') {
-      return options.interactions(defaultInteractions().extend(farmMapDefaults).getArray());
+      return options.interactions(defaultInteractions().extend(nfaMapDefaults).getArray());
     }
 
     // Otherwise just return the defaults.
-    return defaultInteractions().extend(farmMapDefaults);
+    return defaultInteractions().extend(nfaMapDefaults);
   },
 
 };

@@ -1,4 +1,4 @@
-@keyframes farmos-map-loading-spinner {
+@keyframes nfa-map-loading-spinner {
   to {
     transform: rotate(360deg);
   }
@@ -16,6 +16,6 @@ div.ol-viewport.loading-spinner::after {
   margin-left: -20px;
   border-radius: 50%;
   border: 5px solid rgba(180, 180, 180, 0.6);
-  border-top-color: var(--farmos-map-accent-color);
-  animation: farmos-map-loading-spinner 1s linear infinite;
+  border-top-color: var(--nfa-map-accent-color);
+  animation: nfa-map-loading-spinner 1s linear infinite;
 }

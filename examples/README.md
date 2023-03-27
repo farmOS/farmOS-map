@@ -1,4 +1,4 @@
-This directory includes demo projects which can be used to profile the performance differences between different ways of using farmOS-map.
+This directory includes demo projects which can be used to profile the performance differences between different ways of using nfa-map.
 
 ## Getting started
 

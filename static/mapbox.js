@@ -3,7 +3,7 @@
   nfa.map.behaviors.mapbox = {
     attach: function (instance) {
 
-      // Test MapBox API key .
+      // Test MapBox API key
       var key = 'pk.eyJ1IjoiZmFybWllciIsImEiOiJjazB6ajZjODkwMWIzM2ptcDBvNjl4eGViIn0.oYDl6csdVuVzlB0hf2ju2Q';
 
       // Create the MapBox watermark and attribution.
@@ -36,7 +36,6 @@
         visible: true,
       };
       instance.addLayer('xyz', opts);
-
     },
   };
 }());

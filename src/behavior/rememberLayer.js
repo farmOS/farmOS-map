@@ -5,7 +5,7 @@ import forEachLayer from '../utils/forEachLayer';
 function loadLayerVisibility(layer) {
   const title = layer.get('title');
   if (title) {
-    const itemName = `farmOS.map.layers.${title}.visible`;
+    const itemName = `nfa.map.layers.${title}.visible`;
     if (localStorage.getItem(itemName) !== null) {
       const visible = (JSON.parse(localStorage.getItem(itemName)) === true);
       layer.setVisible(visible);
@@ -17,7 +17,7 @@ function loadLayerVisibility(layer) {
 function saveLayerVisibility(layer) {
   const title = layer.get('title');
   if (title) {
-    const itemName = `farmOS.map.layers.${title}.visible`;
+    const itemName = `nfa.map.layers.${title}.visible`;
     const visible = JSON.stringify(layer.get('visible'));
     localStorage.setItem(itemName, visible);
   }
@@ -31,7 +31,7 @@ export default {
     this.update(instance);
 
     // When new layers are added, update layer visibility.
-    instance.map.on('farmOS-map.layer', () => {
+    instance.map.on('nfa-map.layer', () => {
       this.update(instance);
     });
   },

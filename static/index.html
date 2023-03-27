@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>NFA Map</title>
-    <link rel="stylesheet" href="./nfa-map.css" type="text/css">
     <style>
       html, body {
         margin: 0;
@@ -21,22 +20,20 @@
   </head>
   <body>
     <div id="map"></div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBEB1xUvz8LG_XexTVKv5ghXEPaCzF9eng"></script>
     <script src="./nfa-map.js"></script>
-    <script src="./nfa-map-example-ext-behavior.js"></script>
-    <script src="./mapbox.js"></script>
+    <script src="mapbox.js"></script>
     <script>
       var options = {
         units: 'metric',
       }
       var myMap = nfa.map.create("map", options);
-      myMap.addBehavior("edit").then(() => {
-        myMap.addBehavior("measure", { layer: myMap.edit.layer });
-        myMap.edit.wktOn("featurechange", console.log);
-        myMap.edit.geoJSONOn("featurechange", console.log);
-      });
-      myMap.addBehavior("sidePanel");
-      myMap.addBehavior("layerSwitcherInSidePanel");
+      myMap.addBehavior("google");
+      myMap.addBehavior("edit");
       myMap.addBehavior("snappingGrid");
+      myMap.addBehavior("measure", { layer: myMap.edit.layer });
+      myMap.edit.wktOn("featurechange", console.log);
+      myMap.edit.geoJSONOn("featurechange", console.log);
     </script>
   </body>
 </html>
