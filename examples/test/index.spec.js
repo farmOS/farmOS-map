@@ -1,12 +1,12 @@
-const fs = require("fs");
-const spawn = require("cross-spawn");
-const { resolve } = require("path");
+const fs = require('fs');
+const spawn = require('cross-spawn');
+const { resolve } = require('path');
 const getPort = require('get-port');
 const glob = require('glob');
 const { v4: uuidv4 } = require('uuid');
 
 
-const pkg = require("../package.json");
+const pkg = require('../package.json');
 
 
 process.env.TEST_RUN_ID = process.env.TEST_RUN_ID || uuidv4();
@@ -18,23 +18,23 @@ const TEST_ITERATIONS = 10;
 function spawnAsPromise(cmd, args, options) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, options);
-    child.on("close", (code) => {
+    child.on('close', (code) => {
       code === 0 ? resolve(true) : reject(false);
     });
-    child.on("error", () => {
+    child.on('error', () => {
       reject(false);
     });
   });
 }
 
-var counter = 0;
+const counter = 0;
 
 exampleApps.forEach((app) => {
 
   describe(`${app}`, () => {
 
-    it(`should build`, async () => {
-      const result = await spawnAsPromise("npm", ["run", "build"], { cwd: app });
+    it('should build', async () => {
+      const result = await spawnAsPromise('npm', ['run', 'build'], { cwd: app });
       expect(result).toEqual(true);
     }, 60 * 1000);
 
@@ -42,9 +42,9 @@ exampleApps.forEach((app) => {
       for (let index = 0; index < TEST_ITERATIONS; index++) {
         it(`${app} run #${index}`, async () => {
           const env = Object.assign({}, process.env);
-          env.TEST_PORT_NUM = await getPort({port: getPort.makeRange(3000, 3100)});
+          env.TEST_PORT_NUM = await getPort({ port: getPort.makeRange(3000, 3100) });
 
-          const result = await spawnAsPromise("npm", ["test", "../test/perf.test.js"], { cwd: app, env });
+          const result = await spawnAsPromise('npm', ['test', '../test/perf.test.js'], { cwd: app, env });
           expect(result).toEqual(true);
         }, 300 * 1000);
       }
@@ -68,8 +68,7 @@ afterAll(async () => {
 
       avgMetrics[key] = {};
 
-      Object.keys(samples[0].data).forEach(metricName =>
-        avgMetrics[key][metricName] = avgArray(samplesForScenario.map(sample => sample.data[metricName])));
+      Object.keys(samples[0].data).forEach(metricName => avgMetrics[key][metricName] = avgArray(samplesForScenario.map(sample => sample.data[metricName])));
 
     });
 
@@ -79,5 +78,5 @@ afterAll(async () => {
 });
 
 function avgArray(arr) {
-  return arr.reduce((a, b) => a + b, 0) / arr.length
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
 }

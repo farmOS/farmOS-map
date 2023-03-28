@@ -1,15 +1,15 @@
 {
-  "name": "@farmos.org/farmos-map",
+  "name": "nfa-map",
   "version": "2.1.0",
-  "description": "OpenLayers map used in farmOS.",
+  "description": "OpenLayers map used in NFA.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/farmOS/farmOS-map.git"
+    "url": "https://github.com/National-Forestry-Authority/nfa-map.git"
   },
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint src && stylelint 'src/**/*.css'",
+    "lint": "eslint src && stylelint src/**/*.css",
     "build": "npm run lint && webpack --config webpack.config.js --mode production",
     "dev": "webpack-dev-server --host 0.0.0.0 --progress --config webpack.config.js --mode development"
   },

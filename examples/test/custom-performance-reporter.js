@@ -1,15 +1,15 @@
 // Based on https://github.com/tomenden/jest-add-summary-reporter/blob/079aad30424043c9c2c71724660da63e6220cc72/index.js#L1-L82
 // Licensed under MIT per https://github.com/tomenden/jest-add-summary-reporter/blob/079aad30424043c9c2c71724660da63e6220cc72/package.json#L11
 
-const { relative } = require("path");
-const _ = require("lodash");
-const chalk = require("chalk");
+const { relative } = require('path');
+const _ = require('lodash');
+const chalk = require('chalk');
 const { v4: uuidv4 } = require('uuid');
 const glob = require('glob');
-const fs = require("fs");
+const fs = require('fs');
 
-const TESTS_KEY = "@@TEST_KEY@@";
-const PASSED_TEST_STATUS = "passed";
+const TESTS_KEY = '@@TEST_KEY@@';
+const PASSED_TEST_STATUS = 'passed';
 
 
 process.env.TEST_RUN_ID = process.env.TEST_RUN_ID || uuidv4();
@@ -20,12 +20,12 @@ const style = {
   describe: chalk.white,
   heading: chalk.bold.cyan.underline,
   failedSuites: chalk.yellow,
-  failedTests: chalk.red
+  failedTests: chalk.red,
 };
 
-const redX = chalk.red("✕");
-const greenCheck = chalk.green("✓");
-const INDENT = "  ";
+const redX = chalk.red('✕');
+const greenCheck = chalk.green('✓');
+const INDENT = '  ';
 
 class CustomPerformanceReporter {
   constructor({ rootDir }) {
@@ -41,10 +41,9 @@ class CustomPerformanceReporter {
 
     const tree = _(_.cloneDeep(tests))
       .groupBy(
-        test =>
-          test.ancestorTitles.length > 0
-            ? test.ancestorTitles.shift()
-            : TESTS_KEY
+        test => (test.ancestorTitles.length > 0
+          ? test.ancestorTitles.shift()
+          : TESTS_KEY),
       )
       .value();
     return _.mapValues(tree, (value, key) => {
@@ -56,11 +55,11 @@ class CustomPerformanceReporter {
   logTestTree(tree, perfDataSamples, indentLevel = 1) {
     _.forEach(tree, (childTree, key) => {
       if (key === TESTS_KEY) {
-        _.forEach(childTree, test => {
+        _.forEach(childTree, (test) => {
           const symbol = (test.status == PASSED_TEST_STATUS) ? greenCheck : redX;
           console.log(`${INDENT.repeat(indentLevel)}${symbol} ${style.title(test.title)}`);
 
-          if (test.fullName.startsWith("PerformanceTest")) {
+          if (test.fullName.startsWith('PerformanceTest')) {
             const samplesForScenario = perfDataSamples.filter(s => s.scenario === test.title);
 
             const firstContentfulPaint = avgArray(samplesForScenario.map(sample => sample.data['first-contentful-paint'])).toFixed(2);
@@ -82,7 +81,7 @@ class CustomPerformanceReporter {
     const { numFailedTestSuites, numFailedTests, testResults } = results;
 
     // Add a blank line before the test summary
-    console.log("");
+    console.log('');
 
     console.log(style.heading(`Test summary (testRunId=${results.testRunId}):`));
 
@@ -90,7 +89,7 @@ class CustomPerformanceReporter {
 
     const perfDataSamples = perfDataSampleFiles.map(file => JSON.parse(fs.readFileSync(file)));
 
-    for (let testFile of testResults) {
+    for (const testFile of testResults) {
       console.log(style.file(relative(this.rootDir, testFile.testFilePath)));
       const testsTree = this.generateTestTree(testFile.testResults);
       this.logTestTree(testsTree, perfDataSamples, 1);
@@ -99,7 +98,7 @@ class CustomPerformanceReporter {
 }
 
 function avgArray(arr) {
-  return arr.reduce((a, b) => a + b, 0) / arr.length
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
 module.exports = CustomPerformanceReporter;

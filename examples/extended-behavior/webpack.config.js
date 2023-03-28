@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    'farmOS-map-example-ext-behavior': `${__dirname}/src/index.js`,
+    'nfa-map-example-ext-behavior': `${__dirname}/src/index.js`,
   },
   output: {
     path: `${__dirname}/dist`,

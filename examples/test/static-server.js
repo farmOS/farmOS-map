@@ -9,7 +9,7 @@ if (!process.env.TEST_PORT_NUM) {
 
 app.use(compression());
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.set('Cache-control', 'public, max-age=300');
   next();
 });
@@ -17,6 +17,6 @@ app.use(function (req, res, next) {
 app.use(express.static('dist'));
 
 app.set('port', parseInt(process.env.TEST_PORT_NUM));
-app.listen(app.get('port'), function() {
-    console.log(`Node App Started on port ${app.get('port')}`);
+app.listen(app.get('port'), () => {
+  console.log(`Node App Started on port ${app.get('port')}`);
 });

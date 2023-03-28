@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>farmOS Map</title>
-    <link rel="stylesheet" href="./farmOS-map.css" type="text/css">
+    <title>NFA Map</title>
+    <link rel="stylesheet" href="./nfa-map.css" type="text/css">
     <style>
       html, body {
         margin: 0;
@@ -21,14 +21,14 @@
   </head>
   <body>
     <div id="map"></div>
-    <script src="./farmOS-map.js"></script>
-    <script src="./farmOS-map-example-ext-behavior.js"></script>
+    <script src="./nfa-map.js"></script>
+    <script src="./nfa-map-example-ext-behavior.js"></script>
     <script src="./mapbox.js"></script>
     <script>
       var options = {
         units: 'metric',
       }
-      var myMap = farmOS.map.create("map", options);
+      var myMap = nfa.map.create("map", options);
       myMap.addBehavior("edit").then(() => {
         myMap.addBehavior("measure", { layer: myMap.edit.layer });
         myMap.edit.wktOn("featurechange", console.log);

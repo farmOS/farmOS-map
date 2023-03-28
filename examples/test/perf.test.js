@@ -2,38 +2,36 @@ const fs = require('fs');
 const { performance } = require('perf_hooks');
 const { v4: uuidv4 } = require('uuid');
 
-const createNetworkThrottledScenario = (params) => {
-  return async (page, client) => {
-    await client.send('Network.emulateNetworkConditions', params);
-  };
+const createNetworkThrottledScenario = params => async (page, client) => {
+  await client.send('Network.emulateNetworkConditions', params);
 };
 
 const TEST_RUN_ID = process.env.TEST_RUN_ID || uuidv4();
 
 const TEST_SCENARIOS = {
-  'Unthrottled': async (page, client) => {},
-  'Regular2G': createNetworkThrottledScenario({
-    'offline': false,
-    'downloadThroughput': 250 * 1024 / 8,
-    'uploadThroughput': 50 * 1024 / 8,
-    'latency': 300
+  Unthrottled: async (page, client) => {},
+  Regular2G: createNetworkThrottledScenario({
+    offline: false,
+    downloadThroughput: 250 * 1024 / 8,
+    uploadThroughput: 50 * 1024 / 8,
+    latency: 300,
   }),
-  'Regular4G': createNetworkThrottledScenario({
-    'offline': false,
-    'downloadThroughput': 4 * 1024 * 1024 / 8,
-    'uploadThroughput': 3 * 1024 * 1024 / 8,
-    'latency': 20
+  Regular4G: createNetworkThrottledScenario({
+    offline: false,
+    downloadThroughput: 4 * 1024 * 1024 / 8,
+    uploadThroughput: 3 * 1024 * 1024 / 8,
+    latency: 20,
   }),
-  'DSL': createNetworkThrottledScenario({
-    'offline': false,
-    'downloadThroughput': 2 * 1024 * 1024 / 8,
-    'uploadThroughput': 1 * 1024 * 1024 / 8,
-    'latency': 5
+  DSL: createNetworkThrottledScenario({
+    offline: false,
+    downloadThroughput: 2 * 1024 * 1024 / 8,
+    uploadThroughput: 1 * 1024 * 1024 / 8,
+    latency: 5,
   }),
-  'SlowCPU': async (page, client) => {
+  SlowCPU: async (page, client) => {
     await client.send('Emulation.setCPUThrottlingRate', { rate: 8 });
   },
-}
+};
 
 beforeAll(async () => {
   await fs.mkdirSync(`${process.cwd()}/perfData/${TEST_RUN_ID}`, { recursive: true });
@@ -41,20 +39,18 @@ beforeAll(async () => {
 
 describe('PerformanceTest', () => {
 
-  const testTable = Object.entries(TEST_SCENARIOS).flatMap(([scenarioName, scenarioFn]) => {
-    return ['uncached', 'cached'].map((stage) => {
+  const testTable = Object.entries(TEST_SCENARIOS).flatMap(([scenarioName, scenarioFn]) => ['uncached', 'cached'].map((stage) => {
 
-      const testName = `${scenarioName}-${stage}`;
+    const testName = `${scenarioName}-${stage}`;
 
-      // These are the args passed to our test
-      return [
-        testName,
-        scenarioName,
-        scenarioFn,
-        stage,
-      ];
-    });
-  });
+    // These are the args passed to our test
+    return [
+      testName,
+      scenarioName,
+      scenarioFn,
+      stage,
+    ];
+  }));
 
   test.each(testTable)('%s', async (testName, scenarioName, scenarioFn, stage) => {
     const page = await browser.newPage();
@@ -93,7 +89,7 @@ describe('PerformanceTest', () => {
     await page.screenshot({ path: `perfData/${TEST_RUN_ID}/${testCaseId}.png` });
 
     const perfEntries = JSON.parse(
-      await page.evaluate(() => JSON.stringify(performance.getEntries()))
+      await page.evaluate(() => JSON.stringify(performance.getEntries())),
     );
 
     const firstContentfulPaint = perfEntries

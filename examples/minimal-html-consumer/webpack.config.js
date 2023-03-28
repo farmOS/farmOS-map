@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    'main': `${__dirname}/src/index.js`,
+    main: `${__dirname}/src/index.js`,
   },
   output: {
     path: `${__dirname}/dist`,

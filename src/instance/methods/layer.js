@@ -21,7 +21,7 @@ import colorStyles, { clusterStyle } from '../../styles';
 import projection from '../../projection';
 
 // Set withCredentials to true for all XHR requests made via OpenLayers'
-// feature loader. Typically farmOS requires authentication in order to
+// feature loader. Typically nfa requires authentication in order to
 // retrieve data from its GeoJSON endpoints. Setting withCredentials to true
 // is a requirement for authentication credentials to be included in the
 // request that OpenLayers makes.
@@ -277,7 +277,7 @@ export default function addLayer(type, opts = {}) {
     }
 
     // Dispatch an event.
-    this.map.dispatchEvent('farmOS-map.layer', layer);
+    this.map.dispatchEvent('nfa-map.layer', layer);
 
     // Return the layer.
     return layer;

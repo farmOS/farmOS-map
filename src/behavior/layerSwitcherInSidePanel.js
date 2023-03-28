@@ -44,7 +44,7 @@ export default {
       renderLayerSwitcher();
 
       // When new layers are added, refresh the layer layer switcher
-      instance.map.on('farmOS-map.layer', () => {
+      instance.map.on('nfa-map.layer', () => {
         renderLayerSwitcher();
       });
 

@@ -1,7 +1,7 @@
 {
-  "name": "farmos-map-example-minimal-html-consumer",
+  "name": "nfa-map-example-minimal-html-consumer",
   "version": "0.0.0",
-  "description": "An example of using farmOS-map without a build step and only the minimal behaviors",
+  "description": "An example of using nfa-map without a build step and only the minimal behaviors",
   "main": "index.js",
   "scripts": {
     "test": "jest  --verbose=true --config $(pwd)/../test/jest.config.js",

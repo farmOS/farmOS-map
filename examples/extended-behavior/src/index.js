@@ -4,8 +4,8 @@ import HeatmapLayer from 'ol/layer/Heatmap';
 
 
 (function () {
-  farmOS.map.behaviors.exampleHeatmapBehavior = {
-    attach: async function(instance) {
+  nfa.map.behaviors.exampleHeatmapBehavior = {
+    async attach(instance) {
 
       const vector = new HeatmapLayer({
         source: new VectorSource({
@@ -16,7 +16,8 @@ import HeatmapLayer from 'ol/layer/Heatmap';
         }),
         blur: 15,
         radius: 5,
-        weight: function (feature) {
+        weight(feature) {
+
           // 2012_Earthquakes_Mag5.kml stores the magnitude of each earthquake in a
           // standards-violating <magnitude> tag in each Placemark.  We extract it from
           // the Placemark's name instead.
