@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Save dist folder to an artifact in run-build.yml workflow. #193
+
 ## [v2.1.0] - 2022-11-15
 
 ### Added
