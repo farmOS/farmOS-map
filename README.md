@@ -320,6 +320,36 @@ const xyzOpts = {
 const xyzLayer = myMap.addLayer('xyz', xyzOpts);
 ```
 
+### Reading Features
+
+A `readFeatures` method is provided to enable reading geometry features from
+various formats like GeoJSON and WKT. It takes a format as its first parameter,
+and the input data as its second parameter.
+
+For example:
+
+```js
+// Reading features from GeoJSON.
+const geojson = {
+  type: "Feature",
+  geometry: {
+    type: "Polygon",
+    coordinates: [
+      [[30, 10], [40, 40], [20, 40], [10, 20], [30, 10]]
+    ]
+  },
+  properties: {
+    name: "Property Boundary"
+  }
+};
+const features = myMap.readFeatures('geojson', geojson);
+features[0].get('name') === 'Property Boundary'
+
+// Reading features from Well-Known Text (WKT).
+const wkt = "POLYGON ((-75.53643733263014 42.54424760416683, -75.5360350012779 42.54427527000766, -75.53589016199109 42.54412508386721, -75.53588747978209 42.54302634269183, -75.53643733263014 42.54424760416683))";
+const features = myMap.readFeatures('wkt', wkt);
+```
+
 ### Controlling the zoom level
 
 There are two methods for controlling the zoom level. The first, `zoomToVectors`,

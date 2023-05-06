@@ -7,6 +7,7 @@ import defaults from './defaults';
 
 // Import instance methods.
 import addLayer, { getLayerByName } from './methods/layer';
+import readFeatures from './methods/features';
 import addPopup from './methods/popup';
 import { zoomToVectors, zoomToLayer } from './methods/zoom';
 import { addBehavior, attachBehavior, attachBehaviorsByWeight } from './methods/behavior';
@@ -51,6 +52,7 @@ const createInstance = ({ target, options = {} }) => {
     addLayer,
     addPopup,
     getLayerByName,
+    readFeatures,
     zoomToVectors,
     zoomToLayer,
     addBehavior,

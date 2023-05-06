@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Save dist folder to an artifact in run-build.yml workflow. #193
+- Expose methods for reading features from GeoJSON and WKT. #194
 
 ## [v2.1.0] - 2022-11-15
 

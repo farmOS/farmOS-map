@@ -8,7 +8,6 @@ import LayerGroup from 'ol/layer/Group';
 import VectorLayer from 'ol/layer/Vector';
 import TileLayer from 'ol/layer/Tile';
 import GeoJSON from 'ol/format/GeoJSON';
-import WKT from 'ol/format/WKT';
 
 // Import setWithCredentials function.
 import { setWithCredentials } from 'ol/featureloader';
@@ -17,8 +16,8 @@ import { setWithCredentials } from 'ol/featureloader';
 import * as Style from 'ol/style';
 import colorStyles, { clusterStyle } from '../../styles';
 
-// Import the default projection configuration
-import projection from '../../projection';
+// Import readFeatures function.
+import readFeatures from './features';
 
 // Set withCredentials to true for all XHR requests made via OpenLayers'
 // feature loader. Typically farmOS requires authentication in order to
@@ -90,7 +89,7 @@ function addGeoJSONLayer({
     });
   } else {
     source = new VectorSource({
-      features: (new GeoJSON()).readFeatures(geojson, projection),
+      features: readFeatures('geojson', geojson),
       format,
       attributions,
     });
@@ -130,13 +129,7 @@ function addWKTLayer({
   const style = styleFunction
     ? (feature, resolution) => styleFunction(feature, resolution, Style)
     : colorStyles(color);
-  const isMultipart = wkt.includes('MULTIPOINT')
-    || wkt.includes('MULTILINESTRING')
-    || wkt.includes('MULTIPOLYGON')
-    || wkt.includes('GEOMETRYCOLLECTION');
-  const features = isMultipart
-    ? new WKT({ splitCollection: true }).readFeatures(wkt, projection)
-    : [new WKT().readFeature(wkt, projection)];
+  const features = readFeatures('wkt', wkt);
   const attributions = [attribution];
   const source = new VectorSource({
     features,
