@@ -134,6 +134,16 @@ export default {
       createMeasure(feature);
     });
 
+    // Remove any stale measurements if the drawing layer gets cleared
+    layer.getSource().on('clear', () => {
+      stopMeasure();
+    });
+
+    // Add measurements for features which are added directly to the drawing layer
+    layer.getSource().on('addfeature', (evt) => {
+      startMeasure(evt.feature);
+    });
+
     // If the instance has an Edit control, attach listeners to the map
     // interactions so that we can apply measurements to the features.
     if (instance.edit) {
