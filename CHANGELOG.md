@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2.1] - 2023-05-11
+
 ### Fixed
 
 - Fix #195 measure behaviour handling of adding/clearing features. #196
@@ -376,7 +378,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.2.1...HEAD
+[v2.2.1]: https://github.com/farmOS/farmOS-map/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/farmOS/farmOS-map/compare/v2.1.0...v2.2.0
 [v2.1.0]: https://github.com/farmOS/farmOS-map/compare/v2.0.8...v2.1.0
 [v2.0.8]: https://github.com/farmOS/farmOS-map/compare/v2.0.7...v2.0.8
