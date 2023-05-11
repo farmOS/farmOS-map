@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix #195 measure behaviour handling of adding/clearing features. #196
+
 ## [v2.2.0] - 2023-05-10
 
 ### Added
