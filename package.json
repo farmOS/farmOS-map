@@ -1,6 +1,6 @@
 {
   "name": "@farmos.org/farmos-map",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "OpenLayers map used in farmOS.",
   "license": "MIT",
   "repository": {

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2.2] - 2023-09-02
+
 ### Fixed
 
 - Update ol-geocoder to ^4.3 to fix search results. #197
@@ -382,7 +384,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.2.2...HEAD
+[v2.2.1]: https://github.com/farmOS/farmOS-map/compare/v2.2.1...v2.2.2
 [v2.2.1]: https://github.com/farmOS/farmOS-map/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/farmOS/farmOS-map/compare/v2.1.0...v2.2.0
 [v2.1.0]: https://github.com/farmOS/farmOS-map/compare/v2.0.8...v2.1.0
