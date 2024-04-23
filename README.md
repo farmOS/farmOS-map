@@ -285,6 +285,21 @@ const colors = {
 };
 ```
 
+Custom colors can be used by providing a `color` option with the desired color value. A color string parser is included
+to handle hex, rgb and other formats.
+See [color-parse](https://github.com/colorjs/color-parse/tree/master#parsed-strings) for information about supported formats.
+
+```js
+// Add a GeoJSON layer with a custom color inside a layer group called "Assets"
+const opts = {
+  title: 'Animals',
+  url: '/farm/assets/geojson/animal/full',
+  color: '#FF0000',
+  group: 'Assets',
+};
+const layer = myMap.addLayer('geojson', opts);
+```
+
 For more complex styles, the `styleFunction` option allows styles to be
 defined based on a `feature` and `resolution`
 ([StyleFunction docs.](https://openlayers.org/en/latest/apidoc/module-ol_style_Style.html#~StyleFunction)) 
