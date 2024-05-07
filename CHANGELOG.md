@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Allow custom stroke colors in `addLayer` method. #201
+- `npm audit fix` dependencies.
 
 ## [v2.2.2] - 2023-09-02
 
