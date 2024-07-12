@@ -113,6 +113,9 @@ class Image extends Control {
     const url = mapCanvas.toDataURL('image/jpeg');
     this.link.href = url;
 
+    // Remove the new canvas.
+    mapCanvas.remove();
+
     // Toggle the image actions.
     this.element.classList.add('active');
 
