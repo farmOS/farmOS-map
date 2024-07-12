@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add image control to download and print map. #202
+
 ## [v2.3.0] - 2024-05-07
 
 ### Changed
