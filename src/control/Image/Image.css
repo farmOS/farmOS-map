@@ -3,11 +3,13 @@
   right: 6.5em;
 }
 
-.ol-image.ol-control .download {
+.ol-image.ol-control .download,
+.ol-image.ol-control .print {
   display: none;
 }
 
-.ol-image.ol-control.active .download {
+.ol-image.ol-control.active .download,
+.ol-image.ol-control.active .print {
   display: block;
 }
 
