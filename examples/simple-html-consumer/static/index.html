@@ -28,6 +28,7 @@
         units: 'metric',
       }
       var myMap = farmOS.map.create("map", options);
+      myMap.addBehavior("image");
       myMap.addBehavior("edit").then(() => {
         myMap.addBehavior("measure", { layer: myMap.edit.layer });
         myMap.edit.wktOn("featurechange", console.log);

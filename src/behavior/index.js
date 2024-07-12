@@ -11,6 +11,7 @@ function lazyLoadedBehavior(name) {
 
 export default {
   edit: lazyLoadedBehavior('edit'),
+  image: lazyLoadedBehavior('image'),
   layerSwitcherInSidePanel: lazyLoadedBehavior('layerSwitcherInSidePanel'),
   loading: lazyLoadedBehavior('loading'),
   measure: lazyLoadedBehavior('measure'),

@@ -1,0 +1,16 @@
+.ol-image.ol-control {
+  top: 0.5em;
+  right: 6.5em;
+}
+
+.ol-image.ol-control .download {
+  display: none;
+}
+
+.ol-image.ol-control.active .download {
+  display: block;
+}
+
+.ol-image.ol-control button {
+  display: inline-block;
+}
