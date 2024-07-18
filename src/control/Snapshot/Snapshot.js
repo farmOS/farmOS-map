@@ -1,6 +1,7 @@
 import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 import EventType from 'ol/events/EventType';
+import MapEventType from 'ol/MapEventType';
 import './Snapshot.css';
 import printJS from 'print-js';
 
@@ -122,10 +123,7 @@ class Snapshot extends Control {
     // Subscribe to events to deactivate snapshot actions.
     this.getMap().on(EventType.CLICK, this.deactivate.bind(this));
     this.getMap().on(EventType.CHANGE, this.deactivate.bind(this));
-    this.getMap().on(EventType.MOVESTART, this.deactivate.bind(this));
-
-    // The move start event seems to only work with a string.
-    this.getMap().on('movestart', this.deactivate.bind(this));
+    this.getMap().on(MapEventType.MOVESTART, this.deactivate.bind(this));
   }
 
   /**
