@@ -85,30 +85,29 @@ class Snapshot extends Control {
     const mapContext = mapCanvas.getContext('2d');
 
     // Draw each canvas from this map into the new canvas.
-    Array.prototype.forEach.call(
-      this.getMap().getTargetElement().querySelectorAll('.ol-layer canvas'),
-      (canvas) => {
-        if (canvas.width > 0) {
-          const { opacity } = canvas.parentNode.style;
-          mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+    // Logic for transforming and drawing canvases derived from ol export-pdf example.
+    // https://github.com/openlayers/openlayers/blob/6f2ca3b9635f273f6fbddab834bd9126c7d48964/examples/export-pdf.js#L61-L85
+    Array.from(this.getMap().getTargetElement().querySelectorAll('.ol-layer canvas'))
+      .filter(canvas => canvas.width > 0)
+      .forEach((canvas) => {
+        const { opacity } = canvas.parentNode.style;
+        mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
 
-          // Get the transform parameters from the style's transform matrix.
-          // This is necessary so that vectors align with raster layers.
-          const { transform } = canvas.style;
-          const matrix = transform
-            .match(/^matrix\(([^(]*)\)$/)[1]
-            .split(',')
-            .map(Number);
+        // Get the transform parameters from the style's transform matrix.
+        // This is necessary so that vectors align with raster layers.
+        const { transform } = canvas.style;
+        const matrix = transform
+          .match(/^matrix\(([^(]*)\)$/)[1]
+          .split(',')
+          .map(Number);
 
-          // Apply the transform to the export map context.
-          CanvasRenderingContext2D.prototype.setTransform.apply(
-            mapContext,
-            matrix,
-          );
-          mapContext.drawImage(canvas, 0, 0);
-        }
-      },
-    );
+        // Apply the transform to the export map context.
+        CanvasRenderingContext2D.prototype.setTransform.apply(
+          mapContext,
+          matrix,
+        );
+        mapContext.drawImage(canvas, 0, 0);
+      });
 
     // Build a jpeg data url and update link.
     const url = mapCanvas.toDataURL('image/jpeg');
