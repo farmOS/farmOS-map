@@ -11,11 +11,11 @@ function lazyLoadedBehavior(name) {
 
 export default {
   edit: lazyLoadedBehavior('edit'),
-  image: lazyLoadedBehavior('image'),
   layerSwitcherInSidePanel: lazyLoadedBehavior('layerSwitcherInSidePanel'),
   loading: lazyLoadedBehavior('loading'),
   measure: lazyLoadedBehavior('measure'),
   rememberLayer: lazyLoadedBehavior('rememberLayer'),
   sidePanel: lazyLoadedBehavior('sidePanel'),
   snappingGrid: lazyLoadedBehavior('snappingGrid'),
+  snapshot: lazyLoadedBehavior('snapshot'),
 };
