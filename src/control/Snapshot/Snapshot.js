@@ -78,11 +78,11 @@ class Snapshot extends Control {
     event.preventDefault();
 
     // Create a new canvas element to combine multiple map canvas data to.
-    const mapCanvas = document.createElement('canvas');
+    const outputCanvas = document.createElement('canvas');
     const [width, height] = this.getMap().getSize();
-    mapCanvas.width = width;
-    mapCanvas.height = height;
-    const mapContext = mapCanvas.getContext('2d');
+    outputCanvas.width = width;
+    outputCanvas.height = height;
+    const outputContext = outputCanvas.getContext('2d');
 
     // Draw each canvas from this map into the new canvas.
     // Logic for transforming and drawing canvases derived from ol export-pdf example.
@@ -91,7 +91,7 @@ class Snapshot extends Control {
       .filter(canvas => canvas.width > 0)
       .forEach((canvas) => {
         const { opacity } = canvas.parentNode.style;
-        mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+        outputContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
 
         // Get the transform parameters from the style's transform matrix.
         // This is necessary so that vectors align with raster layers.
@@ -103,18 +103,18 @@ class Snapshot extends Control {
 
         // Apply the transform to the export map context.
         CanvasRenderingContext2D.prototype.setTransform.apply(
-          mapContext,
+          outputContext,
           matrix,
         );
-        mapContext.drawImage(canvas, 0, 0);
+        outputContext.drawImage(canvas, 0, 0);
       });
 
     // Build a jpeg data url and update link.
-    const url = mapCanvas.toDataURL('image/jpeg');
+    const url = outputCanvas.toDataURL('image/jpeg');
     this.link.href = url;
 
-    // Remove the new canvas.
-    mapCanvas.remove();
+    // Remove the output canvas.
+    outputCanvas.remove();
 
     // Enable the snapshot actions.
     this.element.classList.add('active');
