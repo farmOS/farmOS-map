@@ -17,4 +17,5 @@ export default {
   rememberLayer: lazyLoadedBehavior('rememberLayer'),
   sidePanel: lazyLoadedBehavior('sidePanel'),
   snappingGrid: lazyLoadedBehavior('snappingGrid'),
+  snapshot: lazyLoadedBehavior('snapshot'),
 };

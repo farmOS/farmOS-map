@@ -1,0 +1,18 @@
+.ol-snapshot.ol-control {
+  top: 0.5em;
+  right: 6.5em;
+}
+
+.ol-snapshot.ol-control .download,
+.ol-snapshot.ol-control .print {
+  display: none;
+}
+
+.ol-snapshot.ol-control.active .download,
+.ol-snapshot.ol-control.active .print {
+  display: block;
+}
+
+.ol-snapshot.ol-control button {
+  display: inline-block;
+}
