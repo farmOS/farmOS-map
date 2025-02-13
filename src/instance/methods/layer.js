@@ -105,13 +105,14 @@ function addGeoJSONLayer({
 
 // Add a Tile ArcGIS MapServer layer to the map.
 function addTileArcGISMapServerLayer({
-  title = 'arcgis-tile', url, params, visible = true, base = false, attribution = '',
+  title = 'arcgis-tile', url, params, visible = true, base = false, attribution = '', crossOrigin = null,
 }) {
   const attributions = [attribution];
   const source = new TileArcGISRest({
     url,
     params,
     attributions,
+    crossOrigin,
   });
   const layer = new TileLayer({
     title,
@@ -146,13 +147,14 @@ function addWKTLayer({
 
 // Add a WMS tile layer to the map.
 function addWMSTileLayer({
-  title = 'wms', url, params, visible = true, base = false, attribution = '',
+  title = 'wms', url, params, visible = true, base = false, attribution = '', crossOrigin = null,
 }) {
   const attributions = [attribution];
   const source = new TileWMS({
     url,
     params,
     attributions,
+    crossOrigin,
   });
   const layer = new TileLayer({
     title,
@@ -165,13 +167,14 @@ function addWMSTileLayer({
 
 // Add an XYZ tile layer to the map.
 function addXYZTileLayer({
-  title = 'xyz', url, tileSize = 256, visible = true, base = false, attribution = '',
+  title = 'xyz', url, tileSize = 256, visible = true, base = false, attribution = '', crossOrigin = null,
 }) {
   const attributions = [attribution];
   const source = new XYZ({
     url,
     tileSize,
     attributions,
+    crossOrigin,
   });
   const layer = new TileLayer({
     title,
