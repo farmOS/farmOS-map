@@ -180,7 +180,8 @@ const wmsOpts = {
     VERSION: '1.1.1',
   },
   visible: true, // defaults to true
-  base: false // defaults to false
+  base: false, // defaults to false
+  crossOrigin: null, // defaults to null
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
@@ -189,7 +190,8 @@ const arcGISTileOpts = {
   title: 'StateCityHighway_USA', // defaults to 'arcgis-tile'
   url: 'https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer', // REQUIRED!
   visible: true, // defaults to true
-  base: false // defaults to false
+  base: false, // defaults to false
+  crossOrigin: null, // defaults to null
 };
 const arcGISTileLayer = myMap.addLayer('arcgis-tile', arcGISTileOpts);
 
@@ -198,7 +200,8 @@ const xyzOpts = {
   title: 'mapbox', // defaults to 'xyz'
   url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=[APIKEY]', // REQUIRED!
   visible: true, // defaults to true
-  base: false // defaults to false
+  base: false, // defaults to false
+  crossOrigin: null, // defaults to null
 };
 const xyzLayer = myMap.addLayer('xyz', xyzOpts);
 
@@ -220,6 +223,13 @@ const clusterLayer = myMap.addLayer('cluster', clusterOpts);
 ```
 
 The method returns a reference to the newly created layer for later use.
+
+All raster layer types have an optional `crossOrigin` option that sets the
+`crossorigin` attribute for loaded images. You must provide a `crossOrigin`
+value if you want to allow access to pixel data with the canvas renderer.
+This is required for the `snapshot` behavior to save images from the canvas.
+See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
+for more detail.
 
 #### Layer groups
 
