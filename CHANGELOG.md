@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add snapshot control to download and print map. #202
 - Add crossOrigin option to raster layer types. #204
 
+### Changed
+
+- `npm audit fix` dependencies.
+
 ## [v2.3.0] - 2024-05-07
 
 ### Changed
