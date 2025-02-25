@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir ${{ env.RELEASE_VERSION }}-dist && cp dist/farmOS-map* ${{ env.RELEASE_VERSION }}-dist && zip -r ${{ env.RELEASE_VERSION }}-dist.zip ${{ env.RELEASE_VERSION }}-dist
       - name: Create Release
-        uses: softprops/action-gh-release@6034af24fba4e5a8e975aaa6056554efe4c794d0 #0.1.13
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 #2.0.8
         with:
           body: |
             See [CHANGELOG.md](https://github.com/farmOS/farmOS-map/blob/${{ env.RELEASE_VERSION }}/CHANGELOG.md) for release notes.
