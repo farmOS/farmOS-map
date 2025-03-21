@@ -386,23 +386,23 @@ class Edit extends Control {
       this.snapInteraction = new Snap({
         features: this.layer.getSource().getFeaturesCollection() || new Collection(),
       });
+    }
 
-      // Load all vector layer features in the map and add them to the snap
-      // interaction's feature collection (so they can be snapped to).
-      forEachLayer(this.getMap().getLayerGroup(), (layer) => {
-        if (typeof layer.getSource === 'function') {
-          const source = layer.getSource();
-          if (source !== 'null' && source instanceof VectorSource) {
-            const features = source.getFeatures();
-            if (source.getState() === 'ready' && features.length > 0) {
-              features.forEach((feature) => {
-                this.snapInteraction.addFeature(feature);
-              });
-            }
+    // Load all vector layer features in the map and add them to the snap
+    // interaction's feature collection (so they can be snapped to).
+    forEachLayer(this.getMap().getLayerGroup(), (layer) => {
+      if (typeof layer.getSource === 'function') {
+        const source = layer.getSource();
+        if (source !== 'null' && source instanceof VectorSource) {
+          const features = source.getFeatures();
+          if (source.getState() === 'ready' && features.length > 0) {
+            features.forEach((feature) => {
+              this.snapInteraction.addFeature(feature);
+            });
           }
         }
-      });
-    }
+      }
+    });
     this.getMap().addInteraction(this.snapInteraction);
   }
 
