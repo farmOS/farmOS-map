@@ -351,6 +351,9 @@ class SnappingGrid extends Control {
         mapInteractions.removeAt(ourSnapInteractionLastIdx);
       }
       this.getMap().addInteraction(this.gridSnapInteraction);
+
+      // Add grid feature to grid snap interaction
+      this.gridSnapInteraction.addFeature(this.grid.getGridFeature());
     } else if (otherDrawInteractionLastIdx === -1 && otherSnapInteractionLastIdx === -1) {
 
       // Remove our snap interaction if there are no other draw/snap interactions
