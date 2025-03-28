@@ -1,12 +1,11 @@
-name: Run 2.x build
+name: Run build
 on:
   push:
     branches:
-      - '2.x'
-      - '2.x-**'
+      - '**'
   pull_request:
     branches:
-      - '2.x'
+      - 'main'
 
 jobs:
   build:
