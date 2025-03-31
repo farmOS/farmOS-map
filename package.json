@@ -34,10 +34,10 @@
     "bootstrap-icons": "^1.5.0",
     "ol": "^10.4.0",
     "ol-geocoder": "^4.3.1",
-    "ol-grid": "^1.1.7",
+    "ol-grid": "^2.0.0",
     "ol-layerswitcher": "^4.1.2",
     "ol-popup": "^5.1.1",
-    "ol-side-panel": "^1.0.6",
+    "ol-side-panel": "^2.0.0",
     "print-js": "^1.6.0"
   }
 }
