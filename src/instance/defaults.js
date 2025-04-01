@@ -31,6 +31,9 @@ import {
 // Import Geolocate control.
 import Geolocate from '../control/Geolocate/Geolocate';
 
+// Import GoogleAttribution control.
+import GoogleAttribution from '../control/Google/GoogleAttribution';
+
 // Define an object that contains the default OpenLayers configuration of layers,
 // controls, and interactions that will be added to all farmOS maps.
 const defaults = {
@@ -68,6 +71,7 @@ const defaults = {
         limit: 5,
         autoComplete: true,
       }),
+      new GoogleAttribution(),
     ];
 
     // If controls were set to 'false', don't attach any controls.
