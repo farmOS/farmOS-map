@@ -185,6 +185,16 @@ const wmsOpts = {
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
+// Adding a Google Map Tiles layer.
+const googleMapOpts = {
+  title: 'Google Satellite',
+  key: 'private-api-key',
+  mapType: 'satellite',
+  visible: true, // defaults to true
+  base: true, // defaults to false
+}
+const googleMapLayer = myMap.addLayer('google', googleMapOpts);
+
 // Adding a ArcGIS MapServer tile layer.
 const arcGISTileOpts = {
   title: 'StateCityHighway_USA', // defaults to 'arcgis-tile'
