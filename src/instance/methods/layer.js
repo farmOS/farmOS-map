@@ -20,6 +20,9 @@ import colorStyles, { clusterStyle } from '../../styles';
 // Import readFeatures function.
 import readFeatures from './features';
 
+// Import GoogleLogoAttribution control.
+import GoogleLogoAttribution from '../../control/Google/GoogleLogoAttribution';
+
 // Set withCredentials to true for all XHR requests made via OpenLayers'
 // feature loader. Typically farmOS requires authentication in order to
 // retrieve data from its GeoJSON endpoints. Setting withCredentials to true
@@ -255,6 +258,10 @@ export default function addLayer(type, opts = {}) {
       throw new Error('Missing a Google Map Tiles API key.');
     }
     layer = addGoogleMapTilesLayer(opts);
+    if (!this.map.getControls().getArray()
+      .some(control => control instanceof GoogleLogoAttribution)) {
+      this.map.addControl(new GoogleLogoAttribution());
+    }
   }
   if (type.toLowerCase() === 'arcgis-tile') {
     if (!opts.url) {
