@@ -194,7 +194,7 @@ const wmsLayer = myMap.addLayer('wms', wmsOpts);
 // https://developers.google.com/maps/documentation/tile/get-api-key
 const googleMapOpts = {
   title: 'Google Satellite',
-  key: 'AIzaSyAs-AoPi0VEcL7feKFQRkNpAdjznxqFi3k', // replace with your API key.
+  key: 'AIzaSyBEB1xUvz8LG_XexTVKv5ghXEPaCzF9eng', // replace with your API key.
   mapType: 'satellite',
   visible: true, // defaults to true
   base: true, // defaults to false
