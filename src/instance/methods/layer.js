@@ -1,6 +1,7 @@
 // Import source types, layer types, and formats.
 import VectorSource from 'ol/source/Vector';
 import Cluster from 'ol/source/Cluster';
+import Google from 'ol/source/Google';
 import TileArcGISRest from 'ol/source/TileArcGISRest';
 import TileWMS from 'ol/source/TileWMS';
 import XYZ from 'ol/source/XYZ';
@@ -18,6 +19,9 @@ import colorStyles, { clusterStyle } from '../../styles';
 
 // Import readFeatures function.
 import readFeatures from './features';
+
+// Import GoogleLogoAttribution control.
+import GoogleLogoAttribution from '../../control/Google/GoogleLogoAttribution';
 
 // Set withCredentials to true for all XHR requests made via OpenLayers'
 // feature loader. Typically farmOS requires authentication in order to
@@ -99,6 +103,29 @@ function addGeoJSONLayer({
     source,
     style,
     visible,
+  });
+  return layer;
+}
+
+// Add a Google Map Tiles layer to the map.
+function addGoogleMapTilesLayer({
+  title = 'google-map-tiles', key, mapType = 'satellite', layerTypes = [], language = 'en-US', region = 'US', apiOptions = null, visible = true, base = true,
+}) {
+  const source = new Google({
+    key,
+    mapType,
+    layerTypes,
+    language,
+    region,
+    apiOptions,
+    scale: 'scaleFactor2x',
+    highDpi: true,
+  });
+  const layer = new TileLayer({
+    title,
+    source,
+    visible,
+    type: base ? 'base' : 'normal',
   });
   return layer;
 }
@@ -225,6 +252,16 @@ export default function addLayer(type, opts = {}) {
       throw new Error('Missing a GeoJSON url or object.');
     }
     layer = addGeoJSONLayer(opts);
+  }
+  if (type.toLowerCase() === 'google') {
+    if (!opts.key) {
+      throw new Error('Missing a Google Map Tiles API key.');
+    }
+    layer = addGoogleMapTilesLayer(opts);
+    if (!this.map.getControls().getArray()
+      .some(control => control instanceof GoogleLogoAttribution)) {
+      this.map.addControl(new GoogleLogoAttribution());
+    }
   }
   if (type.toLowerCase() === 'arcgis-tile') {
     if (!opts.url) {

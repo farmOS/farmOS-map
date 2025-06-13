@@ -185,6 +185,22 @@ const wmsOpts = {
 };
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
+// Adding a Google Map Tiles layer. This requires registering a Google Developer
+// account and creating your own Map Tiles API key. See the following
+// documentation on creating and restricting API keys.
+// "Google strongly recommends that you restrict your API keys by limiting their
+// usage to those only APIs needed for your application. Restricting API keys
+// adds security to your application by protecting it from unwarranted requests."
+// https://developers.google.com/maps/documentation/tile/get-api-key
+const googleMapOpts = {
+  title: 'Google Satellite',
+  key: 'AIzaSyBEB1xUvz8LG_XexTVKv5ghXEPaCzF9eng', // replace with your API key.
+  mapType: 'satellite',
+  visible: true, // defaults to true
+  base: true, // defaults to false
+}
+const googleMapLayer = myMap.addLayer('google', googleMapOpts);
+
 // Adding a ArcGIS MapServer tile layer.
 const arcGISTileOpts = {
   title: 'StateCityHighway_USA', // defaults to 'arcgis-tile'

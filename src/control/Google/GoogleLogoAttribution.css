@@ -1,0 +1,18 @@
+.ol-google-logo-attrib.ol-control {
+  /* By default position the logo above the scale line and to the right of the snapping grid controls. */
+  bottom: 2.75em;
+  left: 3.5em;
+
+  /* Remove the normal grey control background */
+  background-color: rgba(255, 255, 255, 0);
+}
+
+@media (max-width: 767px) {
+  .map-with-ol-side-panel .ol-google-logo-attrib.ol-control:not(.ol-side-panel) {
+    /* If the side-panel is expanded on small screens, don't let it get pushed out of view. */
+    margin-left: 0;
+
+    /* Add a short transition so it doesn't jump so much. */
+    transition: margin-left 500ms;
+  }
+}

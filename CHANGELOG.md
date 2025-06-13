@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for Google Map Tiles layers. #207
+
 ### Changed
 
 - Update open layers to version 10.4.0. #206
