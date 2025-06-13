@@ -854,6 +854,8 @@ myMap.defaultBehaviorsAttached.then(() => {
 
 ## Development
 
+`nvm use` - Use nvm to configure Node.js version.
+
 `npm install` - Install JavaScript dependencies in `./node_modules` and create
 `package-lock.json`.
 

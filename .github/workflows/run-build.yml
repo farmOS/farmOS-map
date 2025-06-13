@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@master
       - uses: actions/setup-node@master
         with:
-          node-version: '16.x'
+          node-version-file: '.nvmrc'
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
