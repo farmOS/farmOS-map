@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update open layers to version 10.4.0. #206
 - Update ol-layerswitcher, ol-popup, ol-grid and ol-side-panel to latest versions.
+- Add .nvmrc file and use in github actions. #210
 
 ## [v2.4.0] - 2025-02-15
 
