@@ -186,10 +186,12 @@ const wmsOpts = {
 const wmsLayer = myMap.addLayer('wms', wmsOpts);
 
 // Adding a Google Map Tiles layer. This requires registering a Google Developer
-// account and creating your own private API key. The one below is a fake key
-// that won't work but will look similar to your key. Be sure never to share
-// yours and if it is accidentally exposed or committed, create a new one. See:
-// https://developers.google.com/maps/documentation/javascript/get-api-key
+// account and creating your own Map Tiles API key. See the following
+// documentation on creating and restricting API keys.
+// "Google strongly recommends that you restrict your API keys by limiting their
+// usage to those only APIs needed for your application. Restricting API keys
+// adds security to your application by protecting it from unwarranted requests."
+// https://developers.google.com/maps/documentation/tile/get-api-key
 const googleMapOpts = {
   title: 'Google Satellite',
   key: 'AIzaSyAs-AoPi0VEcL7feKFQRkNpAdjznxqFi3k', // replace with your API key.
