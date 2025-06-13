@@ -10,5 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # The checkout step is required since this action uses local git commands to enforce the changelog
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: dangoslen/changelog-enforcer@v2
