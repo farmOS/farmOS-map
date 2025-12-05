@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "eslint src && stylelint 'src/**/*.css'",
     "build": "npm run lint && webpack --config webpack.config.js --mode production",
+    "clean": "rimraf --glob -- dist examples/**/dist **/node_modules/**/*",
     "dev": "webpack-dev-server --host 0.0.0.0 --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.1",
     "mini-css-extract-plugin": "^1.6.0",
+    "rimraf": "^6.1.2",
     "style-loader": "^0.23.1",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
