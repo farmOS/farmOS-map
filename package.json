@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "eslint src && stylelint 'src/**/*.css'",
     "build": "npm run lint && webpack --config webpack.config.js --mode production",
+    "clean": "rimraf --glob -- dist examples/**/dist **/node_modules/**/*",
     "dev": "webpack-dev-server --host 0.0.0.0 --progress --config webpack.config.js --mode development"
   },
   "devDependencies": {
