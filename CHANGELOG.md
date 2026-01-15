@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.0.0] - 2026-01-15
+
 ### Added
 
 - Add support for Google Map Tiles layers. #207
@@ -412,7 +414,8 @@ I _think_ that's just about everything. :slightly_smiling_face:
 
 Initial commit.
 
-[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/farmOS/farmOS-map/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/farmOS/farmOS-map/compare/v2.4.0...v3.0.0
 [v2.4.0]: https://github.com/farmOS/farmOS-map/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/farmOS/farmOS-map/compare/v2.2.2...v2.3.0
 [v2.2.2]: https://github.com/farmOS/farmOS-map/compare/v2.2.1...v2.2.2
